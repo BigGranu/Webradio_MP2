@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hello world workflow state actions -->
+<Workflow DescriptorVersion="1.0">
+  <MenuActions>
+	<!-- Eintrag im Hauptmenu -->
+    <PushNavigationTransition Id="EA48BD6E-60D3-45b2-9C35-1AB437CC72FB"
+        Name="Home->Webradio"
+        DisplayCategory="z-Webradio"
+        SortOrder="a"
+        SourceStates="7F702D9C-F2DD-42da-9ED8-0BA92F07787F"
+        TargetState="D5CD9D35-1B36-4ede-8BED-A4FB658F27BD"
+        DisplayTitle="[Webradio.MenuEntry]"/>
+		
+	<!-- Einträge im Homescreen -->
+	<PushNavigationTransition Id="D3DED8FE-3AFE-4A90-A727-444E33582016"
+        Name="Webradio->Home"
+        DisplayCategory="a-Webradio"
+        SortOrder="a"
+        SourceStates="D5CD9D35-1B36-4ede-8BED-A4FB658F27BD"
+        TargetState="5726DA5A-70D5-458f-AF67-611293D97912"
+        DisplayTitle="[Webradio.Home.Menu.View]"/>
+	<PushNavigationTransition Id="C6074C4C-4ABA-45A2-881F-BBC61FD30AF7"
+        Name="Webradio->Home"
+        DisplayCategory="a-Webradio"
+        SortOrder="a"
+        SourceStates="D5CD9D35-1B36-4ede-8BED-A4FB658F27BD"
+        TargetState="5726DA5A-70D5-458f-AF67-611293D97912"
+        DisplayTitle="[Webradio.Home.Menu.Filter]"/>
+	<PushNavigationTransition Id="6A7897A8-467C-4E41-8272-BA76A0E100EE"
+        Name="Webradio->Home"
+        DisplayCategory="a-Webradio"
+        SortOrder="a"
+        SourceStates="D5CD9D35-1B36-4ede-8BED-A4FB658F27BD"
+        TargetState="5726DA5A-70D5-458f-AF67-611293D97912"
+        DisplayTitle="[Webradio.Home.Menu.Favorites]"/>
+	<PushNavigationTransition Id="2ABFF249-2F05-4E25-8F3E-3F2B136A40FB"
+        Name="WebradioHome->Settings"
+        DisplayCategory="a-Webradio"
+        SortOrder="a"
+        SourceStates="D5CD9D35-1B36-4ede-8BED-A4FB658F27BD"
+        TargetState="508639CD-BB0A-40BD-8210-73BA2A818411"
+        DisplayTitle="[Webradio.Home.Menu.Settings]"/>
+
+	<!-- Einträge in den Settings -->
+	<PushNavigationTransition Id="AD312631-E1C4-4FBD-BFBB-D3175D03CA66"
+        Name="WebradioSettings->Filter"
+        DisplayCategory="a-Webradio"
+        SortOrder="a"
+        SourceStates="508639CD-BB0A-40BD-8210-73BA2A818411"
+        TargetState="07BC0758-CE7C-466C-9014-3D3373E5B658"
+        DisplayTitle="[Webradio.Settings.Menu.Filter]"/>	
+	<PushNavigationTransition Id="94FED17C-D1D2-47C4-B3C8-02A7ACC6CE47"
+        Name="WebradioSettings->Favorites"
+        DisplayCategory="a-Webradio"
+        SortOrder="a"
+        SourceStates="508639CD-BB0A-40BD-8210-73BA2A818411"
+        TargetState="345105A7-B9D3-4A86-BB0B-FA393D96F870"
+        DisplayTitle="[Webradio.Settings.Menu.Favorites]"/>
+		
+		<!-- Einträge in den Favoriten -->
+	<PushNavigationTransition Id="F9334D42-D0C3-48B9-89A3-293BD1AADEB4"
+        Name="WebradioSettings-"
+        DisplayCategory="a-Webradio"
+        SortOrder="a"
+        SourceStates="345105A7-B9D3-4A86-BB0B-FA393D96F870"
+        TargetState="A4CC6BAE-EA85-4F2C-B261-8B2C97D76203"
+        DisplayTitle="[Webradio.Favorites.Add]"/>	
+	<PushNavigationTransition Id="F9CE9537-8F78-476B-8724-B8348BCB5E43"
+        Name="WebradioSettings-"
+        DisplayCategory="a-Webradio"
+        SortOrder="a"
+        SourceStates="345105A7-B9D3-4A86-BB0B-FA393D96F870"
+        TargetState="A4CC6BAE-EA85-4F2C-B261-8B2C97D76203"
+        DisplayTitle="[Webradio.Favorites.Delete]"/>
+	<PushNavigationTransition Id="911CC334-7F8D-49F0-81D1-F4F17F9C0792"
+        Name="WebradioSettings-"
+        DisplayCategory="a-Webradio"
+        SortOrder="a"
+        SourceStates="345105A7-B9D3-4A86-BB0B-FA393D96F870"
+        TargetState="A4CC6BAE-EA85-4F2C-B261-8B2C97D76203"
+        DisplayTitle="[Webradio.Favorites.Rename]"/>
+	<PushNavigationTransition Id="60E44CF6-2932-4069-9129-3B2306893D52"
+        Name="WebradioSettings-"
+        DisplayCategory="a-Webradio"
+        SortOrder="a"
+        SourceStates="345105A7-B9D3-4A86-BB0B-FA393D96F870"
+        TargetState="A4CC6BAE-EA85-4F2C-B261-8B2C97D76203"
+        DisplayTitle="[Webradio.Favorites.Save]"/>		
+  </MenuActions>
+</Workflow>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="Webradio.MenuEntry">WEBRADIO</string> 
+  <string name="Webradio.StateDisplayLabel">WEBRADIO</string>
+
+  <string name="Webradio.Home.ScreenTitle"> </string>
+  <string name="Webradio.Home.Menu.View">View</string>
+  <string name="Webradio.Home.Menu.Filter">Filter</string>
+  <string name="Webradio.Home.Menu.Favorites">Favorites</string>
+  <string name="Webradio.Home.Menu.Settings">Settings</string>
+
+  <string name="Webradio.Settings.ScreenTitle">Settings</string>
+  <string name="Webradio.Settings.Menu.Filter">Filter</string>
+  <string name="Webradio.Settings.Menu.Favorites">Favorites</string>
+  
+  <string name="Webradio.Favorites.ScreenTitle">Favorites</string>
+  <string name="Webradio.Favorites.Add">Add</string>   
+  <string name="Webradio.Favorites.Delete">Delete</string>
+  <string name="Webradio.Favorites.Rename">Rename</string> 
+  <string name="Webradio.Favorites.Save">Save</string>
+  
+  <string name="Webradio.Filter.ScreenTitle">Filter</string>	
+  
+  <string name="HelloWorld.HelloWorldText">Pressing the button will change this text</string>
+  <string name="HelloWorld.SampleText">This is the sample screen of the HelloWorld plugin</string>
+  <string name="HelloWorld.ButtonText">Press me</string>
+  <string name="HelloWorld.ButtonTextCommandExecuted">Congrats, you just triggered a Command!</string>
+</resources>

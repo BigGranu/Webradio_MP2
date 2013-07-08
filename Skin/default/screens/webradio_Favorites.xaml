@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include
+    xmlns="www.team-mediaportal.com/2008/mpf/directx"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Source="screens\master_menu.xaml"
+    >
+	<Include.Resources>
+
+    <!-- Header -->
+    <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Favorites.ScreenTitle]"/>
+
+    <!-- Contents -->
+    <ControlTemplate x:Key="Contents_Template">
+		<DockPanel Context="{Model Id=05ED0891-5546-4727-8A11-7CA77141B52F}" LastChildFill="False">
+
+			<StackPanel Orientation="Vertical" Margin="0,0,5,0">				
+				<Button Content="[Webradio.Favorites.Add]" Style="{ThemeResource ButtonWideStyle}"
+					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					Command="{Command Add}"/>			  
+				<Button Content="[Webradio.Favorites.Delete]" Style="{ThemeResource ButtonWideStyle}"
+					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					Command="{Command Delete}"/>			  
+				<Button Content="[Webradio.Favorites.Rename]" Style="{ThemeResource ButtonWideStyle}"
+					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					Command="{Command Rename}"/>			  
+				<Button Content="[Webradio.Favorites.Save]" Style="{ThemeResource ButtonWideStyle}"
+					HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+					Command="{Command Save}"/>
+					
+				<TextBox Margin="10,5,10,5" HorizontalAlignment="Stretch" BorderThickness="1" 
+					Text="{Binding Path=SearchCity,Mode=TwoWay}"/>
+			</StackPanel>
+		
+			<StackPanel Orientation="Vertical" Margin="5,0,0,0">
+				<TreeView Style="{ThemeResource SingleMarkableTreeViewStyle}"
+					Margin="50" RadioButton.GroupContext="RadioButtonGroup"
+					VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+					ItemsSource="{Binding Path=Tree,Mode=OneTime}">
+						<TreeView.Resources>
+						<!-- Expander_Binding isn't necessary here - the TreeView won't synchronize its opening-state to the underlaying data model; it is static. We use a dummy. -->
+						<BindingWrapper x:Key="Expander_Binding"/>
+
+						<!-- Command not necessary here. We use a dummy. -->
+						<ResourceWrapper x:Key="Expander_Command"/>
+
+						<!-- Checker_Command isn't necessary here - the selection state will be propagated via the Selected property.
+						We use a dummy. -->
+						<ResourceWrapper x:Key="Checker_Command"/>
+						</TreeView.Resources>
+				</TreeView>
+			</StackPanel>
+      </DockPanel>
+    </ControlTemplate>
+  </Include.Resources>
+</Include>
