@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>C:\Program Files %28x86%29\Team MediaPortal\MP2-Client\Plugins\Webradio\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -72,36 +72,11 @@
     <Content Include="Data\WebradioFilters.xml" />
     <Content Include="Data\WebradioSender.xml" />
     <Content Include="Language\strings_en.xml" />
-    <Content Include="Skin\default\workflow\webradio-actions.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Skin\default\screens\webradio_Favorites.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Skin\default\screens\webradio_Filter.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Skin\default\screens\webradio_Home.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Skin\default\screens\webradio_Settings.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetDir)$(ProjectName).dll"  "C:\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\$(ProjectName)\"
-xcopy /Y "$(ProjectDir)plugin.xml"  "C:\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\$(ProjectName)\"
-mkdir "C:\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\$(ProjectName)\Data"
-mkdir "C:\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\$(ProjectName)\Language"
-mkdir "C:\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\$(ProjectName)\Skin"
-xcopy /Y /E "$(ProjectDir)Data\*.*"  "C:\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\$(ProjectName)\Data\"
-xcopy /Y /E "$(ProjectDir)Language\*.*"  "C:\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\$(ProjectName)\Language\"
-xcopy /Y /E "$(ProjectDir)Skin\*.*"  "C:\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\$(ProjectName)\Skin\"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,20 +2,23 @@
 <Include
     xmlns="www.team-mediaportal.com/2008/mpf/directx"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Source="screens\master_menu.xaml"
-    >
+	xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
+    Source="screens\master_menu.xaml">
   <Include.Resources>
-
+ 
     <!-- Header -->
     <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Home.ScreenTitle]"/>
 
+	<Model x:Key="WebradioModel" Id="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"/>
+	
     <!-- Contents -->
     <ControlTemplate x:Key="Contents_Template">
-      <DockPanel
-          Context="{Model Id=5726DA5A-70D5-458f-AF67-611293D97912}" LastChildFill="False">
+      <DockPanel DataContext="{Binding Source={StaticResource WebradioModel}}">
         <Label Content="[HelloWorld.SampleText]" Color="{ThemeResource TextColor}" FontSize="36" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
 		
-
+        <ListView Width="492" Height="132" VerticalAlignment="Top" Name="lstOverview" ItemsSource="{Binding Path=List}">
+   
+        </ListView>
 		
         <StackPanel DockPanel.Dock="Center" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
           <Button Content="[HelloWorld.ButtonText]" Style="{ThemeResource ButtonWideStyle}" Margin="10"

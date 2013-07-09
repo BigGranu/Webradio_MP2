@@ -12,7 +12,7 @@
     <!-- Contents -->
     <ControlTemplate x:Key="Contents_Template">
       <DockPanel
-          Context="{Model Id=A4CC6BAE-EA85-4F2C-B261-8B2C97D76203}" LastChildFill="False">
+          Context="{Model Id=6378BD83-BF06-4AC3-ADD7-9A4B72DA878E}" LastChildFill="False">
         <Label Content="[HelloWorld.SampleText]" Color="{ThemeResource TextColor}" FontSize="36" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
         <StackPanel DockPanel.Dock="Center" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
           <Button Content="[HelloWorld.ButtonText]" Style="{ThemeResource ButtonWideStyle}" Margin="10"

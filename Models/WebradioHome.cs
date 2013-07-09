@@ -16,16 +16,16 @@ namespace Webradio.Models
 {
     public class WebradioHome : IWorkflowModel
     {
-        public const string MODEL_ID_STR = "5726DA5A-70D5-458f-AF67-611293D97912";
+        public const string MODEL_ID_STR = "EA3CC191-0BE5-4C8D-889F-E9C4616AB554";
         public static string _file = System.Windows.Forms.Application.StartupPath + "\\Plugins\\Webradio\\Data\\WebradioSender.xml";
 
         public static MyStreams StreamList = new MyStreams();
 
         public WebradioHome()
         {
-            WebradioHome.StreamList = Webradio.Models.MyStreams.Read(WebradioHome._file);
-            WebradioFavorites.FavoritList = Webradio.Models.Favorits.Read(WebradioFavorites._file);
-            WebradioFilter.FilterList = Webradio.Models.MyFilters.Read(WebradioFilter._file);
+            //WebradioHome.StreamList = Webradio.Models.MyStreams.Read(WebradioHome._file);
+            //WebradioFavorites.FavoritList = Webradio.Models.Favorits.Read(WebradioFavorites._file);
+            //WebradioFilter.FilterList = Webradio.Models.MyFilters.Read(WebradioFilter._file);
         }
 
         public static ObservableCollection<MyStream> Liste { get; set; }

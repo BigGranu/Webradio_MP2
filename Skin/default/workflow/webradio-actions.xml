@@ -3,12 +3,12 @@
 <Workflow DescriptorVersion="1.0">
   <MenuActions>
 	<!-- Eintrag im Hauptmenu -->
-    <PushNavigationTransition Id="EA48BD6E-60D3-45b2-9C35-1AB437CC72FB"
+    <PushNavigationTransition Id="2DED75C0-5EAE-4E69-9913-6B50A9AB2956"
         Name="Home->Webradio"
         DisplayCategory="z-Webradio"
         SortOrder="a"
         SourceStates="7F702D9C-F2DD-42da-9ED8-0BA92F07787F"
-        TargetState="D5CD9D35-1B36-4ede-8BED-A4FB658F27BD"
+        TargetState="263FADFE-87BE-4563-83F0-E62707891E1B"
         DisplayTitle="[Webradio.MenuEntry]"/>
 		
 	<!-- Einträge im Homescreen -->
@@ -16,29 +16,29 @@
         Name="Webradio->Home"
         DisplayCategory="a-Webradio"
         SortOrder="a"
-        SourceStates="D5CD9D35-1B36-4ede-8BED-A4FB658F27BD"
-        TargetState="5726DA5A-70D5-458f-AF67-611293D97912"
+        SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
+        TargetState="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"
         DisplayTitle="[Webradio.Home.Menu.View]"/>
 	<PushNavigationTransition Id="C6074C4C-4ABA-45A2-881F-BBC61FD30AF7"
         Name="Webradio->Home"
         DisplayCategory="a-Webradio"
         SortOrder="a"
-        SourceStates="D5CD9D35-1B36-4ede-8BED-A4FB658F27BD"
-        TargetState="5726DA5A-70D5-458f-AF67-611293D97912"
+        SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
+        TargetState="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"
         DisplayTitle="[Webradio.Home.Menu.Filter]"/>
 	<PushNavigationTransition Id="6A7897A8-467C-4E41-8272-BA76A0E100EE"
         Name="Webradio->Home"
         DisplayCategory="a-Webradio"
         SortOrder="a"
-        SourceStates="D5CD9D35-1B36-4ede-8BED-A4FB658F27BD"
-        TargetState="5726DA5A-70D5-458f-AF67-611293D97912"
+        SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
+        TargetState="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"
         DisplayTitle="[Webradio.Home.Menu.Favorites]"/>
 	<PushNavigationTransition Id="2ABFF249-2F05-4E25-8F3E-3F2B136A40FB"
         Name="WebradioHome->Settings"
         DisplayCategory="a-Webradio"
         SortOrder="a"
-        SourceStates="D5CD9D35-1B36-4ede-8BED-A4FB658F27BD"
-        TargetState="508639CD-BB0A-40BD-8210-73BA2A818411"
+        SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
+        TargetState="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
         DisplayTitle="[Webradio.Home.Menu.Settings]"/>
 
 	<!-- Einträge in den Settings -->
@@ -47,14 +47,14 @@
         DisplayCategory="a-Webradio"
         SortOrder="a"
         SourceStates="508639CD-BB0A-40BD-8210-73BA2A818411"
-        TargetState="07BC0758-CE7C-466C-9014-3D3373E5B658"
+        TargetState="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
         DisplayTitle="[Webradio.Settings.Menu.Filter]"/>	
 	<PushNavigationTransition Id="94FED17C-D1D2-47C4-B3C8-02A7ACC6CE47"
         Name="WebradioSettings->Favorites"
         DisplayCategory="a-Webradio"
         SortOrder="a"
         SourceStates="508639CD-BB0A-40BD-8210-73BA2A818411"
-        TargetState="345105A7-B9D3-4A86-BB0B-FA393D96F870"
+        TargetState="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
         DisplayTitle="[Webradio.Settings.Menu.Favorites]"/>
 		
 		<!-- Einträge in den Favoriten -->

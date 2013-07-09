@@ -15,7 +15,7 @@ namespace Webradio.Models
 {
     public class WebradioFavorites : IWorkflowModel
     {
-        public const string MODEL_ID_STR = "05ED0891-5546-4727-8A11-7CA77141B52F";
+        public const string MODEL_ID_STR = "EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94";
 
         public static string _file = System.Windows.Forms.Application.StartupPath + "\\Plugins\\Webradio\\Data\\WebradioFavorites.xml";
 
