@@ -20,24 +20,53 @@ namespace Webradio.Models
         public static string _file = System.Windows.Forms.Application.StartupPath + "\\Plugins\\Webradio\\Data\\WebradioSender.xml";
 
         public static MyStreams StreamList = new MyStreams();
+        // Diese Collection sollte in der Liste im Skin angezeigt werden
+        public static ObservableCollection<MyStream> AllRadioStreams = new ObservableCollection<MyStream>();
 
         public WebradioHome()
         {
-            //WebradioHome.StreamList = Webradio.Models.MyStreams.Read(WebradioHome._file);
-            //WebradioFavorites.FavoritList = Webradio.Models.Favorits.Read(WebradioFavorites._file);
-            //WebradioFilter.FilterList = Webradio.Models.MyFilters.Read(WebradioFilter._file);
+            // beim ersten Start alle Listen füllen
+            WebradioHome.StreamList = Webradio.Models.MyStreams.Read(WebradioHome._file);
+            WebradioFavorites.FavoritList = Webradio.Models.Favorits.Read(WebradioFavorites._file);
+            WebradioFilter.FilterList = Webradio.Models.MyFilters.Read(WebradioFilter._file);
         }
 
-        public static ObservableCollection<MyStream> Liste { get; set; }
-
-        public void InitStreams()
+        public void Init_AllRadioStreams()
         {
-            Liste = new ObservableCollection<MyStream>();
-            foreach (MyStream f in StreamList.StreamList)
+            StreamList.Streams.ToList().ForEach(AllRadioStreams.Add);
+        }
+
+        public void Item_selected()
+        {
+            //Play( selected Item ID)
+        }
+
+        public void Play(int _ID)
+        {
+           
+            // Streamurl (GetStreamByID(_ID).URL) an den Player übergeben 
+            // noch klären welcher Player dafür wie genutzt wird
+
+            // Playcount des Sender hochzählen
+           SetPlayCount(_ID);
+        }
+
+        public void SetPlayCount(int _ID)
+        {
+            foreach (MyStream f in StreamList.Streams)
             {
-                ListItem item = new ListItem("Titel", f.Titel);
-                Liste.Add(f);
+                if (f.ID == _ID) { f.PlayCount  += 1; }
             }
+            MyStreams.Write(_file, StreamList);
+        }
+
+        public MyStream GetStreamByID(int _ID)
+        {
+            foreach (MyStream f in StreamList.Streams)
+            {
+                if (f.ID == _ID ){return f;}
+            }
+            return null;
         }
 
         #region IWorkflowModel implementation
@@ -54,7 +83,7 @@ namespace Webradio.Models
 
         public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
         {
-            InitStreams();
+            Init_AllRadioStreams();
         }
 
         public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
@@ -90,11 +119,9 @@ namespace Webradio.Models
     #region Read/Write
     public class MyStreams
     {
-        public List<MyStream> StreamList = new List<MyStream>();
+        public List<MyStream> Streams = new List<MyStream>();
 
-        public MyStreams()
-        {
-        }
+        public MyStreams(){}
 
         public static MyStreams Read(string XmlFile)
         {
@@ -170,9 +197,7 @@ namespace Webradio.Models
         public string tag3 = "";
         public string tag4 = "";
 
-        public MyStream() 
-        {
-        }
+        public MyStream() {}
     }
 
     #endregion
