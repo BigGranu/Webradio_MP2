@@ -5,7 +5,7 @@
 	xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
     Source="screens\master_menu.xaml">
   <Include.Resources>
- 
+
     <!-- Header -->
     <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Home.ScreenTitle]"/>
 
@@ -13,23 +13,57 @@
 	
     <!-- Contents -->
     <ControlTemplate x:Key="Contents_Template">
-      <DockPanel DataContext="{Binding Source={StaticResource WebradioModel}}">
-        <Label Content="[HelloWorld.SampleText]" Color="{ThemeResource TextColor}" FontSize="36" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
-		
-        <ListView Width="492" Height="132" VerticalAlignment="Top" Name="lstOverview" ItemsSource="{Binding Path=List}">
-   
-        </ListView>
-		
-        <StackPanel DockPanel.Dock="Center" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-          <Button Content="[HelloWorld.ButtonText]" Style="{ThemeResource ButtonWideStyle}" Margin="10"
-              HorizontalAlignment="Right" VerticalAlignment="Center"
-              Command="{Command ChangeHelloWorldString}"/>
-          <Label Content="{Binding HelloString}" Color="{ThemeResource TextColor}" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        </StackPanel>
-		
-		
+      <DockPanel DataContext="{Binding Source={StaticResource WebradioModel}}">	
+	      <DockPanel.Resources>
+      <DataTemplate x:Key="ItemDataTemplate">
+        <Label x:Name="ItemDataLabel" Content="{Binding}" FontSize="{ThemeResource SmallFontSize}" Color="Blue"/>
+      </DataTemplate>
+      <Style x:Key="ListViewStyle" BasedOn="{ThemeResource DefaultListViewStyle}">
+        <Setter Property="ItemTemplate" Value="{ThemeResource ItemDataTemplate}"/>
+        <Setter Property="ItemContainerStyle" Value="{ThemeResource DefaultMenuItemContainerStyle}"/>
+      </Style>
+    </DockPanel.Resources>
+		<Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40*"  />
+            <ColumnDefinition Width="60*" />
+        </Grid.ColumnDefinitions>
+			<Grid Grid.Column="0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="10*" />
+					<RowDefinition Height="80*" />
+					<RowDefinition Height="10*" />
+				</Grid.RowDefinitions>
+				<!--Details-->
+				<Grid Grid.Row="1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="50*"  />
+						<ColumnDefinition Width="50*" />
+					</Grid.ColumnDefinitions>
+					<StackPanel Orientation="Vertical" Grid.Column="0" Margin="5,0,0,0">
+						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Genre]" FontSize="16"></Label>
+						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="selectedItem.Genre" FontSize="13"></Label>
+						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Bitrate]" FontSize="16"></Label>
+						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="selectedItem.Bitrate" FontSize="13"></Label>
+						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Country]" FontSize="16"></Label>
+						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="selectedItem.Country" FontSize="13"></Label>
+						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.City]" FontSize="16"></Label>
+						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="selectedItem.City" FontSize="13"></Label>
+					</StackPanel>
+					<Image VerticalAlignment="Top" Grid.Column="1" Margin="5,0,0,0" Stretch="Uniform" Source="C:\Users\dierk_000\Pictures\Billy Idol.jpg"></Image>
+				</Grid>
+			</Grid>
+			<!--nur für Designtests , muß ersetzt werden-->
+			<ListView x:Name="Test" Grid.Column="1" Style="{ThemeResource ListViewStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0">
+				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 1  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
+				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 2  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
+				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 3  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
+				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 4  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
+				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 5  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
+				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 6  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
+			</ListView>
+		</Grid>
       </DockPanel>
     </ControlTemplate>
-
   </Include.Resources>
 </Include>
