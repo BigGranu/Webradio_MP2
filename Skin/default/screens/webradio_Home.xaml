@@ -41,7 +41,8 @@
 						<ColumnDefinition Width="50*" />
 					</Grid.ColumnDefinitions>
 					<StackPanel Orientation="Vertical" Grid.Column="0" Margin="5,0,0,0">
-						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Genre]" FontSize="16"></Label>
+						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Genre]" FontSize="16"/>
+					<!--<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="{Binding SelectedItem.Genre, ElementName=lvStreams}" FontSize="13"/>-->
 						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="selectedItem.Genre" FontSize="13"></Label>
 						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Bitrate]" FontSize="16"></Label>
 						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="selectedItem.Bitrate" FontSize="13"></Label>
@@ -54,7 +55,7 @@
 				</Grid>
 			</Grid>
 			<!--nur für Designtests , muß ersetzt werden-->
-			<ListView x:Name="Test" Grid.Column="1" Style="{ThemeResource ListViewStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0">
+			<ListView x:Name="lvStreams" Grid.Column="1" Style="{ThemeResource ListViewStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0">
 				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 1  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
 				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 2  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
 				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 3  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
