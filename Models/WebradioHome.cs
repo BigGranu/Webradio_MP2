@@ -1,4 +1,28 @@
-﻿using System;
+﻿#region Copyright (C) 2007-2013 Team MediaPortal
+
+/*
+    Copyright (C) 2007-2013 Team MediaPortal
+    http://www.team-mediaportal.com
+
+    This file is part of MediaPortal 2
+
+    MediaPortal 2 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    MediaPortal 2 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with MediaPortal 2. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#endregion
+
+using System;
 using System.IO;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
@@ -56,20 +80,28 @@ namespace Webradio.Models
       }
     }
 
+    /// <summary>
+    /// Show Dialog to select the Favoritsfunctions
+    /// </summary>
     public void ShowFavorites()
     {
     }
 
-    public void Play(int _ID)
+    /// <summary>
+    /// Play the Stream with the current StreamID and Set the Playcount +1
+    /// </summary>
+    private void Play(int _ID)
     {           
       // Streamurl (GetStreamByID(_ID).URL) an den Player übergeben 
       // noch klären welcher Player dafür wie genutzt wird
 
-      // Playcount des Sender hochzählen
       SetPlayCount(_ID);
     }
 
-    public void SetPlayCount(int _ID)
+    /// <summary>
+    /// Set the Playcount of playing Stream +1
+    /// </summary>
+    private void SetPlayCount(int _ID)
     {
       foreach (MyStream f in AllRadioStreams)
       {
@@ -81,6 +113,9 @@ namespace Webradio.Models
       MyStreams.Write(_file, AllRadioStreams);
     }
 
+    /// <summary>
+    /// Get the Stream of selected ID
+    /// </summary>
     public MyStream GetStreamByID(int _ID)
     {
       foreach (MyStream f in AllRadioStreams)
