@@ -1,69 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include
-    xmlns="www.team-mediaportal.com/2008/mpf/directx"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns="www.team-mediaportal.com/2008/mpf/directx"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
-    Source="screens\master_menu.xaml">
-  <Include.Resources>
+	Source="screens\master_menu.xaml">
+	<Include.Resources>
 
     <!-- Header -->
     <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Home.ScreenTitle]"/>
 
-	<Model x:Key="WebradioModel" Id="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"/>
+		<Model x:Key="WebradioModel" Id="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"/>
 	
     <!-- Contents -->
     <ControlTemplate x:Key="Contents_Template">
       <DockPanel DataContext="{Binding Source={StaticResource WebradioModel}}">	
-	      <DockPanel.Resources>
-      <DataTemplate x:Key="ItemDataTemplate">
-        <Label x:Name="ItemDataLabel" Content="{Binding}" FontSize="{ThemeResource SmallFontSize}" Color="Blue"/>
-      </DataTemplate>
-      <Style x:Key="ListViewStyle" BasedOn="{ThemeResource DefaultListViewStyle}">
-        <Setter Property="ItemTemplate" Value="{ThemeResource ItemDataTemplate}"/>
-        <Setter Property="ItemContainerStyle" Value="{ThemeResource DefaultMenuItemContainerStyle}"/>
-      </Style>
-    </DockPanel.Resources>
-		<Grid>
+	    <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="10*" />
+          <RowDefinition Height="60*" />
+          <RowDefinition Height="30*" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40*"  />
-            <ColumnDefinition Width="60*" />
+          <ColumnDefinition Width="25*"  />
+          <ColumnDefinition Width="15*"  />
+          <ColumnDefinition Width="60*" />
         </Grid.ColumnDefinitions>
-			<Grid Grid.Column="0">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="10*" />
-					<RowDefinition Height="80*" />
-					<RowDefinition Height="10*" />
-				</Grid.RowDefinitions>
-				<!--Details-->
-				<Grid Grid.Row="1">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="50*"  />
-						<ColumnDefinition Width="50*" />
-					</Grid.ColumnDefinitions>
-					<StackPanel Orientation="Vertical" Grid.Column="0" Margin="5,0,0,0">
-						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Genre]" FontSize="16"/>
-					<!--<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="{Binding SelectedItem.Genre, ElementName=lvStreams}" FontSize="13"/>-->
-						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="selectedItem.Genre" FontSize="13"></Label>
-						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Bitrate]" FontSize="16"></Label>
-						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="selectedItem.Bitrate" FontSize="13"></Label>
-						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Country]" FontSize="16"></Label>
-						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="selectedItem.Country" FontSize="13"></Label>
-						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.City]" FontSize="16"></Label>
-						<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="selectedItem.City" FontSize="13"></Label>
-					</StackPanel>
-					<Image VerticalAlignment="Top" Grid.Column="1" Margin="5,0,0,0" Stretch="Uniform" Source="C:\Users\dierk_000\Pictures\Billy Idol.jpg"></Image>
+        
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="10,10,10,10">
+          <Label DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
+						Content="{Binding [Name]}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5">
+					<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Genres]" 
+						FontSize="{ThemeResource SmallFontSize}" Color="White"/>
+					<Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
+						Content="{Binding [Genres]}" FontSize="{ThemeResource SmallerFontSize}" Color="White"/>
+					<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Bitrate]" 
+						FontSize="{ThemeResource SmallFontSize}" Color="White"/>
+					<Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
+						Content="{Binding [Bitrate]}" FontSize="{ThemeResource SmallerFontSize}" Color="White"/>
+					<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Country]" 
+						FontSize="{ThemeResource SmallFontSize}" Color="White"/>
+					<Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
+						Content="{Binding [Country]}" FontSize="{ThemeResource SmallerFontSize}" Color="White"/>
+					<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.City]" 
+						FontSize="{ThemeResource SmallFontSize}" Color="White"/>
+					<Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
+						Content="{Binding [City]}" FontSize="{ThemeResource SmallerFontSize}" Color="White"/>
+        </StackPanel>
+		
+        <Image Grid.Column="1" Grid.Row="1" Margin="10" Stretch="Uniform" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" Source="{Binding [Logo]}" VerticalAlignment="Top"/>
+		
+				<Label Grid.ColumnSpan="2" Grid.Row="2" Margin="5,5,5,5" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" Content="{Binding [Description]}" FontSize="{ThemeResource SmallerFontSize}" Color="White" />
+
+            <ListView x:Name="lvStreams" Grid.Column="2" Grid.RowSpan="3" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{ThemeResource ContentsMenuListViewStyle}"
+								ItemsSource="{Binding Path=AllRadioStreams}" >	
+							<ListView.Resources> 
+								<CommandList x:Key="Menu_Command">
+									<Command Source="{StaticResource WebradioModel}" Path="SelectStream">
+										<Command.Parameters> 
+											<LateBoundValue BindingValue="{Binding}"/> 
+										</Command.Parameters>
+									</Command>
+								</CommandList>
+							</ListView.Resources>
+						</ListView>
+
 				</Grid>
-			</Grid>
-			<!--nur für Designtests , muß ersetzt werden-->
-			<ListView x:Name="lvStreams" Grid.Column="1" Style="{ThemeResource ListViewStyle}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0">
-				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 1  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
-				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 2  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
-				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 3  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
-				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 4  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
-				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 5  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
-				<ListViewItem><Label Color="{ThemeResource TextColor}" Content="Label 6  ...... nur für Designtests , muß ersetzt werden ...."/></ListViewItem>
-			</ListView>
-		</Grid>
       </DockPanel>
     </ControlTemplate>
   </Include.Resources>

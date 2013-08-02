@@ -68,7 +68,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\WebradioFavorites.xml" />
+    <Content Include="Data\WebradioFavorites.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Data\WebradioFilters.xml" />
     <Content Include="Data\WebradioSender.xml" />
     <Content Include="Language\strings_en.xml" />

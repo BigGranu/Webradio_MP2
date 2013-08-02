@@ -41,49 +41,53 @@ namespace Webradio.Models
   public class WebradioHome : IWorkflowModel
   {
     public const string MODEL_ID_STR = "EA3CC191-0BE5-4C8D-889F-E9C4616AB554";
+
+    const string STREAM_ID = "StreamID";
+
     public static string _file = System.Windows.Forms.Application.StartupPath + "\\Plugins\\Webradio\\Data\\WebradioSender.xml";
-        
-    // Diese Collection sollte in der Liste im Skin angezeigt werden
-    public static ObservableCollection<MyStream> AllRadioStreams { get; private set; }
 
+    //public static ObservableCollection<MyStream> AllRadioStreams { get; private set; }
 
+    public static ItemsList AllRadioStreams;
+
+    public static List<MyStream> StreamList = new List<MyStream>();
 
     public WebradioHome()
     {
-      // beim ersten Start alle Listen füllen
+      // beim ersten Start alle Listen füllen-
       if (AllRadioStreams == null)
       {
         MyStreams Streams = MyStreams.Read(_file);
-        AllRadioStreams = new ObservableCollection<MyStream>();
+        StreamList = Streams.StreamList;
+        AllRadioStreams = new ItemsList();
 
-        foreach (MyStream ms in Streams.StreamList) 
-        { 
-          AllRadioStreams.Add(ms); 
-        }
+        //foreach (MyStream ms in Streams.StreamList) 
+        //{ 
+        //  AllRadioStreams.Add(ms); 
+        //}
+
+        foreach (MyStream ms in Streams.StreamList)
+         {
+          ListItem item = new ListItem();
+          item.SetLabel("Name",ms.Titel);
+          item.SetLabel("Country", ms.Country);
+          item.SetLabel("City", ms.City);
+          item.SetLabel("Genres", ms.Genres);
+          item.SetLabel("Bitrate", ms.Bitrate);
+          item.SetLabel("Logo", ms.Logo);
+          item.AdditionalProperties[STREAM_ID] = ms.ID;
+          item.SetLabel("ImageSrc", ms.Logo);
+          AllRadioStreams.Add(item);
+        } 
       }
 
-      WebradioFavorites.FavoritList = Webradio.Models.Favorits.Read(WebradioFavorites._file);
-      WebradioFilter.FilterList = Webradio.Models.MyFilters.Read(WebradioFilter._file);
-    }
-
-    private MyStream selectedStream;
-    public MyStream SelectedStream
-    {
-      get 
-      {
-        Play(selectedStream.ID);
-        return selectedStream; 
-      }
-      set 
-      { 
-        selectedStream = value; 
-      }
+      //WebradioFilter.FilterList = Webradio.Models.MyFilters.Read(WebradioFilter._file);
     }
 
     /// <summary>
-    /// Show Dialog to select the Favoritsfunctions
+    /// Show Dialog to select the Favoritfunctions
     /// </summary>
-    public void ShowFavorites()
+    public void ShowFavorites(MyStream item)
     {
     }
 
@@ -98,12 +102,17 @@ namespace Webradio.Models
       SetPlayCount(_ID);
     }
 
+    public void SelectStream(ListItem item)
+    {
+      MyStream ms = GetStreamByID((int)item.AdditionalProperties[STREAM_ID]);
+    }
+
     /// <summary>
     /// Set the Playcount of playing Stream +1
     /// </summary>
     private void SetPlayCount(int _ID)
     {
-      foreach (MyStream f in AllRadioStreams)
+      foreach (MyStream f in StreamList)
       {
         if (f.ID == _ID) 
         { 
@@ -118,7 +127,7 @@ namespace Webradio.Models
     /// </summary>
     public MyStream GetStreamByID(int _ID)
     {
-      foreach (MyStream f in AllRadioStreams)
+      foreach (MyStream f in StreamList)
       {
         if (f.ID == _ID )
         {

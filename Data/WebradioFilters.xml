@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<MyFilters xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FilterList>
+    <MyFilter>
+      <Titel>test1</Titel>
+      <fCountrys>
+        <string>Aserbaidschan</string>
+        <string>Argentinien</string>
+      </fCountrys>
+      <fCitys />
+      <fGenres />
+      <fBitrate />
+    </MyFilter>
+    <MyFilter>
+      <Titel>test1</Titel>
+      <fCountrys>
+        <string>Aserbaidschan</string>
+        <string>Argentinien</string>
+      </fCountrys>
+      <fCitys />
+      <fGenres />
+      <fBitrate />
+    </MyFilter>
+    <MyFilter>
+      <Titel>test22</Titel>
+      <fCountrys>
+        <string>Argentinien</string>
+        <string>Chile</string>
+      </fCountrys>
+      <fCitys>
+        <string>Alphen Am Rhein</string>
+      </fCitys>
+      <fGenres>
+        <string>30er</string>
+      </fGenres>
+      <fBitrate>
+        <string>80 kbps</string>
+        <string>112 kbps</string>
+        <string>128 kbps</string>
+        <string>64 kbps</string>
+        <string>56 kbps</string>
+      </fBitrate>
+    </MyFilter>
+  </FilterList>
+</MyFilters>

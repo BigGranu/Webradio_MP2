@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include
+    xmlns="www.team-mediaportal.com/2008/mpf/directx"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
+    Source="screens\master_menu.xaml">
+  <Include.Resources>
+
+    <!-- Header -->
+    <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Home.ScreenTitle]"/>
+
+	<Model x:Key="Model" Id="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"/>
+	
+    
+	<ControlTemplate x:Key="Contents_Template">
+      <DockPanel DataContext="{Binding Source={StaticResource Model}}">
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+          <!-- Feeds -->
+		  
+		  <Label Color="{ThemeResource HintTextColor}" DockPanel.Dock="Bottom" Height="40" Margin="100,0,100,1"
+					  HorizontalAlignment="Stretch" VerticalAlignment="Center" Wrap="True" Scroll="Auto" FontSize="{ThemeResource SmallerFontSize}"
+					  DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}"
+					  Content="{Binding Titel}"/>
+		  
+          <ListView Name="lvStreams" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+              Style="{ThemeResource MenuListViewStyle}"
+              ItemsSource="{Binding Path=AAllRadioStreams}" >
+				<ListView.Resources> 
+					<CommandList x:Key="Menu_Command">
+						<Command Source="{StaticResource Model}" Path="ShowFavorites">
+							<Command.Parameters> 
+								<LateBoundValue BindingValue="{Binding}"/> 
+							</Command.Parameters>
+						</Command>
+					</CommandList>
+				</ListView.Resources>
+          </ListView>
+        </Grid>
+      </DockPanel>
+    </ControlTemplate>
+			
+  </Include.Resources>
+</Include>

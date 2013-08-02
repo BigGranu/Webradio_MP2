@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="Webradio.MenuEntry">WEBRADIO</string> 
+	<string name="Webradio.MenuEntry">Webradio</string> 
 	<string name="Webradio.StateDisplayLabel">Webradio</string>
 
 	<string name="Webradio.Home.ScreenTitle"> </string>
@@ -8,6 +8,10 @@
 	<string name="Webradio.Home.Menu.Filter">Filter</string>
 	<string name="Webradio.Home.Menu.Favorites">Favorites</string>
 	<string name="Webradio.Home.Menu.Settings">Settings</string>
+	<string name="Webradio.Home.Genres">Genres</string>
+	<string name="Webradio.Home.Bitrate">Bitrate</string>
+	<string name="Webradio.Home.Country">Country</string>
+	<string name="Webradio.Home.City">City</string>
 
 	<string name="Webradio.Settings.ScreenTitle">Settings</string>
 	<string name="Webradio.Settings.Menu.Filter">Filter</string>

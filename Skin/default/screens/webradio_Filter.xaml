@@ -1,30 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include
-    xmlns="www.team-mediaportal.com/2008/mpf/directx"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Source="screens\master_menu.xaml"
-    >
+	xmlns="www.team-mediaportal.com/2008/mpf/directx"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
+	Source="screens\master_menu.xaml">
   <Include.Resources>
 
     <!-- Header -->
-    <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Filter.ScreenTitle]"/>
+    <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Home.ScreenTitle]"/>
 
-    <!-- Contents -->
-    <ControlTemplate x:Key="Contents_Template">
-      <DockPanel
-          Context="{Model Id=FF29E03E-F4A9-4E21-A299-349E79010430}" LastChildFill="False">
-        <Label Content="[HelloWorld.SampleText]" Color="{ThemeResource TextColor}" FontSize="36" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
-        <StackPanel DockPanel.Dock="Center" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-          <Button Content="[HelloWorld.ButtonText]" Style="{ThemeResource ButtonWideStyle}" Margin="10"
-              HorizontalAlignment="Right" VerticalAlignment="Center"
-              Command="{Command ChangeHelloWorldString}"/>
-          <Label Content="{Binding HelloString}" Color="{ThemeResource TextColor}" Margin="10"
-              HorizontalAlignment="Left" VerticalAlignment="Center"/>
-			            <Label Content="{Binding HelloString}" Color="{ThemeResource TextColor}" Margin="10"
-              HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        </StackPanel>
-      </DockPanel>
-    </ControlTemplate>
+		<Model x:Key="Model" Id="FF29E03E-F4A9-4E21-A299-349E79010430"/>
 
+		<ControlTemplate x:Key="Contents_Template">
+			<DockPanel DataContext="{Binding Source={StaticResource Model}}">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="30*" />
+						<ColumnDefinition Width="30*" />
+						<ColumnDefinition Width="20*" />
+						<ColumnDefinition Width="20*" />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="7*" />
+						<RowDefinition Height="7*" />
+						<RowDefinition Height="86*" />
+					</Grid.RowDefinitions>
+				
+					<!-- Actual Filter -->
+					<TextBox  Grid.ColumnSpan="4" Grid.Row="0" Margin="5,5,5,0" Text="{Binding Path=FilterTitel, Mode=TwoWay}" VerticalAlignment="Center" />
+
+					<!-- Countrys -->
+					<Label Grid.Column="0" Grid.Row="1" Content="Country" HorizontalContentAlignment="Center" 
+						HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" />
+					<ListView x:Name="lvCountrys" Grid.Column="0" Grid.Row="2" Margin="10" 
+						HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+						Style="{ThemeResource WebradioFilterListViewStyle}"
+						ItemsSource="{Binding Path=Countrys, Mode=TwoWay}" >			
+							<ListView.Resources> 
+								<CommandList x:Key="Menu_Command">
+									<Command Source="{StaticResource Model}" Path="ChangeCountry">
+										<Command.Parameters> 
+											<LateBoundValue BindingValue="{Binding}"/> 
+										</Command.Parameters>
+									</Command>
+								</CommandList>
+							</ListView.Resources>
+					</ListView>	
+					
+					<!-- Citys -->
+					<Label Grid.Column="1" Grid.Row="1" Content="City" HorizontalContentAlignment="Center" 
+						HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" />
+					<ListView x:Name="lvCitys" Grid.Column="1" Grid.Row="2" Margin="10" 
+						HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+						Style="{ThemeResource WebradioFilterListViewStyle}"
+						ItemsSource="{Binding Path=Citys}">
+						<ListView.Resources> 
+							<CommandList x:Key="Menu_Command">
+								<Command Source="{StaticResource Model}" Path="ChangeCity">
+									<Command.Parameters> 
+										<LateBoundValue BindingValue="{Binding}"/> 
+									</Command.Parameters>
+								</Command>
+							</CommandList>
+						</ListView.Resources>
+					</ListView>		
+						
+					<!-- Genres -->	
+					<Label Grid.Column="2" Grid.Row="1" Content="Genre" HorizontalContentAlignment="Center" 
+						HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" />
+					<ListView x:Name="lvGenres" Grid.Column="2" Grid.Row="2" Margin="10" 
+						HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+						Style="{ThemeResource WebradioFilterListViewStyle}"
+						ItemsSource="{Binding Path=Genres}" >	
+						<ListView.Resources> 
+							<CommandList x:Key="Menu_Command">
+								<Command Source="{StaticResource Model}" Path="ChangeGenre">
+									<Command.Parameters> 
+										<LateBoundValue BindingValue="{Binding}"/> 
+									</Command.Parameters>
+								</Command>
+							</CommandList>
+						</ListView.Resources>
+					</ListView>	
+					
+					<!-- Bitrate -->
+					<Label Grid.Column="3" Grid.Row="1" Content="Bitrate" HorizontalContentAlignment="Center" 
+						HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" />
+					<ListView x:Name="lvBitrate" Grid.Column="3" Grid.Row="2" Margin="10" 
+						HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+						Style="{ThemeResource WebradioFilterListViewStyle}"
+						ItemsSource="{Binding Path=Bitrate}" >
+						<ListView.Resources> 
+							<CommandList x:Key="Menu_Command">
+								<Command Source="{StaticResource Model}" Path="ChangeBitrate">
+									<Command.Parameters> 
+										<LateBoundValue BindingValue="{Binding}"/> 
+									</Command.Parameters>
+								</Command>
+							</CommandList>
+						</ListView.Resources>
+					</ListView>	
+					
+				</Grid> 
+			</DockPanel>
+    </ControlTemplate>		
   </Include.Resources>
 </Include>
