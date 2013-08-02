@@ -25,6 +25,11 @@
   
 	<string name="Webradio.Filter.ScreenTitle">Filter</string>	
 	<string name="Webradio.Filter.Add">Add</string>
-	<string name="Webradio.Filter.Rename">Rename</string>
+	<string name="Webradio.Filter.Import">Import</string>
+	<string name="Webradio.Filter.Clear">Clear</string>
 	<string name="Webradio.Filter.Save">Save</string>
+	<string name="Webradio.Filter.Genres">Genres</string>
+	<string name="Webradio.Filter.Bitrate">Bitrate</string>
+	<string name="Webradio.Filter.Country">Country</string>
+	<string name="Webradio.Filter.City">City</string>
 </resources>
