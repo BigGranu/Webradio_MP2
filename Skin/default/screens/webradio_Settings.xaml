@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include
-	xmlns="www.team-mediaportal.com/2008/mpf/directx"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	Source="screens\master_menu.xaml">
+  xmlns="www.team-mediaportal.com/2008/mpf/directx"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  Source="screens\master_menu.xaml">
   <Include.Resources>
     <!-- Header -->
     <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Settings.ScreenTitle]"/>
@@ -17,7 +17,7 @@
             Command="{Command ChangeHelloWorldString}"/>
           <Label Content="{Binding HelloString}" Color="{ThemeResource TextColor}" Margin="10"
             HorizontalAlignment="Left" VerticalAlignment="Center"/>
-			    <Label Content="{Binding HelloString}" Color="{ThemeResource TextColor}" Margin="10"
+          <Label Content="{Binding HelloString}" Color="{ThemeResource TextColor}" Margin="10"
             HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </StackPanel>
       </DockPanel>

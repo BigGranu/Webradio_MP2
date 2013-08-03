@@ -1,117 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Workflow DescriptorVersion="1.0">
   <MenuActions>
-		<!-- Entrys in Homemenu -->
+    <!-- Entrys in Homemenu -->
     <PushNavigationTransition Id="2DED75C0-5EAE-4E69-9913-6B50A9AB2956"
-			Name="Home->Webradio"
-			DisplayCategory="z-Webradio"
-			SortOrder="a"
-			SourceStates="7F702D9C-F2DD-42da-9ED8-0BA92F07787F"
-			TargetState="263FADFE-87BE-4563-83F0-E62707891E1B"
-			DisplayTitle="[Webradio.MenuEntry]"/>
-		
-		<!--                  Entrys in Homescreen                    -->
-		<PushNavigationTransition Id="D3DED8FE-3AFE-4A90-A727-444E33582016"
-			Name="Webradio->Home"
-			DisplayCategory="a-Webradio"
-			SortOrder="a"
-			SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
-			TargetState="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"
-			DisplayTitle="[Webradio.Home.Menu.View]"/>
-		<MethodCallAction Id="6A7897A8-467C-4E41-8272-BA76A0E100EE"
-			Name="Webradio->Home"
-			DisplayCategory="a-Webradio"
-			SortOrder="a"
-			SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
-			ModelId="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"
-			MethodName="ShowFavorites"
+      Name="Home->Webradio"
+      DisplayCategory="z-Webradio"
+      SortOrder="a"
+      SourceStates="7F702D9C-F2DD-42da-9ED8-0BA92F07787F"
+      TargetState="263FADFE-87BE-4563-83F0-E62707891E1B"
+      DisplayTitle="[Webradio.MenuEntry]"/>
+
+    <!--                  Entrys in Homescreen                    -->
+    <PushNavigationTransition Id="D3DED8FE-3AFE-4A90-A727-444E33582016"
+      Name="Webradio->Home"
+      DisplayCategory="a-Webradio"
+      SortOrder="a"
+      SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
+      TargetState="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"
+      DisplayTitle="[Webradio.Home.Menu.View]"/>
+    <MethodCallAction Id="6A7897A8-467C-4E41-8272-BA76A0E100EE"
+      Name="Webradio->Home"
+      DisplayCategory="a-Webradio"
+      SortOrder="a"
+      SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
+      ModelId="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"
+      MethodName="ShowFavorites"
       DisplayTitle="[Webradio.Home.Menu.Favorites]"/>
-		<PushNavigationTransition Id="2ABFF249-2F05-4E25-8F3E-3F2B136A40FB"
-			Name="WebradioHome->Settings"
-			DisplayCategory="a-Webradio"
-			SortOrder="a"
-			SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
-			TargetState="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
-			DisplayTitle="[Webradio.Home.Menu.Settings]"/>
+    <PushNavigationTransition Id="2ABFF249-2F05-4E25-8F3E-3F2B136A40FB"
+      Name="WebradioHome->Settings"
+      DisplayCategory="a-Webradio"
+      SortOrder="a"
+      SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
+      TargetState="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
+      DisplayTitle="[Webradio.Home.Menu.Settings]"/>
 
-		<!--                Entrys in Settings                    -->
-		<PushNavigationTransition Id="AD312631-E1C4-4FBD-BFBB-D3175D03CA66"
-			Name="WebradioSettings->Filter"
-			DisplayCategory="a-Webradio"
-			SortOrder="a"
-			SourceStates="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
-			TargetState="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
-			DisplayTitle="[Webradio.Settings.Menu.Filter]"/>	
-		<PushNavigationTransition Id="94FED17C-D1D2-47C4-B3C8-02A7ACC6CE47"
-			Name="WebradioSettings->Favorites"
-			DisplayCategory="a-Webradio"
-			SortOrder="a"
-			SourceStates="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
-			TargetState="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
-			DisplayTitle="[Webradio.Settings.Menu.Favorites]"/>
+    <!--                Entrys in Settings                    -->
+    <PushNavigationTransition Id="AD312631-E1C4-4FBD-BFBB-D3175D03CA66"
+      Name="WebradioSettings->Filter"
+      DisplayCategory="a-Webradio"
+      SortOrder="a"
+      SourceStates="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
+      TargetState="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
+      DisplayTitle="[Webradio.Settings.Menu.Filter]"/>
+    <PushNavigationTransition Id="94FED17C-D1D2-47C4-B3C8-02A7ACC6CE47"
+      Name="WebradioSettings->Favorites"
+      DisplayCategory="a-Webradio"
+      SortOrder="a"
+      SourceStates="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
+      TargetState="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
+      DisplayTitle="[Webradio.Settings.Menu.Favorites]"/>
 
-		<!--                Entrys Filters                  -->
-		<MethodCallAction Id="A70617D3-7A87-4FB9-BBC9-CA8B4B26BD6A"
-			Name="AddFilter"
-			DisplayCategory="a-Webradio"
-			DisplayTitle="[Webradio.Filter.Add]"
-			SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
-			ModelId="FF29E03E-F4A9-4E21-A299-349E79010430"
-			MethodName="Add"/>
-		<MethodCallAction Id="73595548-1061-4F1A-94F2-447280813FDE"
-			Name="RenameFilter"
-			DisplayCategory="a-Webradio"
-			DisplayTitle="[Webradio.Filter.Clear]"
-			SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
-			ModelId="FF29E03E-F4A9-4E21-A299-349E79010430"
-			MethodName="Clear"/>	
-		<MethodCallAction Id="7766CFB8-09D6-4A4F-8C8D-2AC859B6B115"
-			Name="SaveFilter"
-			DisplayCategory="a-Webradio"
-			DisplayTitle="[Webradio.Filter.Save]"
-			SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
-			ModelId="FF29E03E-F4A9-4E21-A299-349E79010430"
-			MethodName="Save"/>	
-		<!-- Import Filter Dialog-->	
-		<PushNavigationTransition Id="5A626D7B-BB4A-4882-9FFB-F72BE27D9792"
-			Name="dialogImportFilter"
-			DisplayCategory="a-Webradio"
-			DisplayTitle="[Webradio.Filter.Import]"
-			SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
-			TargetState="5A626D7B-BB4A-4882-9FFB-F72BE27D9792"/>
-			
-		<!--                Entrys in Favorites                   -->
-		<MethodCallAction Id="F9334D42-D0C3-48B9-89A3-293BD1AADEB4"
-			Name="AddFavorit"
-			DisplayCategory="a-Webradio"
-			SortOrder="a"
-			DisplayTitle="[Webradio.Favorites.Add]"
-			SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
-			ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
-			MethodName="Add"/>
-		<MethodCallAction Id="F9CE9537-8F78-476B-8724-B8348BCB5E43"
-			Name="DeleteFavorit"
-			DisplayCategory="a-Webradio"
-			SortOrder="a"
-			DisplayTitle="[Webradio.Favorites.Delete]"
-			SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
-			ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
-			MethodName="Delete"/>
-		<MethodCallAction Id="911CC334-7F8D-49F0-81D1-F4F17F9C0792"
-			Name="RenameFavorit"
-			DisplayCategory="a-Webradio"
-			SortOrder="a"
-			DisplayTitle="[Webradio.Favorites.Rename]"
-			SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
-			ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
-			MethodName="Rename"/>	
-		<MethodCallAction Id="60E44CF6-2932-4069-9129-3B2306893D52"
-			Name="SaveFavorit"
-			DisplayCategory="a-Webradio"
-			SortOrder="a"
-			DisplayTitle="[Webradio.Favorites.Save]"
-			SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
-			ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
-			MethodName="Save"/>
+    <!--                Entrys Filters                  -->
+    <MethodCallAction Id="A70617D3-7A87-4FB9-BBC9-CA8B4B26BD6A"
+      Name="AddFilter"
+      DisplayCategory="a-Webradio"
+      DisplayTitle="[Webradio.Filter.Add]"
+      SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
+      ModelId="FF29E03E-F4A9-4E21-A299-349E79010430"
+      MethodName="Add"/>
+    <MethodCallAction Id="73595548-1061-4F1A-94F2-447280813FDE"
+      Name="RenameFilter"
+      DisplayCategory="a-Webradio"
+      DisplayTitle="[Webradio.Filter.Clear]"
+      SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
+      ModelId="FF29E03E-F4A9-4E21-A299-349E79010430"
+      MethodName="Clear"/>
+    <MethodCallAction Id="7766CFB8-09D6-4A4F-8C8D-2AC859B6B115"
+      Name="SaveFilter"
+      DisplayCategory="a-Webradio"
+      DisplayTitle="[Webradio.Filter.Save]"
+      SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
+      ModelId="FF29E03E-F4A9-4E21-A299-349E79010430"
+      MethodName="Save"/>
+    <!-- Import Filter Dialog-->
+    <PushNavigationTransition Id="5A626D7B-BB4A-4882-9FFB-F72BE27D9792"
+      Name="dialogImportFilter"
+      DisplayCategory="a-Webradio"
+      DisplayTitle="[Webradio.Filter.Import]"
+      SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
+      TargetState="5A626D7B-BB4A-4882-9FFB-F72BE27D9792"/>
+
+    <!--                Entrys in Favorites                   -->
+    <MethodCallAction Id="F9334D42-D0C3-48B9-89A3-293BD1AADEB4"
+      Name="AddFavorit"
+      DisplayCategory="a-Webradio"
+      SortOrder="a"
+      DisplayTitle="[Webradio.Favorites.Add]"
+      SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
+      ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
+      MethodName="Add"/>
+    <MethodCallAction Id="F9CE9537-8F78-476B-8724-B8348BCB5E43"
+      Name="DeleteFavorit"
+      DisplayCategory="a-Webradio"
+      SortOrder="a"
+      DisplayTitle="[Webradio.Favorites.Delete]"
+      SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
+      ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
+      MethodName="Delete"/>
+    <MethodCallAction Id="911CC334-7F8D-49F0-81D1-F4F17F9C0792"
+      Name="RenameFavorit"
+      DisplayCategory="a-Webradio"
+      SortOrder="a"
+      DisplayTitle="[Webradio.Favorites.Rename]"
+      SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
+      ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
+      MethodName="Rename"/>
+    <MethodCallAction Id="60E44CF6-2932-4069-9129-3B2306893D52"
+      Name="SaveFavorit"
+      DisplayCategory="a-Webradio"
+      SortOrder="a"
+      DisplayTitle="[Webradio.Favorites.Save]"
+      SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
+      ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
+      MethodName="Save"/>
   </MenuActions>
 </Workflow>

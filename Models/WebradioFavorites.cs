@@ -27,12 +27,6 @@ using System.IO;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Xml.Serialization;
-using System.Globalization;
-using System.Linq;
-using MediaPortal.Common;
-using MediaPortal.Common.General;
-using MediaPortal.Common.Settings;
-using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
 

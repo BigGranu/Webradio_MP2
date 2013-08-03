@@ -1,49 +1,49 @@
 ﻿<Plugin
-	DescriptorVersion="1.0"
-	Name="Webradio"
-	PluginId="{9CBA9944-C19B-4112-B082-70C745677A97}"
-	Author="BigGranu"
-	Copyright="GPL"
-	Description="Play Webradiostreams"
-	PluginVersion="1.0">
+  DescriptorVersion="1.0"
+  Name="Webradio"
+  PluginId="{9CBA9944-C19B-4112-B082-70C745677A97}"
+  Author="BigGranu"
+  Copyright="GPL"
+  Description="Play Webradiostreams"
+  PluginVersion="1.0">
 
   <Runtime>
     <Assembly FileName="Webradio.dll"/>
   </Runtime>
 
   <Register Location="/Models">
-  <Model Id="EA3CC191-0BE5-4C8D-889F-E9C4616AB554" ClassName="Webradio.Models.WebradioHome"/>
-	<Model Id="6378BD83-BF06-4AC3-ADD7-9A4B72DA878E" ClassName="Webradio.Models.WebradioSettings"/>
-	<Model Id="FF29E03E-F4A9-4E21-A299-349E79010430" ClassName="Webradio.Models.WebradioFilter"/>
-	<Model Id="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94" ClassName="Webradio.Models.WebradioFavorites"/>
+    <Model Id="EA3CC191-0BE5-4C8D-889F-E9C4616AB554" ClassName="Webradio.Models.WebradioHome"/>
+    <Model Id="6378BD83-BF06-4AC3-ADD7-9A4B72DA878E" ClassName="Webradio.Models.WebradioSettings"/>
+    <Model Id="FF29E03E-F4A9-4E21-A299-349E79010430" ClassName="Webradio.Models.WebradioFilter"/>
+    <Model Id="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94" ClassName="Webradio.Models.WebradioFavorites"/>
   </Register>
 
   <Register Location="/Workflow/States">
     <WorkflowState Id="263FADFE-87BE-4563-83F0-E62707891E1B"
       Name="WebradioHome" MainScreen="webradio_Home"
       DisplayLabel="Home"
-			WorkflowModel="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"/>		
-		<WorkflowState Id="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
+      WorkflowModel="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"/>
+    <WorkflowState Id="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
       Name="WebradioSettings" MainScreen="webradio_Settings"
       DisplayLabel="Settings"
-			WorkflowModel="6378BD83-BF06-4AC3-ADD7-9A4B72DA878E"/>		
-		<WorkflowState Id="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
+      WorkflowModel="6378BD83-BF06-4AC3-ADD7-9A4B72DA878E"/>
+    <WorkflowState Id="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
       Name="WebradioFilter" MainScreen="webradio_Filter"
       DisplayLabel="Filter"
-			WorkflowModel="FF29E03E-F4A9-4E21-A299-349E79010430"/>		
-		<WorkflowState Id="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
+      WorkflowModel="FF29E03E-F4A9-4E21-A299-349E79010430"/>
+    <WorkflowState Id="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
       Name="WebradioFavorites" MainScreen="webradio_Favorites"
       DisplayLabel="Favorites"
-			WorkflowModel="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"/>
-		<DialogState Id="5A626D7B-BB4A-4882-9FFB-F72BE27D9792" 
-			Name="ImportFilter" 
-			DialogScreen="webradio_dialogImportFilter" 
-			DisplayLabel="[Weather.WeatherLocationStateDisplayLabel]" 
-			WorkflowModel="FF29E03E-F4A9-4E21-A299-349E79010430"/>
+      WorkflowModel="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"/>
+    <DialogState Id="5A626D7B-BB4A-4882-9FFB-F72BE27D9792"
+      Name="ImportFilter"
+      DialogScreen="webradio_dialogImportFilter"
+      DisplayLabel="[Weather.WeatherLocationStateDisplayLabel]"
+      WorkflowModel="FF29E03E-F4A9-4E21-A299-349E79010430"/>
   </Register>
 
   <Register Location="/Resources/Skin">
-		<Resource Id="WebradioSkin" Directory="Skin" Type="Skin"/>
+    <Resource Id="WebradioSkin" Directory="Skin" Type="Skin"/>
   </Register>
   <Register Location="/Resources/Language">
     <Resource Id="WebradioLanguge" Directory="Language" Type="Language"/>

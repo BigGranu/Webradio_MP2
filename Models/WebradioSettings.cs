@@ -24,12 +24,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MediaPortal.Common;
-using MediaPortal.Common.General;
-using MediaPortal.Common.Settings;
-using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
 
@@ -38,10 +32,6 @@ namespace Webradio.Models
   class WebradioSettings :IWorkflowModel 
   {
     public const string MODEL_ID_STR = "6378BD83-BF06-4AC3-ADD7-9A4B72DA878E";
-
-    public WebradioSettings()
-    {
-    }
 
     #region IWorkflowModel implementation
     public Guid ModelId
