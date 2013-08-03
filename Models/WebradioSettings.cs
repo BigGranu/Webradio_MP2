@@ -29,7 +29,7 @@ using MediaPortal.UI.Presentation.Workflow;
 
 namespace Webradio.Models
 {
-  class WebradioSettings :IWorkflowModel 
+  class WebradioSettings : IWorkflowModel
   {
     public const string MODEL_ID_STR = "6378BD83-BF06-4AC3-ADD7-9A4B72DA878E";
 

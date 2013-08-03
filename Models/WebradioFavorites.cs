@@ -24,9 +24,10 @@
 
 using System;
 using System.IO;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using MediaPortal.Common;
+using MediaPortal.Common.Logging;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
 
@@ -38,14 +39,7 @@ namespace Webradio.Models
     public static string _file = System.Windows.Forms.Application.StartupPath + "\\Plugins\\Webradio\\Data\\WebradioFavorites.xml";
 
     // List of all Favorites in Xmlfile
-    public static Favorits FavoritList = new Favorits();
-
-    //test
-    public  ObservableCollection<Favorit> Liste = new ObservableCollection<Favorit>();
-
-    public WebradioFavorites()
-    {
-    }
+    protected static Favorits _favoritList = new Favorits();
 
     /// <summary>
     /// Remove a Entry
@@ -78,12 +72,12 @@ namespace Webradio.Models
     #region IWorkflowModel implementation
     public Guid ModelId
     {
-        get { return new Guid(MODEL_ID_STR); }
+      get { return new Guid(MODEL_ID_STR); }
     }
 
     public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
     {
-        return true;
+      return true;
     }
 
     public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
@@ -96,7 +90,7 @@ namespace Webradio.Models
 
     public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
     {
-        // We could initialize some data here when changing the media navigation state
+      // We could initialize some data here when changing the media navigation state
     }
 
     public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
@@ -113,7 +107,7 @@ namespace Webradio.Models
 
     public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
     {
-        return ScreenUpdateMode.AutoWorkflowManager;
+      return ScreenUpdateMode.AutoWorkflowManager;
     }
     #endregion
 
@@ -122,80 +116,66 @@ namespace Webradio.Models
   #region Read/Write Xml
   public class Favorits
   {
-      public List<Favorit> FavoritList = new List<Favorit>();
+    public List<Favorit> FavoritList { get; set; }
 
-      public Favorits()
+    public Favorits()
+    {
+      FavoritList = new List<Favorit>();
+    }
+
+    public static Favorits Read(string xmlFile)
+    {
+      if (!File.Exists(xmlFile)) { File.Create(xmlFile); }
+      Favorits list = new Favorits();
+      XmlSerializer serializer = new XmlSerializer(typeof(Favorits));
+      try
       {
+        using (FileStream fs = new FileStream(xmlFile, FileMode.Open))
+          list = (Favorits) serializer.Deserialize(fs);
       }
-
-      public static Favorits Read(string XmlFile)
+      catch (Exception ex)
       {
-          if (!File.Exists(XmlFile)) { File.Create(XmlFile); }
-          Favorits _list = new Favorits();
-          XmlSerializer serializer = new XmlSerializer(typeof(Favorits));
-          FileStream fs = new FileStream(XmlFile, FileMode.Open);
-
-          try
-          {
-              _list = (Favorits)serializer.Deserialize(fs);
-
-          }
-          catch (Exception ex)
-          {
-              Console.WriteLine(ex.StackTrace);
-          }
-          finally
-          {
-              fs.Close();
-              serializer = null;
-          }
-
-          return _list;
+        ServiceRegistration.Get<ILogger>().Error("WebRadio: Error reading favorites", ex);
       }
+      return list;
+    }
 
-      public static bool Write(string XmlFile, Favorits mliste)
+    public static bool Write(string xmlFile, Favorits mliste)
+    {
+      XmlSerializer serializer = new XmlSerializer(typeof(Favorits));
+      try
       {
-          XmlSerializer serializer = new XmlSerializer(typeof(Favorits));
-          StreamWriter writer = new StreamWriter(XmlFile, false);
-
-          try
-          {
-              serializer.Serialize(writer, mliste);
-          }
-          catch (Exception ex)
-          {
-              Console.WriteLine(ex.StackTrace);
-          }
-          finally
-          {
-              writer.Close();
-              serializer = null;
-          }
-
-          return true;
+        using (StreamWriter writer = new StreamWriter(xmlFile, false))
+          serializer.Serialize(writer, mliste);
       }
+      catch (Exception ex)
+      {
+        ServiceRegistration.Get<ILogger>().Error("WebRadio: Error writing favorites", ex);
+      }
+      return true;
+    }
   }
 
   public class Favorit
   {
-      public string Titel;
-      public bool Active;
-      public List<string> IDs;
+    public string Titel { get; set; }
+    public bool Active { get; set; }
+    public List<string> IDs { get; set; }
 
-      public Favorit()
-      {
-          Titel = "";
-          Active = true;
-          IDs = new List<string>();
-      }
+    public Favorit()
+    {
+      Titel = "";
+      Active = true;
+      IDs = new List<string>();
+    }
 
-      public Favorit(String _Titel, bool _Active, List<string> _IDs)
-      {
-          Titel = _Titel;
-          Active = _Active;
-          IDs = _IDs;
-      }
+    public Favorit(String titel, bool active, List<string> ids)
+    {
+      Titel = titel;
+      Active = active;
+      IDs = ids;
+    }
   }
-    #endregion
+  #endregion
 
 }

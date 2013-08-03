@@ -27,14 +27,16 @@ using System.IO;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Linq;
+using MediaPortal.Common;
 using MediaPortal.Common.General;
+using MediaPortal.Common.Logging;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
 
 namespace Webradio.Models
 {
-  class WebradioFilter : IWorkflowModel  
+  class WebradioFilter : IWorkflowModel
   {
     public const string MODEL_ID_STR = "FF29E03E-F4A9-4E21-A299-349E79010430";
 
@@ -44,109 +46,111 @@ namespace Webradio.Models
 
     #region Lists
     // List of all Filters in Xmlfile
-    public static List<MyFilter> FilterList = new List<MyFilter>();
-    public ItemsList FilterItems = new ItemsList();
+    protected List<MyFilter> _filterList = new List<MyFilter>();
+
+    public ItemsList FilterItems { get; protected set; }
 
     // Lists with all Items from Streamlist
-    public ItemsList Countrys = new ItemsList();
-    public ItemsList Citys = new ItemsList();
-    public ItemsList Bitrate = new ItemsList();
-    public ItemsList Genres = new ItemsList();
+    public ItemsList Countrys { get; protected set; }
+    public ItemsList Citys { get; protected set; }
+    public ItemsList Bitrate { get; protected set; }
+    public ItemsList Genres { get; protected set; }
 
     // Lists with Selected Items 
-    private List<string> selectedCountrys = new List<string>();
-    private List<string> selectedCitys = new List<string>();
-    private List<string> selectedBitrate = new List<string>();
-    private List<string> selectedGenres = new List<string>();
+    private readonly List<string> _selectedCountrys = new List<string>();
+    private readonly List<string> _selectedCitys = new List<string>();
+    private readonly List<string> _selectedBitrate = new List<string>();
+    private readonly List<string> _selectedGenres = new List<string>();
 
     // Lists with all Entrys in Streamlist
-    private List<string> Coun_List = new List<string>();
-    private List<string> City_List = new List<string>();
-    private List<string> Bitr_List = new List<string>();
-    private List<string> Genr_List = new List<string>();
+    private readonly List<string> _countries = new List<string>();
+    private readonly List<string> _cities = new List<string>();
+    private readonly List<string> _bitrates = new List<string>();
+    private readonly List<string> _genres = new List<string>();
     #endregion
 
     #region Labels
-    private AbstractProperty _FilterTitelProperty = null;
+    private AbstractProperty _filterTitelProperty = null;
     public AbstractProperty FilterTitelProperty
     {
-      get { return _FilterTitelProperty; }
+      get { return _filterTitelProperty; }
     }
     public string FilterTitel
     {
-      get { return (string)_FilterTitelProperty.GetValue(); }
-      set { 
-          _FilterTitelProperty.SetValue(value);
-          }
+      get { return (string) _filterTitelProperty.GetValue(); }
+      set
+      {
+        _filterTitelProperty.SetValue(value);
+      }
     }
 
-    private AbstractProperty _SelectedStreamsCountProperty = null;
+    private AbstractProperty _selectedStreamsCountProperty = null;
     public AbstractProperty SelectedStreamsCountProperty
     {
-      get { return _SelectedStreamsCountProperty; }
+      get { return _selectedStreamsCountProperty; }
     }
     public string SelectedStreamsCount
     {
-      get { return (string)_SelectedStreamsCountProperty.GetValue(); }
+      get { return (string) _selectedStreamsCountProperty.GetValue(); }
       set
       {
-        _SelectedStreamsCountProperty.SetValue(value);
+        _selectedStreamsCountProperty.SetValue(value);
       }
     }
 
-    private AbstractProperty _CountryStateProperty = null;
+    private AbstractProperty _countryStateProperty = null;
     public AbstractProperty CountryStateProperty
     {
-      get { return _CountryStateProperty; }
+      get { return _countryStateProperty; }
     }
     public string CountryState
     {
-      get { return (string)_CountryStateProperty.GetValue(); }
+      get { return (string) _countryStateProperty.GetValue(); }
       set
       {
-        _CountryStateProperty.SetValue(value);
+        _countryStateProperty.SetValue(value);
       }
     }
 
-    private AbstractProperty _CityStateProperty = null;
+    private AbstractProperty _cityStateProperty = null;
     public AbstractProperty CityStateProperty
     {
-      get { return _CityStateProperty; }
+      get { return _cityStateProperty; }
     }
     public string CityState
     {
-      get { return (string)_CityStateProperty.GetValue(); }
+      get { return (string) _cityStateProperty.GetValue(); }
       set
       {
-        _CityStateProperty.SetValue(value);
+        _cityStateProperty.SetValue(value);
       }
     }
 
-    private AbstractProperty _BitrateStateProperty = null;
+    private AbstractProperty _bitrateStateProperty = null;
     public AbstractProperty BitrateStateProperty
     {
-      get { return _BitrateStateProperty; }
+      get { return _bitrateStateProperty; }
     }
     public string BitrateState
     {
-      get { return (string)_BitrateStateProperty.GetValue(); }
+      get { return (string) _bitrateStateProperty.GetValue(); }
       set
       {
-        _BitrateStateProperty.SetValue(value);
+        _bitrateStateProperty.SetValue(value);
       }
     }
 
-    private AbstractProperty _GenreStateProperty = null;
+    private AbstractProperty _genreStateProperty = null;
     public AbstractProperty GenreStateProperty
     {
-      get { return _GenreStateProperty; }
+      get { return _genreStateProperty; }
     }
     public string GenreState
     {
-      get { return (string)_GenreStateProperty.GetValue(); }
+      get { return (string) _genreStateProperty.GetValue(); }
       set
       {
-        _GenreStateProperty.SetValue(value);
+        _genreStateProperty.SetValue(value);
       }
     }
     #endregion
@@ -158,12 +162,17 @@ namespace Webradio.Models
 
     private void Init()
     {
-      _FilterTitelProperty = new WProperty(typeof(string), string.Empty);
-      _SelectedStreamsCountProperty = new WProperty(typeof(string), string.Empty);
-      _CountryStateProperty = new WProperty(typeof(string), string.Empty);
-      _CityStateProperty = new WProperty(typeof(string), string.Empty);
-      _BitrateStateProperty = new WProperty(typeof(string), string.Empty);
-      _GenreStateProperty = new WProperty(typeof(string), string.Empty);
+      _filterTitelProperty = new WProperty(typeof(string), string.Empty);
+      _selectedStreamsCountProperty = new WProperty(typeof(string), string.Empty);
+      _countryStateProperty = new WProperty(typeof(string), string.Empty);
+      _cityStateProperty = new WProperty(typeof(string), string.Empty);
+      _bitrateStateProperty = new WProperty(typeof(string), string.Empty);
+      _genreStateProperty = new WProperty(typeof(string), string.Empty);
+      Countrys = new ItemsList();
+      Citys = new ItemsList();
+      Bitrate = new ItemsList();
+      Genres = new ItemsList();
+      FilterItems = new ItemsList();
       FillAllLists();
     }
 
@@ -174,13 +183,13 @@ namespace Webradio.Models
     public void ImportFilter()
     {
       MyFilters filters = MyFilters.Read(_file);
-      FilterList = filters.FilterList;
+      _filterList = filters.FilterList;
 
-      foreach (MyFilter f in FilterList)
+      foreach (MyFilter f in _filterList)
       {
         ListItem item = new ListItem();
-        item.AdditionalProperties[NAME] = f.Titel;
-        item.SetLabel("Name", f.Titel);
+        item.AdditionalProperties[NAME] = f.Title;
+        item.SetLabel("Name", f.Title);
         FilterItems.Add(item);
       }
     }
@@ -190,43 +199,24 @@ namespace Webradio.Models
     /// </summary>
     public void SetImportFilter(ListItem item)
     {
-      FilterTitel = (string)item.AdditionalProperties[NAME];
+      FilterTitel = (string) item.AdditionalProperties[NAME];
       ClearSelected();
 
-      foreach (MyFilter f in FilterList)
+      foreach (MyFilter f in _filterList.Where(f => f.Title == FilterTitel))
       {
-        if (f.Titel == FilterTitel)
-        {
-          foreach (string s in f.fCountrys)
-          {
-            selectedCountrys.Add(s);
-          }
-
-          foreach (string s in f.fCitys)
-          {
-            selectedCitys.Add(s);
-          }
-
-          foreach (string s in f.fBitrate)
-          {
-            selectedBitrate.Add(s);
-          }
-
-          foreach (string s in f.fGenres)
-          {
-            selectedGenres.Add(s);
-          }
-
-          FillAllItemsList();
-          break;
-        }
+        _selectedCountrys.AddRange(f.Countries);
+        _selectedCitys.AddRange(f.Cities);
+        _selectedBitrate.AddRange(f.Bitrates);
+        _selectedGenres.AddRange(f.Genres);
+        FillAllItemsList();
+        break;
       }
     }
 
     /// <summary>
     /// Rename a Entry
     /// </summary>
-    public void Clear( )
+    public void Clear()
     {
       //FilterTitel = string.Empty;
       ClearSelected();
@@ -239,7 +229,7 @@ namespace Webradio.Models
     public void Add()
     {
       Clear();
-      FilterList.Add(new MyFilter(FilterTitel, selectedCountrys, selectedCitys, selectedGenres, selectedBitrate));
+      _filterList.Add(new MyFilter(FilterTitel, _selectedCountrys, _selectedCitys, _selectedGenres, _selectedBitrate));
     }
 
     /// <summary>
@@ -248,91 +238,88 @@ namespace Webradio.Models
     public void Save()
     {
       bool find = false;
-      foreach (MyFilter f in FilterList)
+      foreach (MyFilter f in _filterList.Where(f => f.Title == FilterTitel))
       {
-        if (f.Titel == FilterTitel)
-        {
-          find = true;
-          f.fCountrys = selectedCountrys;
-          f.fCitys = selectedCitys;
-          f.fBitrate = selectedBitrate;
-          f.fGenres = selectedGenres;
-        }
+        find = true;
+        f.Countries = _selectedCountrys;
+        f.Cities = _selectedCitys;
+        f.Bitrates = _selectedBitrate;
+        f.Genres = _selectedGenres;
       }
 
       if (find == false)
       {
-        FilterList.Add(new MyFilter(FilterTitel, selectedCountrys, selectedCitys, selectedGenres, selectedBitrate));
+        _filterList.Add(new MyFilter(FilterTitel, _selectedCountrys, _selectedCitys, _selectedGenres, _selectedBitrate));
       }
-      MyFilters.Write(_file, new MyFilters(FilterList));
+      MyFilters.Write(_file, new MyFilters(_filterList));
     }
     #endregion
 
     #region Change SelectedItem
     public void ChangeCountry(ListItem item)
     {
-      string s = (string)item.AdditionalProperties[NAME];
-      if (selectedCountrys.Contains(s))
+      string s = (string) item.AdditionalProperties[NAME];
+      if (_selectedCountrys.Contains(s))
       {
-        selectedCountrys.Remove(s);
+        _selectedCountrys.Remove(s);
         item.Selected = false;
       }
       else
       {
-        selectedCountrys.Add(s);
+        _selectedCountrys.Add(s);
         item.Selected = true;
       }
-      
+
       // Autofill Citys in selected Country
-      if (selectedCountrys.Count > 0)
-      { 
-        IEnumerable<MyStream> query = from r in WebradioHome.StreamList where _contains(selectedCountrys, r.Country) select r;
+      if (_selectedCountrys.Count > 0)
+      {
+        IEnumerable<MyStream> query = from r in WebradioHome.StreamList where EmptyOrContains(_selectedCountrys, r.Country) select r;
         foreach (MyStream ms in query)
         {
-          if (!selectedCitys.Contains(ms.City)) {selectedCitys.Add(ms.City);}
+          if (!_selectedCitys.Contains(ms.City)) { _selectedCitys.Add(ms.City); }
         }
 
         foreach (ListItem i in Citys)
         {
-          string si = (string)i.AdditionalProperties[NAME];
-          if (selectedCitys.Contains(si))
+          string si = (string) i.AdditionalProperties[NAME];
+          if (_selectedCitys.Contains(si))
           {
             i.Selected = true;
-            Refresh(Citys,i);
+            Refresh(Citys, i);
           }
         }
       }
 
-      Refresh(Countrys,item);
+      Refresh(Countrys, item);
     }
 
-    public void ChangeCity(ListItem item)   
+    public void ChangeCity(ListItem item)
     {
-      string s = (string)item.AdditionalProperties[NAME];
-      if (selectedCitys.Contains(s))
+      string s = (string) item.AdditionalProperties[NAME];
+      if (_selectedCitys.Contains(s))
       {
-        selectedCitys.Remove(s);
+        _selectedCitys.Remove(s);
         item.Selected = false;
       }
       else
       {
-        selectedCitys.Add(s);
+        _selectedCitys.Add(s);
         item.Selected = true;
       }
 
       // Autofill Country by selected City
-      if (selectedCitys.Count > 0)
-      { 
-        IEnumerable<MyStream> query = from r in WebradioHome.StreamList where _contains(selectedCitys, r.City) select r;
+      if (_selectedCitys.Count > 0)
+      {
+        IEnumerable<MyStream> query = from r in WebradioHome.StreamList where EmptyOrContains(_selectedCitys, r.City) select r;
         foreach (MyStream ms in query)
         {
-          if (!selectedCountrys.Contains(ms.Country)) {selectedCountrys.Add(ms.Country);}
+          if (!_selectedCountrys.Contains(ms.Country)) { _selectedCountrys.Add(ms.Country); }
         }
 
         foreach (ListItem i in Countrys)
         {
-          string si = (string)i.AdditionalProperties[NAME];
-          if (selectedCountrys.Contains(si))
+          string si = (string) i.AdditionalProperties[NAME];
+          if (_selectedCountrys.Contains(si))
           {
             i.Selected = true;
             Refresh(Countrys, i);
@@ -345,15 +332,15 @@ namespace Webradio.Models
 
     public void ChangeBitrate(ListItem item)
     {
-      string s = (string)item.AdditionalProperties[NAME];
-      if (selectedBitrate.Contains(s))
+      string s = (string) item.AdditionalProperties[NAME];
+      if (_selectedBitrate.Contains(s))
       {
-        selectedBitrate.Remove(s);
+        _selectedBitrate.Remove(s);
         item.Selected = false;
       }
       else
       {
-        selectedBitrate.Add(s);
+        _selectedBitrate.Add(s);
         item.Selected = true;
       }
       Refresh(Bitrate, item);
@@ -361,15 +348,15 @@ namespace Webradio.Models
 
     public void ChangeGenre(ListItem item)
     {
-      string s = (string)item.AdditionalProperties[NAME];
-      if (selectedGenres.Contains(s))
+      string s = (string) item.AdditionalProperties[NAME];
+      if (_selectedGenres.Contains(s))
       {
-        selectedGenres.Remove(s);
+        _selectedGenres.Remove(s);
         item.Selected = false;
       }
       else
       {
-        selectedGenres.Add(s);
+        _selectedGenres.Add(s);
         item.Selected = true;
       }
       Refresh(Genres, item);
@@ -384,42 +371,42 @@ namespace Webradio.Models
       foreach (MyStream ms in WebradioHome.StreamList)
       {
         // Add Countrys
-        if (ms.Country != "" & !Coun_List.Contains(ms.Country))
+        if (ms.Country != "" & !_countries.Contains(ms.Country))
         {
-          Coun_List.Add(ms.Country);
+          _countries.Add(ms.Country);
         }
 
         // Add Citys
-        if (ms.City != "" & !City_List.Contains(ms.City))
-        {      
-          City_List.Add(ms.City);
+        if (ms.City != "" & !_cities.Contains(ms.City))
+        {
+          _cities.Add(ms.City);
         }
 
         // Add Bitrate
         if (ms.Bitrate != "")
         {
           string br = ms.Bitrate.Replace(" kbps", "").PadLeft(3, '0');
-          if (!Bitr_List.Contains(br))
-          { 
-            Bitr_List.Add(br);
-          }           
+          if (!_bitrates.Contains(br))
+          {
+            _bitrates.Add(br);
+          }
         }
 
         // Add Genres
-        string[] split = ms.Genres.Split(new Char[] {','});
+        string[] split = ms.Genres.Split(new[] { ',' });
         foreach (string s in split)
         {
-          if (s.Trim() != "" & !Genr_List.Contains(s.Trim()))
+          if (s.Trim() != "" & !_genres.Contains(s.Trim()))
           {
-            Genr_List.Add(s.Trim());
+            _genres.Add(s.Trim());
           }
         }
       }
 
-      Coun_List.Sort();
-      City_List.Sort();
-      Bitr_List.Sort();
-      Genr_List.Sort();
+      _countries.Sort();
+      _cities.Sort();
+      _bitrates.Sort();
+      _genres.Sort();
       FillAllItemsList();
     }
 
@@ -427,12 +414,12 @@ namespace Webradio.Models
     {
       ClearItemsList();
 
-      foreach (string s in Coun_List)
+      foreach (string s in _countries)
       {
         ListItem item = new ListItem();
         item.AdditionalProperties[NAME] = s;
         item.SetLabel("Name", s);
-        if (selectedCountrys.Contains(s)) 
+        if (_selectedCountrys.Contains(s))
         {
           item.Selected = true;
         }
@@ -440,12 +427,12 @@ namespace Webradio.Models
       }
       Refresh(Countrys);
 
-      foreach (string s in City_List)
+      foreach (string s in _cities)
       {
         ListItem item = new ListItem();
         item.AdditionalProperties[NAME] = s;
         item.SetLabel("Name", s);
-        if (selectedCitys.Contains(s))
+        if (_selectedCitys.Contains(s))
         {
           item.Selected = true;
         }
@@ -453,12 +440,12 @@ namespace Webradio.Models
       }
       Refresh(Citys);
 
-      foreach (string s in Bitr_List)
+      foreach (string s in _bitrates)
       {
         ListItem item = new ListItem();
         item.AdditionalProperties[NAME] = Convert.ToInt32(s) + " kbps";
         item.SetLabel("Name", Convert.ToInt32(s) + " kbps");
-        if (selectedBitrate.Contains(Convert.ToInt32(s) + " kbps"))
+        if (_selectedBitrate.Contains(Convert.ToInt32(s) + " kbps"))
         {
           item.Selected = true;
         }
@@ -466,12 +453,12 @@ namespace Webradio.Models
       }
       Refresh(Bitrate);
 
-      foreach (string s in Genr_List)
+      foreach (string s in _genres)
       {
         ListItem item = new ListItem();
         item.AdditionalProperties[NAME] = s;
         item.SetLabel("Name", s);
-        if (selectedGenres.Contains(s))
+        if (_selectedGenres.Contains(s))
         {
           item.Selected = true;
         }
@@ -488,85 +475,78 @@ namespace Webradio.Models
       Genres.Clear();
     }
 
-    private void ClearSelected() 
+    private void ClearSelected()
     {
-      selectedCountrys.Clear();
-      selectedCitys.Clear();
-      selectedBitrate.Clear();
-      selectedGenres.Clear();
+      _selectedCountrys.Clear();
+      _selectedCitys.Clear();
+      _selectedBitrate.Clear();
+      _selectedGenres.Clear();
     }
 
-    private void Refresh(ItemsList List, ListItem item)
+    private void Refresh(ItemsList list, ListItem item)
     {
-      RefreshState(List);
+      RefreshState(list);
       item.FireChange();
     }
 
-    private void Refresh(ItemsList List)
+    private void Refresh(ItemsList list)
     {
-      RefreshState(List);
-      List.FireChange();
+      RefreshState(list);
+      list.FireChange();
     }
 
-    private void RefreshState(ItemsList List)
+    private void RefreshState(ItemsList list)
     {
-      if (List == Countrys) { CountryState = Convert.ToString(selectedCountrys.Count) + "/" + Convert.ToString(Countrys.Count);}
-      if (List == Citys) { CityState = Convert.ToString(selectedCitys.Count) + "/" + Convert.ToString(Citys.Count); }
-      if (List == Bitrate) { BitrateState = Convert.ToString(selectedBitrate.Count) + "/" + Convert.ToString(Bitrate.Count); }
-      if (List == Genres) { GenreState = Convert.ToString(selectedGenres.Count) + "/" + Convert.ToString(Genres.Count); }
+      if (list == Countrys) { CountryState = Convert.ToString(_selectedCountrys.Count) + "/" + Convert.ToString(Countrys.Count); }
+      if (list == Citys) { CityState = Convert.ToString(_selectedCitys.Count) + "/" + Convert.ToString(Citys.Count); }
+      if (list == Bitrate) { BitrateState = Convert.ToString(_selectedBitrate.Count) + "/" + Convert.ToString(Bitrate.Count); }
+      if (list == Genres) { GenreState = Convert.ToString(_selectedGenres.Count) + "/" + Convert.ToString(Genres.Count); }
       RefreshState();
     }
 
     private void RefreshState()
     {
       int x = 0;
-      if (selectedCountrys.Count + selectedCitys.Count + selectedBitrate.Count + selectedGenres.Count > 0)
+      if (_selectedCountrys.Count + _selectedCitys.Count + _selectedBitrate.Count + _selectedGenres.Count > 0)
       {
-        IEnumerable<MyStream> query = from r in WebradioHome.StreamList where
-                                      _contains(selectedCountrys, r.Country)
-                                      && _contains(selectedCitys, r.City)
-                                      && _contains2(selectedGenres, r.Genres)
-                                      && _contains(selectedBitrate, r.Bitrate) select r;
-        x = query.Count<MyStream>();
+        IEnumerable<MyStream> query = from r in WebradioHome.StreamList
+                                      where
+                                        EmptyOrContains(_selectedCountrys, r.Country)
+                                        && EmptyOrContains(_selectedCitys, r.City)
+                                        && ContainsAny(_selectedGenres, r.Genres)
+                                        && EmptyOrContains(_selectedBitrate, r.Bitrate)
+                                      select r;
+        x = query.Count();
       }
       SelectedStreamsCount = Convert.ToString(x) + "/" + Convert.ToString(WebradioHome.StreamList.Count);
     }
 
-    private bool _contains(List<string> L, string S)
+    private bool EmptyOrContains(List<string> l, string s)
     {
-      if (L.Count == 0)
-        return true;
-      return L.Contains(S);
+      return l.Count == 0 || l.Contains(s);
     }
 
-    private bool _contains2(List<string> L, string S)
+    private bool ContainsAny(List<string> l, string s)
     {
-      if (L.Count == 0) { return true;}
+      if (l.Count == 0) { return true; }
 
-      string[] split = S.Split(new Char[] { ',' });
-      foreach (string s in split)
-      {
-        if (L.Contains(s))
-        {
-          return true;
-        }
-      }
-      return false;
+      string[] split = s.Split(new[] { ',' });
+      return split.Any(l.Contains);
     }
 
     #region IWorkflowModel implementation
     public Guid ModelId
     {
-        get { return new Guid(MODEL_ID_STR); }
+      get { return new Guid(MODEL_ID_STR); }
     }
 
     public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
     {
-        return true;
+      return true;
     }
 
-    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)    
-    {      
+    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
+    {
       ImportFilter();
     }
 
@@ -576,7 +556,7 @@ namespace Webradio.Models
 
     public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
     {
-        // We could initialize some data here when changing the media navigation state
+      // We could initialize some data here when changing the media navigation state
     }
 
     public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
@@ -593,7 +573,7 @@ namespace Webradio.Models
 
     public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
     {
-        return ScreenUpdateMode.AutoWorkflowManager;
+      return ScreenUpdateMode.AutoWorkflowManager;
     }
     #endregion
 
@@ -602,88 +582,93 @@ namespace Webradio.Models
   #region Read/Write
   public class MyFilters
   {
+    public List<MyFilter> FilterList { get; set; }
+    static XmlSerializer _serializer = new XmlSerializer(typeof(MyFilters));
+    static FileStream _stream;
 
-      public List<MyFilter> FilterList = new List<MyFilter>();
-
-      static XmlSerializer serializer = new XmlSerializer(typeof(MyFilters));
-      static FileStream stream;
-
-      public MyFilters()
-      {
-      }
-
-      public MyFilters(List<MyFilter> _filters)
-      {
-        FilterList = _filters;
-      }
-
-      public static MyFilters Read(string XmlFile)
-      {
-        MyFilters _s = new MyFilters();
-        try
-        { 
-          stream = new FileStream(XmlFile, FileMode.Open);
-          _s = (MyFilters)serializer.Deserialize(stream);
-        }
-        catch (Exception ex)
-        {
-          Console.WriteLine(ex.StackTrace);
-        }
-        finally
-        {
-          stream.Close();
-          serializer = null;
-        }
-        return _s;
-      }
-
-      public static bool Write(string XmlFile, Object obj)
-      {
-        try
-        {
-          stream = new FileStream(XmlFile, FileMode.Create);
-          serializer = new XmlSerializer(typeof(MyFilters));
-          serializer.Serialize(stream, obj);
-        }
-        catch (Exception ex)
-        {
-          Console.WriteLine(ex.StackTrace);
-        }
-        finally
-        {
-          stream.Close();
-          serializer = null;
-        }
-        return true;
-      }
-
+    public MyFilters()
+    {
+      FilterList = new List<MyFilter>();
     }
+
+    public MyFilters(List<MyFilter> filters)
+    {
+      FilterList = new List<MyFilter>();
+      FilterList = filters;
+    }
+
+    public static MyFilters Read(string xmlFile)
+    {
+      MyFilters s = new MyFilters();
+      try
+      {
+        _stream = new FileStream(xmlFile, FileMode.Open);
+        s = (MyFilters) _serializer.Deserialize(_stream);
+      }
+      catch (Exception ex)
+      {
+        ServiceRegistration.Get<ILogger>().Error("WebRadio: Error reading filters", ex);
+      }
+      finally
+      {
+        _stream.Close();
+        _serializer = null;
+      }
+      return s;
+    }
+
+    public static bool Write(string xmlFile, Object obj)
+    {
+      try
+      {
+        _stream = new FileStream(xmlFile, FileMode.Create);
+        _serializer = new XmlSerializer(typeof(MyFilters));
+        _serializer.Serialize(_stream, obj);
+      }
+      catch (Exception ex)
+      {
+        ServiceRegistration.Get<ILogger>().Error("WebRadio: Error writing favorites", ex);
+      }
+      finally
+      {
+        _stream.Close();
+        _serializer = null;
+      }
+      return true;
+    }
+
+  }
 
   public class MyFilter
   {
-      public string Titel;
-      public List<string> fCountrys;
-      public List<string> fCitys;
-      public List<string> fGenres;
-      public List<string> fBitrate;
+    [XmlElement("Titel")]
+    public string Title { get; set; }
+    [XmlElement("fCountrys")]
+    public List<string> Countries { get; set; }
+    [XmlElement("fCitys")]
+    public List<string> Cities { get; set; }
+    [XmlElement("fGenres")]
+    public List<string> Genres { get; set; }
+    [XmlElement("fBitrate")]
+    public List<string> Bitrates { get; set; }
 
-      public MyFilter()
-      {
-          Titel = "";
-          fCountrys = new List<string>();
-          fCitys = new List<string>();
-          fGenres = new List<string>();
-          fBitrate = new List<string>();
-      }
+    public MyFilter()
+    {
+      Title = "";
+      Countries = new List<string>();
+      Cities = new List<string>();
+      Genres = new List<string>();
+      Bitrates = new List<string>();
+    }
 
-      public MyFilter(String _Titel, List<string> _Countrys, List<string> _Citys, List<string> _Genres, List<string> _Bitrate)
-      {
-          Titel = _Titel;
-          fCountrys = _Countrys;
-          fCitys = _Citys;
-          fGenres = _Genres;
-          fBitrate = _Bitrate;
-      }
+    public MyFilter(String titel, List<string> countrys, List<string> citys, List<string> genres, List<string> bitrate)
+    {
+      Title = titel;
+      Countries = countrys;
+      Cities = citys;
+      Genres = genres;
+      Bitrates = bitrate;
+    }
   }
 
   #endregion

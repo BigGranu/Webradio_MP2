@@ -21,7 +21,7 @@
   <Register Location="/Workflow/States">
     <WorkflowState Id="263FADFE-87BE-4563-83F0-E62707891E1B"
       Name="WebradioHome" MainScreen="webradio_Home"
-      DisplayLabel="Home"
+      DisplayLabel="[Webradio.StateDisplayLabel]"
       WorkflowModel="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"/>
     <WorkflowState Id="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
       Name="WebradioSettings" MainScreen="webradio_Settings"
