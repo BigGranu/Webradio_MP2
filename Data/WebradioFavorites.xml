@@ -1,21 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Favorits xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <FavoritList>
-    <Favorit>
-      <Titel>10687701</Titel>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MyFavoriten xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FavoritenList>
+    <MyFavorit>
+      <Titel>Party</Titel>
       <Active>true</Active>
-      <IDs>
-        <string>12</string>
-        <string>24</string>
-      </IDs>
-    </Favorit>
-    <Favorit>
-      <Titel>10687744</Titel>
+      <fIDs>
+        <string>2</string>
+        <string>6</string>
+      </fIDs>
+    </MyFavorit>
+    <MyFavorit>
+      <Titel>Italo</Titel>
       <Active>true</Active>
-      <IDs>
-        <string>344</string>
-        <string>675</string>
-      </IDs>
-    </Favorit>
-  </FavoritList>
-</Favorits>
+      <fIDs>
+        <string>615</string>
+      </fIDs>
+    </MyFavorit>
+    <MyFavorit>
+      <Titel>Rock</Titel>
+      <Active>true</Active>
+      <fIDs />
+    </MyFavorit>
+    <MyFavorit>
+      <Titel>Dance</Titel>
+      <Active>true</Active>
+      <fIDs />
+    </MyFavorit>
+    <MyFavorit>
+      <Titel>Cool</Titel>
+      <Active>true</Active>
+      <fIDs />
+    </MyFavorit>
+  </FavoritenList>
+</MyFavoriten>

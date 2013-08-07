@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include
+	xmlns="www.team-mediaportal.com/2008/mpf/directx"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
+	Source="screens\master_configuration_dialog_wb.xaml">
+  <Include.Resources>
+
+    <!-- Header -->
+    <ResourceWrapper x:Key="Dialog_Header_Text" Resource="[Webradio.Dialog.ShowFavorites.Header]"/>
+
+		<Model x:Key="Model" Id="9723DCC8-969D-470E-B156-F4E6E639DD18"/>
+
+		<ControlTemplate x:Key="Contents_Template">
+			<DockPanel DataContext="{Binding Source={StaticResource Model}}">
+				<ListView x:Name="lvFilter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{ThemeResource ContentsMenuListViewStyle}"
+					ItemsSource="{Binding Path=FavoritItems}" >	
+					<ListView.Resources> 
+						<CommandList x:Key="Menu_Command">
+							<Command Source="{StaticResource Model}" Path="Selected">
+								<Command.Parameters> 
+									<LateBoundValue BindingValue="{Binding}"/> 
+								</Command.Parameters>
+							</Command>
+						</CommandList>
+					</ListView.Resources>
+				</ListView>
+			</DockPanel>
+    </ControlTemplate>		
+  </Include.Resources>
+</Include>

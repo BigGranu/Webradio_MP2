@@ -1,0 +1,1265 @@
+From 7442ec9da53a39ed65688bebf09e839e5d6e92ad Mon Sep 17 00:00:00 2001
+From: morpheusxx <morpheus_xx@team-mediaportal.com>
+Date: Sat, 3 Aug 2013 12:06:42 +0200
+Subject: [PATCH 1/2] Changed project from AnyCPU to x86 Replace direct
+ compile to MP2 folder by post-build Action to copy
+ files Added skin/data to project Minor cleanups
+
+---
+ Language/strings_en.xml                            |  70 +++---
+ Models/WebradioFavorites.cs                        |   6 -
+ Models/WebradioFilter.cs                           |   4 -
+ Models/WebradioHome.cs                             |   6 -
+ Models/WebradioSettings.cs                         |  10 -
+ Skin/default/screens/webradio_Favorites.xaml       |  14 +-
+ Skin/default/screens/webradio_Filter.xaml          | 242 ++++++++++-----------
+ Skin/default/screens/webradio_Home.xaml            | 148 ++++++-------
+ Skin/default/screens/webradio_Settings.xaml        |   8 +-
+ .../screens/webradio_dialogImportFilter.xaml       |  62 +++---
+ .../themes/default/styles/WebradioStyles.xaml      |  22 +-
+ Skin/default/workflow/webradio-actions.xml         | 234 ++++++++++----------
+ Webradio.csproj                                    | 101 ++++++---
+ build.targets                                      |  33 +++
+ plugin.xml                                         |  48 ++--
+ 15 files changed, 523 insertions(+), 485 deletions(-)
+ rewrite Language/strings_en.xml (96%)
+ rewrite Skin/default/screens/webradio_Filter.xaml (96%)
+ rewrite Skin/default/screens/webradio_Home.xaml (91%)
+ rewrite Skin/default/screens/webradio_dialogImportFilter.xaml (83%)
+ rewrite Skin/default/workflow/webradio-actions.xml (94%)
+ create mode 100644 build.targets
+
+diff --git a/Language/strings_en.xml b/Language/strings_en.xml
+dissimilarity index 96%
+index 1d4669d..e31661f 100644
+--- a/Language/strings_en.xml
++++ b/Language/strings_en.xml
+@@ -1,35 +1,35 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<resources>
+-	<string name="Webradio.MenuEntry">Webradio</string> 
+-	<string name="Webradio.StateDisplayLabel">Webradio</string>
+-
+-	<string name="Webradio.Home.ScreenTitle"> </string>
+-	<string name="Webradio.Home.Menu.View">View</string>
+-	<string name="Webradio.Home.Menu.Filter">Filter</string>
+-	<string name="Webradio.Home.Menu.Favorites">Favorites</string>
+-	<string name="Webradio.Home.Menu.Settings">Settings</string>
+-	<string name="Webradio.Home.Genres">Genres</string>
+-	<string name="Webradio.Home.Bitrate">Bitrate</string>
+-	<string name="Webradio.Home.Country">Country</string>
+-	<string name="Webradio.Home.City">City</string>
+-
+-	<string name="Webradio.Settings.ScreenTitle">Settings</string>
+-	<string name="Webradio.Settings.Menu.Filter">Filter</string>
+-	<string name="Webradio.Settings.Menu.Favorites">Favorites</string>
+-
+-	<string name="Webradio.Favorites.ScreenTitle">Favorites</string>
+-	<string name="Webradio.Favorites.Add">Add</string>   
+-	<string name="Webradio.Favorites.Delete">Delete</string>
+-	<string name="Webradio.Favorites.Rename">Rename</string> 
+-	<string name="Webradio.Favorites.Save">Save</string>
+-  
+-	<string name="Webradio.Filter.ScreenTitle">Filter</string>	
+-	<string name="Webradio.Filter.Add">Add</string>
+-	<string name="Webradio.Filter.Import">Import</string>
+-	<string name="Webradio.Filter.Clear">Clear</string>
+-	<string name="Webradio.Filter.Save">Save</string>
+-	<string name="Webradio.Filter.Genres">Genres</string>
+-	<string name="Webradio.Filter.Bitrate">Bitrate</string>
+-	<string name="Webradio.Filter.Country">Country</string>
+-	<string name="Webradio.Filter.City">City</string>
+-</resources>
+\ No newline at end of file
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++  <string name="Webradio.MenuEntry">Webradio</string>
++  <string name="Webradio.StateDisplayLabel">Webradio</string>
++
++  <string name="Webradio.Home.ScreenTitle"> </string>
++  <string name="Webradio.Home.Menu.View">View</string>
++  <string name="Webradio.Home.Menu.Filter">Filter</string>
++  <string name="Webradio.Home.Menu.Favorites">Favorites</string>
++  <string name="Webradio.Home.Menu.Settings">Settings</string>
++  <string name="Webradio.Home.Genres">Genres</string>
++  <string name="Webradio.Home.Bitrate">Bitrate</string>
++  <string name="Webradio.Home.Country">Country</string>
++  <string name="Webradio.Home.City">City</string>
++
++  <string name="Webradio.Settings.ScreenTitle">Settings</string>
++  <string name="Webradio.Settings.Menu.Filter">Filter</string>
++  <string name="Webradio.Settings.Menu.Favorites">Favorites</string>
++
++  <string name="Webradio.Favorites.ScreenTitle">Favorites</string>
++  <string name="Webradio.Favorites.Add">Add</string>
++  <string name="Webradio.Favorites.Delete">Delete</string>
++  <string name="Webradio.Favorites.Rename">Rename</string>
++  <string name="Webradio.Favorites.Save">Save</string>
++
++  <string name="Webradio.Filter.ScreenTitle">Filter</string>
++  <string name="Webradio.Filter.Add">Add</string>
++  <string name="Webradio.Filter.Import">Import</string>
++  <string name="Webradio.Filter.Clear">Clear</string>
++  <string name="Webradio.Filter.Save">Save</string>
++  <string name="Webradio.Filter.Genres">Genres</string>
++  <string name="Webradio.Filter.Bitrate">Bitrate</string>
++  <string name="Webradio.Filter.Country">Country</string>
++  <string name="Webradio.Filter.City">City</string>
++</resources>
+\ No newline at end of file
+diff --git a/Models/WebradioFavorites.cs b/Models/WebradioFavorites.cs
+index 3251537..38866b7 100644
+--- a/Models/WebradioFavorites.cs
++++ b/Models/WebradioFavorites.cs
+@@ -27,12 +27,6 @@
+ using System.Collections.ObjectModel;
+ using System.Collections.Generic;
+ using System.Xml.Serialization;
+-using System.Globalization;
+-using System.Linq;
+-using MediaPortal.Common;
+-using MediaPortal.Common.General;
+-using MediaPortal.Common.Settings;
+-using MediaPortal.UI.Presentation.DataObjects;
+ using MediaPortal.UI.Presentation.Models;
+ using MediaPortal.UI.Presentation.Workflow;
+ 
+diff --git a/Models/WebradioFilter.cs b/Models/WebradioFilter.cs
+index 3d48bd4..54c4830 100644
+--- a/Models/WebradioFilter.cs
++++ b/Models/WebradioFilter.cs
+@@ -25,13 +25,9 @@
+ using System;
+ using System.IO;
+ using System.Collections.Generic;
+-using System.Collections.ObjectModel;
+ using System.Xml.Serialization;
+-using System.Globalization;
+ using System.Linq;
+-using MediaPortal.Common;
+ using MediaPortal.Common.General;
+-using MediaPortal.Common.Settings;
+ using MediaPortal.UI.Presentation.DataObjects;
+ using MediaPortal.UI.Presentation.Models;
+ using MediaPortal.UI.Presentation.Workflow;
+diff --git a/Models/WebradioHome.cs b/Models/WebradioHome.cs
+index 2b752c2..84f2695 100644
+--- a/Models/WebradioHome.cs
++++ b/Models/WebradioHome.cs
+@@ -24,14 +24,8 @@
+ 
+ using System;
+ using System.IO;
+-using System.Collections.ObjectModel;
+ using System.Collections.Generic;
+ using System.Xml.Serialization;
+-using System.Globalization;
+-using System.Linq;
+-using MediaPortal.Common;
+-using MediaPortal.Common.General;
+-using MediaPortal.Common.Settings;
+ using MediaPortal.UI.Presentation.DataObjects;
+ using MediaPortal.UI.Presentation.Models;
+ using MediaPortal.UI.Presentation.Workflow;
+diff --git a/Models/WebradioSettings.cs b/Models/WebradioSettings.cs
+index ca43cc2..749b1d4 100644
+--- a/Models/WebradioSettings.cs
++++ b/Models/WebradioSettings.cs
+@@ -24,12 +24,6 @@
+ 
+ using System;
+ using System.Collections.Generic;
+-using System.Linq;
+-using System.Text;
+-using MediaPortal.Common;
+-using MediaPortal.Common.General;
+-using MediaPortal.Common.Settings;
+-using MediaPortal.UI.Presentation.DataObjects;
+ using MediaPortal.UI.Presentation.Models;
+ using MediaPortal.UI.Presentation.Workflow;
+ 
+@@ -39,10 +33,6 @@ class WebradioSettings :IWorkflowModel
+   {
+     public const string MODEL_ID_STR = "6378BD83-BF06-4AC3-ADD7-9A4B72DA878E";
+ 
+-    public WebradioSettings()
+-    {
+-    }
+-
+     #region IWorkflowModel implementation
+     public Guid ModelId
+     {
+diff --git a/Skin/default/screens/webradio_Favorites.xaml b/Skin/default/screens/webradio_Favorites.xaml
+index 97d5798..46eb10b 100644
+--- a/Skin/default/screens/webradio_Favorites.xaml
++++ b/Skin/default/screens/webradio_Favorites.xaml
+@@ -2,26 +2,26 @@
+ <Include
+     xmlns="www.team-mediaportal.com/2008/mpf/directx"
+     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+-		xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
++    xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
+     Source="screens\master_menu.xaml">
+   <Include.Resources>
+ 
+     <!-- Header -->
+     <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Favorites.ScreenTitle]"/>
+ 
+-		<Model x:Key="WebradioModel" Id="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"/>
+-	
++    <Model x:Key="WebradioModel" Id="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"/>
++
+     <!-- Contents -->
+     <ControlTemplate x:Key="Contents_Template">
+       <DockPanel DataContext="{Binding Source={StaticResource WebradioModel}}">
+         <Label Content="[HelloWorld.SampleText]" Color="{ThemeResource TextColor}" FontSize="36" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
+-			
+-		  <ToggleButton Width="50" Height="20" Content="Hallo" />
+-			
++
++        <ToggleButton Width="50" Height="20" Content="Hallo" />
++
+         <ListView Width="492" Height="132" VerticalAlignment="Top" Name="lstOverview" ItemsSource="{Binding Path=List}">
+ 
+         </ListView>
+-		
++
+         <StackPanel DockPanel.Dock="Center" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+           <Button Content="[HelloWorld.ButtonText]" Style="{ThemeResource ButtonWideStyle}" Margin="10"
+               HorizontalAlignment="Right" VerticalAlignment="Center"
+diff --git a/Skin/default/screens/webradio_Filter.xaml b/Skin/default/screens/webradio_Filter.xaml
+dissimilarity index 96%
+index 5174faa..3581bbf 100644
+--- a/Skin/default/screens/webradio_Filter.xaml
++++ b/Skin/default/screens/webradio_Filter.xaml
+@@ -1,121 +1,121 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<Include
+-	xmlns="www.team-mediaportal.com/2008/mpf/directx"
+-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+-	xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
+-	Source="screens\master_menu.xaml">
+-  <Include.Resources>
+-
+-    <!-- Header -->
+-    <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Home.ScreenTitle]"/>
+-
+-		<Model x:Key="Model" Id="FF29E03E-F4A9-4E21-A299-349E79010430"/>
+-
+-		<ControlTemplate x:Key="Contents_Template">
+-			<DockPanel DataContext="{Binding Source={StaticResource Model}}">
+-				<Grid>
+-					<Grid.ColumnDefinitions>
+-						<ColumnDefinition Width="30*" />
+-						<ColumnDefinition Width="30*" />
+-						<ColumnDefinition Width="20*" />
+-						<ColumnDefinition Width="20*" />
+-					</Grid.ColumnDefinitions>
+-					<Grid.RowDefinitions>
+-						<RowDefinition Height="6*" />
+-						<RowDefinition Height="6*" />
+-						<RowDefinition Height="81*" />
+-						<RowDefinition Height="3*" />
+-						<RowDefinition Height="3*" />
+-					</Grid.RowDefinitions>
+-				
+-					<!-- Actual Filter -->
+-					<TextBox Grid.ColumnSpan="4" Grid.Row="0" Margin="5,5,5,0" Text="{Binding Path=FilterTitel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+-
+-					<!-- Countrys -->
+-					<Label Grid.Column="0" Grid.Row="1" Content="[Webradio.Filter.Country]" HorizontalContentAlignment="Center" 
+-						HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" Color="White" />
+-					<ListView x:Name="lvCountrys" Grid.Column="0" Grid.Row="2" Margin="10" 
+-						HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+-						Style="{ThemeResource WebradioFilterListViewStyle}"
+-						ItemsSource="{Binding Path=Countrys, Mode=TwoWay}" >			
+-							<ListView.Resources> 
+-								<CommandList x:Key="Menu_Command">
+-									<Command Source="{StaticResource Model}" Path="ChangeCountry">
+-										<Command.Parameters> 
+-											<LateBoundValue BindingValue="{Binding}"/> 
+-										</Command.Parameters>
+-									</Command>
+-								</CommandList>
+-							</ListView.Resources>
+-					</ListView>	
+-					<Label Grid.Column="0" Grid.Row="3" Content="{Binding Path=CountryState, Mode=TwoWay}" HorizontalContentAlignment="Center" 
+-						HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="{ThemeResource SmallerFontSize}" Color="White" />
+-						
+-					<!-- Citys -->
+-					<Label Grid.Column="1" Grid.Row="1" Content="[Webradio.Filter.City]" HorizontalContentAlignment="Center" 
+-						HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" Color="White" />
+-					<ListView x:Name="lvCitys" Grid.Column="1" Grid.Row="2" Margin="10" 
+-						HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+-						Style="{ThemeResource WebradioFilterListViewStyle}"
+-						ItemsSource="{Binding Path=Citys}">
+-						<ListView.Resources> 
+-							<CommandList x:Key="Menu_Command">
+-								<Command Source="{StaticResource Model}" Path="ChangeCity">
+-									<Command.Parameters> 
+-										<LateBoundValue BindingValue="{Binding}"/> 
+-									</Command.Parameters>
+-								</Command>
+-							</CommandList>
+-						</ListView.Resources>
+-					</ListView>		
+-					<Label Grid.Column="1" Grid.Row="3" Content="{Binding Path=CityState, Mode=TwoWay}" HorizontalContentAlignment="Center" 
+-						HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="{ThemeResource SmallerFontSize}" Color="White" />
+-						
+-					<!-- Genres -->	
+-					<Label Grid.Column="2" Grid.Row="1" Content="[Webradio.Filter.Genres]" HorizontalContentAlignment="Center" 
+-						HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" Color="White" />
+-					<ListView x:Name="lvGenres" Grid.Column="2" Grid.Row="2" Margin="10" 
+-						HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+-						Style="{ThemeResource WebradioFilterListViewStyle}"
+-						ItemsSource="{Binding Path=Genres}" >	
+-						<ListView.Resources> 
+-							<CommandList x:Key="Menu_Command">
+-								<Command Source="{StaticResource Model}" Path="ChangeGenre">
+-									<Command.Parameters> 
+-										<LateBoundValue BindingValue="{Binding}"/> 
+-									</Command.Parameters>
+-								</Command>
+-							</CommandList>
+-						</ListView.Resources>
+-					</ListView>	
+-					<Label Grid.Column="2" Grid.Row="3" Content="{Binding Path=GenreState, Mode=TwoWay}" HorizontalContentAlignment="Center" 
+-						HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="{ThemeResource SmallerFontSize}" Color="White" />
+-						
+-					<!-- Bitrate -->
+-					<Label Grid.Column="3" Grid.Row="1" Content="[Webradio.Filter.Bitrate]" HorizontalContentAlignment="Center" 
+-						HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" Color="White" />
+-					<ListView x:Name="lvBitrate" Grid.Column="3" Grid.Row="2" Margin="10" 
+-						HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+-						Style="{ThemeResource WebradioFilterListViewStyle}"
+-						ItemsSource="{Binding Path=Bitrate}" >
+-						<ListView.Resources> 
+-							<CommandList x:Key="Menu_Command">
+-								<Command Source="{StaticResource Model}" Path="ChangeBitrate">
+-									<Command.Parameters> 
+-										<LateBoundValue BindingValue="{Binding}"/> 
+-									</Command.Parameters>
+-								</Command>
+-							</CommandList>
+-						</ListView.Resources>
+-					</ListView>	
+-					<Label Grid.Column="3" Grid.Row="3" Content="{Binding Path=BitrateState, Mode=TwoWay}" HorizontalContentAlignment="Center" 
+-						HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="{ThemeResource SmallerFontSize}" Color="White" />
+-					
+-					<Label Grid.ColumnSpan="4" Grid.Row="4" Content="{Binding Path=SelectedStreamsCount, Mode=TwoWay}" Margin="0,0,5,0" HorizontalContentAlignment="Center" 
+-						HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="{ThemeResource SmallerFontSize}" Color="White" />
+-					
+-				</Grid> 
+-			</DockPanel>
+-    </ControlTemplate>		
+-  </Include.Resources>
+-</Include>
+\ No newline at end of file
++<?xml version="1.0" encoding="utf-8"?>
++<Include
++  xmlns="www.team-mediaportal.com/2008/mpf/directx"
++  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
++  xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
++  Source="screens\master_menu.xaml">
++  <Include.Resources>
++
++    <!-- Header -->
++    <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Home.ScreenTitle]"/>
++
++    <Model x:Key="Model" Id="FF29E03E-F4A9-4E21-A299-349E79010430"/>
++
++    <ControlTemplate x:Key="Contents_Template">
++      <DockPanel DataContext="{Binding Source={StaticResource Model}}">
++        <Grid>
++          <Grid.ColumnDefinitions>
++            <ColumnDefinition Width="30*" />
++            <ColumnDefinition Width="30*" />
++            <ColumnDefinition Width="20*" />
++            <ColumnDefinition Width="20*" />
++          </Grid.ColumnDefinitions>
++          <Grid.RowDefinitions>
++            <RowDefinition Height="6*" />
++            <RowDefinition Height="6*" />
++            <RowDefinition Height="81*" />
++            <RowDefinition Height="3*" />
++            <RowDefinition Height="3*" />
++          </Grid.RowDefinitions>
++
++          <!-- Actual Filter -->
++          <TextBox Grid.ColumnSpan="4" Grid.Row="0" Margin="5,5,5,0" Text="{Binding Path=FilterTitel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
++
++          <!-- Countrys -->
++          <Label Grid.Column="0" Grid.Row="1" Content="[Webradio.Filter.Country]" HorizontalContentAlignment="Center" 
++            HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" Color="White" />
++          <ListView x:Name="lvCountrys" Grid.Column="0" Grid.Row="2" Margin="10" 
++            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
++            Style="{ThemeResource WebradioFilterListViewStyle}"
++            ItemsSource="{Binding Path=Countrys, Mode=TwoWay}" >
++            <ListView.Resources>
++              <CommandList x:Key="Menu_Command">
++                <Command Source="{StaticResource Model}" Path="ChangeCountry">
++                  <Command.Parameters>
++                    <LateBoundValue BindingValue="{Binding}"/>
++                  </Command.Parameters>
++                </Command>
++              </CommandList>
++            </ListView.Resources>
++          </ListView>
++          <Label Grid.Column="0" Grid.Row="3" Content="{Binding Path=CountryState, Mode=TwoWay}" HorizontalContentAlignment="Center" 
++            HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="{ThemeResource SmallerFontSize}" Color="White" />
++
++          <!-- Citys -->
++          <Label Grid.Column="1" Grid.Row="1" Content="[Webradio.Filter.City]" HorizontalContentAlignment="Center" 
++            HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" Color="White" />
++          <ListView x:Name="lvCitys" Grid.Column="1" Grid.Row="2" Margin="10" 
++            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
++            Style="{ThemeResource WebradioFilterListViewStyle}"
++            ItemsSource="{Binding Path=Citys}">
++            <ListView.Resources>
++              <CommandList x:Key="Menu_Command">
++                <Command Source="{StaticResource Model}" Path="ChangeCity">
++                  <Command.Parameters>
++                    <LateBoundValue BindingValue="{Binding}"/>
++                  </Command.Parameters>
++                </Command>
++              </CommandList>
++            </ListView.Resources>
++          </ListView>
++          <Label Grid.Column="1" Grid.Row="3" Content="{Binding Path=CityState, Mode=TwoWay}" HorizontalContentAlignment="Center" 
++            HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="{ThemeResource SmallerFontSize}" Color="White" />
++
++          <!-- Genres -->
++          <Label Grid.Column="2" Grid.Row="1" Content="[Webradio.Filter.Genres]" HorizontalContentAlignment="Center" 
++            HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" Color="White" />
++          <ListView x:Name="lvGenres" Grid.Column="2" Grid.Row="2" Margin="10" 
++            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
++            Style="{ThemeResource WebradioFilterListViewStyle}"
++            ItemsSource="{Binding Path=Genres}" >
++            <ListView.Resources>
++              <CommandList x:Key="Menu_Command">
++                <Command Source="{StaticResource Model}" Path="ChangeGenre">
++                  <Command.Parameters>
++                    <LateBoundValue BindingValue="{Binding}"/>
++                  </Command.Parameters>
++                </Command>
++              </CommandList>
++            </ListView.Resources>
++          </ListView>
++          <Label Grid.Column="2" Grid.Row="3" Content="{Binding Path=GenreState, Mode=TwoWay}" HorizontalContentAlignment="Center" 
++            HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="{ThemeResource SmallerFontSize}" Color="White" />
++
++          <!-- Bitrate -->
++          <Label Grid.Column="3" Grid.Row="1" Content="[Webradio.Filter.Bitrate]" HorizontalContentAlignment="Center" 
++            HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" Color="White" />
++          <ListView x:Name="lvBitrate" Grid.Column="3" Grid.Row="2" Margin="10" 
++            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
++            Style="{ThemeResource WebradioFilterListViewStyle}"
++            ItemsSource="{Binding Path=Bitrate}" >
++            <ListView.Resources>
++              <CommandList x:Key="Menu_Command">
++                <Command Source="{StaticResource Model}" Path="ChangeBitrate">
++                  <Command.Parameters>
++                    <LateBoundValue BindingValue="{Binding}"/>
++                  </Command.Parameters>
++                </Command>
++              </CommandList>
++            </ListView.Resources>
++          </ListView>
++          <Label Grid.Column="3" Grid.Row="3" Content="{Binding Path=BitrateState, Mode=TwoWay}" HorizontalContentAlignment="Center" 
++            HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="{ThemeResource SmallerFontSize}" Color="White" />
++
++          <Label Grid.ColumnSpan="4" Grid.Row="4" Content="{Binding Path=SelectedStreamsCount, Mode=TwoWay}" Margin="0,0,5,0" HorizontalContentAlignment="Center" 
++            HorizontalAlignment="Stretch" VerticalAlignment="Top" FontSize="{ThemeResource SmallerFontSize}" Color="White" />
++
++        </Grid>
++      </DockPanel>
++    </ControlTemplate>
++  </Include.Resources>
++</Include>
+\ No newline at end of file
+diff --git a/Skin/default/screens/webradio_Home.xaml b/Skin/default/screens/webradio_Home.xaml
+dissimilarity index 91%
+index 336a63e..f2491eb 100644
+--- a/Skin/default/screens/webradio_Home.xaml
++++ b/Skin/default/screens/webradio_Home.xaml
+@@ -1,74 +1,74 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<Include
+-	xmlns="www.team-mediaportal.com/2008/mpf/directx"
+-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+-	xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
+-	Source="screens\master_menu.xaml">
+-	<Include.Resources>
+-
+-    <!-- Header -->
+-    <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Home.ScreenTitle]"/>
+-
+-		<Model x:Key="WebradioModel" Id="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"/>
+-	
+-    <!-- Contents -->
+-    <ControlTemplate x:Key="Contents_Template">
+-      <DockPanel DataContext="{Binding Source={StaticResource WebradioModel}}">	
+-	    <Grid>
+-        <Grid.RowDefinitions>
+-          <RowDefinition Height="10*" />
+-          <RowDefinition Height="60*" />
+-          <RowDefinition Height="30*" />
+-        </Grid.RowDefinitions>
+-        <Grid.ColumnDefinitions>
+-          <ColumnDefinition Width="25*"  />
+-          <ColumnDefinition Width="15*"  />
+-          <ColumnDefinition Width="60*" />
+-        </Grid.ColumnDefinitions>
+-        
+-        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="10,10,10,10">
+-          <Label DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
+-						Content="{Binding [Name]}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+-        </StackPanel>
+-
+-        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5">
+-					<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Genres]" 
+-						FontSize="{ThemeResource SmallFontSize}" Color="White"/>
+-					<Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
+-						Content="{Binding [Genres]}" FontSize="{ThemeResource SmallerFontSize}" Color="White"/>
+-					<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Bitrate]" 
+-						FontSize="{ThemeResource SmallFontSize}" Color="White"/>
+-					<Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
+-						Content="{Binding [Bitrate]}" FontSize="{ThemeResource SmallerFontSize}" Color="White"/>
+-					<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Country]" 
+-						FontSize="{ThemeResource SmallFontSize}" Color="White"/>
+-					<Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
+-						Content="{Binding [Country]}" FontSize="{ThemeResource SmallerFontSize}" Color="White"/>
+-					<Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.City]" 
+-						FontSize="{ThemeResource SmallFontSize}" Color="White"/>
+-					<Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
+-						Content="{Binding [City]}" FontSize="{ThemeResource SmallerFontSize}" Color="White"/>
+-        </StackPanel>
+-		
+-        <Image Grid.Column="1" Grid.Row="1" Margin="10" Stretch="Uniform" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" Source="{Binding [Logo]}" VerticalAlignment="Top"/>
+-		
+-				<Label Grid.ColumnSpan="2" Grid.Row="2" Margin="5,5,5,5" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" Content="{Binding [Description]}" FontSize="{ThemeResource SmallerFontSize}" Color="White" />
+-
+-            <ListView x:Name="lvStreams" Grid.Column="2" Grid.RowSpan="3" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{ThemeResource ContentsMenuListViewStyle}"
+-								ItemsSource="{Binding Path=AllRadioStreams}" >	
+-							<ListView.Resources> 
+-								<CommandList x:Key="Menu_Command">
+-									<Command Source="{StaticResource WebradioModel}" Path="SelectStream">
+-										<Command.Parameters> 
+-											<LateBoundValue BindingValue="{Binding}"/> 
+-										</Command.Parameters>
+-									</Command>
+-								</CommandList>
+-							</ListView.Resources>
+-						</ListView>
+-
+-				</Grid>
+-      </DockPanel>
+-    </ControlTemplate>
+-  </Include.Resources>
+-</Include>
+\ No newline at end of file
++<?xml version="1.0" encoding="utf-8"?>
++<Include
++  xmlns="www.team-mediaportal.com/2008/mpf/directx"
++  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
++  xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
++  Source="screens\master_menu.xaml">
++  <Include.Resources>
++
++    <!-- Header -->
++    <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Home.ScreenTitle]"/>
++
++    <Model x:Key="WebradioModel" Id="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"/>
++
++    <!-- Contents -->
++    <ControlTemplate x:Key="Contents_Template">
++      <DockPanel DataContext="{Binding Source={StaticResource WebradioModel}}">
++        <Grid>
++          <Grid.RowDefinitions>
++            <RowDefinition Height="10*" />
++            <RowDefinition Height="60*" />
++            <RowDefinition Height="30*" />
++          </Grid.RowDefinitions>
++          <Grid.ColumnDefinitions>
++            <ColumnDefinition Width="25*"  />
++            <ColumnDefinition Width="15*"  />
++            <ColumnDefinition Width="60*" />
++          </Grid.ColumnDefinitions>
++
++          <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="10,10,10,10">
++            <Label DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
++            Content="{Binding [Name]}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
++          </StackPanel>
++
++          <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5">
++            <Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Genres]" 
++            FontSize="{ThemeResource SmallFontSize}" Color="White"/>
++            <Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
++            Content="{Binding [Genres]}" FontSize="{ThemeResource SmallerFontSize}" Color="White"/>
++            <Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Bitrate]" 
++            FontSize="{ThemeResource SmallFontSize}" Color="White"/>
++            <Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
++            Content="{Binding [Bitrate]}" FontSize="{ThemeResource SmallerFontSize}" Color="White"/>
++            <Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Country]" 
++            FontSize="{ThemeResource SmallFontSize}" Color="White"/>
++            <Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
++            Content="{Binding [Country]}" FontSize="{ThemeResource SmallerFontSize}" Color="White"/>
++            <Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.City]" 
++            FontSize="{ThemeResource SmallFontSize}" Color="White"/>
++            <Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
++            Content="{Binding [City]}" FontSize="{ThemeResource SmallerFontSize}" Color="White"/>
++          </StackPanel>
++
++          <Image Grid.Column="1" Grid.Row="1" Margin="10" Stretch="Uniform" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" Source="{Binding [Logo]}" VerticalAlignment="Top"/>
++
++          <Label Grid.ColumnSpan="2" Grid.Row="2" Margin="5,5,5,5" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" Content="{Binding [Description]}" FontSize="{ThemeResource SmallerFontSize}" Color="White" />
++
++          <ListView x:Name="lvStreams" Grid.Column="2" Grid.RowSpan="3" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{ThemeResource ContentsMenuListViewStyle}"
++                ItemsSource="{Binding Path=AllRadioStreams}" >
++            <ListView.Resources>
++              <CommandList x:Key="Menu_Command">
++                <Command Source="{StaticResource WebradioModel}" Path="SelectStream">
++                  <Command.Parameters>
++                    <LateBoundValue BindingValue="{Binding}"/>
++                  </Command.Parameters>
++                </Command>
++              </CommandList>
++            </ListView.Resources>
++          </ListView>
++
++        </Grid>
++      </DockPanel>
++    </ControlTemplate>
++  </Include.Resources>
++</Include>
+\ No newline at end of file
+diff --git a/Skin/default/screens/webradio_Settings.xaml b/Skin/default/screens/webradio_Settings.xaml
+index d932f69..b8d49ea 100644
+--- a/Skin/default/screens/webradio_Settings.xaml
++++ b/Skin/default/screens/webradio_Settings.xaml
+@@ -1,8 +1,8 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <Include
+-	xmlns="www.team-mediaportal.com/2008/mpf/directx"
+-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+-	Source="screens\master_menu.xaml">
++  xmlns="www.team-mediaportal.com/2008/mpf/directx"
++  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
++  Source="screens\master_menu.xaml">
+   <Include.Resources>
+     <!-- Header -->
+     <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Settings.ScreenTitle]"/>
+@@ -17,7 +17,7 @@
+             Command="{Command ChangeHelloWorldString}"/>
+           <Label Content="{Binding HelloString}" Color="{ThemeResource TextColor}" Margin="10"
+             HorizontalAlignment="Left" VerticalAlignment="Center"/>
+-			    <Label Content="{Binding HelloString}" Color="{ThemeResource TextColor}" Margin="10"
++          <Label Content="{Binding HelloString}" Color="{ThemeResource TextColor}" Margin="10"
+             HorizontalAlignment="Left" VerticalAlignment="Center"/>
+         </StackPanel>
+       </DockPanel>
+diff --git a/Skin/default/screens/webradio_dialogImportFilter.xaml b/Skin/default/screens/webradio_dialogImportFilter.xaml
+dissimilarity index 83%
+index 4768e8e..6a2611e 100644
+--- a/Skin/default/screens/webradio_dialogImportFilter.xaml
++++ b/Skin/default/screens/webradio_dialogImportFilter.xaml
+@@ -1,31 +1,31 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<Include
+-	xmlns="www.team-mediaportal.com/2008/mpf/directx"
+-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+-	xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
+-	Source="screens\master_configuration_dialog_wb.xaml">
+-  <Include.Resources>
+-
+-    <!-- Header -->
+-    <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Home.ScreenTitle]"/>
+-
+-		<Model x:Key="Model" Id="FF29E03E-F4A9-4E21-A299-349E79010430"/>
+-
+-		<ControlTemplate x:Key="Contents_Template">
+-			<DockPanel DataContext="{Binding Source={StaticResource Model}}">
+-				<ListView x:Name="lvFilter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{ThemeResource ContentsMenuListViewStyle}"
+-					ItemsSource="{Binding Path=FilterItems}" >	
+-					<ListView.Resources> 
+-						<CommandList x:Key="Menu_Command">
+-							<Command Source="{StaticResource Model}" Path="SetImportFilter">
+-								<Command.Parameters> 
+-									<LateBoundValue BindingValue="{Binding}"/> 
+-								</Command.Parameters>
+-							</Command>
+-						</CommandList>
+-					</ListView.Resources>
+-				</ListView>
+-			</DockPanel>
+-    </ControlTemplate>		
+-  </Include.Resources>
+-</Include>
+\ No newline at end of file
++<?xml version="1.0" encoding="utf-8"?>
++<Include
++  xmlns="www.team-mediaportal.com/2008/mpf/directx"
++  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
++  xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
++  Source="screens\master_configuration_dialog_wb.xaml">
++  <Include.Resources>
++
++    <!-- Header -->
++    <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Home.ScreenTitle]"/>
++
++    <Model x:Key="Model" Id="FF29E03E-F4A9-4E21-A299-349E79010430"/>
++
++    <ControlTemplate x:Key="Contents_Template">
++      <DockPanel DataContext="{Binding Source={StaticResource Model}}">
++        <ListView x:Name="lvFilter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{ThemeResource ContentsMenuListViewStyle}"
++          ItemsSource="{Binding Path=FilterItems}" >
++          <ListView.Resources>
++            <CommandList x:Key="Menu_Command">
++              <Command Source="{StaticResource Model}" Path="SetImportFilter">
++                <Command.Parameters>
++                  <LateBoundValue BindingValue="{Binding}"/>
++                </Command.Parameters>
++              </Command>
++            </CommandList>
++          </ListView.Resources>
++        </ListView>
++      </DockPanel>
++    </ControlTemplate>
++  </Include.Resources>
++</Include>
+\ No newline at end of file
+diff --git a/Skin/default/themes/default/styles/WebradioStyles.xaml b/Skin/default/themes/default/styles/WebradioStyles.xaml
+index 4a2dd55..c2ad478 100644
+--- a/Skin/default/themes/default/styles/WebradioStyles.xaml
++++ b/Skin/default/themes/default/styles/WebradioStyles.xaml
+@@ -1,23 +1,23 @@
+ ﻿<?xml version="1.0" encoding="utf-8"?>
+ <ResourceDictionary
+-	xmlns="www.team-mediaportal.com/2008/mpf/directx"
+-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+-	xmlns:collections="clr-namespace:MediaPortal.UI.Presentation.DataObjects;assembly=MediaPortal.UI"
+-	xmlns:wrh="clr-namespace:Webradio.Models"
+-	DependsOnStyleResources="Buttons,Colors,Consts">
++  xmlns="www.team-mediaportal.com/2008/mpf/directx"
++  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
++  xmlns:collections="clr-namespace:MediaPortal.UI.Presentation.DataObjects;assembly=MediaPortal.UI"
++  xmlns:wrh="clr-namespace:Webradio.Models"
++  DependsOnStyleResources="Buttons,Colors,Consts">
+ 
+-	<!-- A data template which shows an image and the Name of the ListItem -->
++  <!-- A data template which shows an image and the Name of the ListItem -->
+   <DataTemplate x:Key="WebradioFilterItemDataTemplate" DataType="{x:Type collections:ListItem}">
+     <DockPanel x:Name="ItemControl" LastChildFill="False">
+       <CheckBox DockPanel.Dock="Left" IsChecked="{Binding Selected}" />
+       <Label x:Name="ItemLabel" DockPanel.Dock="Center" Content="{Binding [Name]}"
+-				HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="{ThemeResource SmallFontSize}"
+-				Color="{ThemeResource TextColor}"/>
++        HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="{ThemeResource SmallFontSize}"
++        Color="{ThemeResource TextColor}"/>
+     </DockPanel>
+   </DataTemplate>
+-		
+-	<!-- ListView style to be used in the content area of the screens -->
+-	<Style x:Key="WebradioFilterListViewStyle" BasedOn="{ThemeResource DefaultListViewStyle}">
++
++  <!-- ListView style to be used in the content area of the screens -->
++  <Style x:Key="WebradioFilterListViewStyle" BasedOn="{ThemeResource DefaultListViewStyle}">
+     <Setter Property="ItemTemplate" Value="{ThemeResource WebradioFilterItemDataTemplate}"/>
+     <Setter Property="DataStringProvider" Value="{ThemeResource ContentsMenuItemDataStringProvider}"/>
+     <Setter Property="ItemContainerStyle" Value="{ThemeResource DefaultMenuItemContainerStyle}"/>
+diff --git a/Skin/default/workflow/webradio-actions.xml b/Skin/default/workflow/webradio-actions.xml
+dissimilarity index 94%
+index 89dc957..5379f49 100644
+--- a/Skin/default/workflow/webradio-actions.xml
++++ b/Skin/default/workflow/webradio-actions.xml
+@@ -1,117 +1,117 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<Workflow DescriptorVersion="1.0">
+-  <MenuActions>
+-		<!-- Entrys in Homemenu -->
+-    <PushNavigationTransition Id="2DED75C0-5EAE-4E69-9913-6B50A9AB2956"
+-			Name="Home->Webradio"
+-			DisplayCategory="z-Webradio"
+-			SortOrder="a"
+-			SourceStates="7F702D9C-F2DD-42da-9ED8-0BA92F07787F"
+-			TargetState="263FADFE-87BE-4563-83F0-E62707891E1B"
+-			DisplayTitle="[Webradio.MenuEntry]"/>
+-		
+-		<!--                  Entrys in Homescreen                    -->
+-		<PushNavigationTransition Id="D3DED8FE-3AFE-4A90-A727-444E33582016"
+-			Name="Webradio->Home"
+-			DisplayCategory="a-Webradio"
+-			SortOrder="a"
+-			SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
+-			TargetState="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"
+-			DisplayTitle="[Webradio.Home.Menu.View]"/>
+-		<MethodCallAction Id="6A7897A8-467C-4E41-8272-BA76A0E100EE"
+-			Name="Webradio->Home"
+-			DisplayCategory="a-Webradio"
+-			SortOrder="a"
+-			SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
+-			ModelId="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"
+-			MethodName="ShowFavorites"
+-      DisplayTitle="[Webradio.Home.Menu.Favorites]"/>
+-		<PushNavigationTransition Id="2ABFF249-2F05-4E25-8F3E-3F2B136A40FB"
+-			Name="WebradioHome->Settings"
+-			DisplayCategory="a-Webradio"
+-			SortOrder="a"
+-			SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
+-			TargetState="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
+-			DisplayTitle="[Webradio.Home.Menu.Settings]"/>
+-
+-		<!--                Entrys in Settings                    -->
+-		<PushNavigationTransition Id="AD312631-E1C4-4FBD-BFBB-D3175D03CA66"
+-			Name="WebradioSettings->Filter"
+-			DisplayCategory="a-Webradio"
+-			SortOrder="a"
+-			SourceStates="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
+-			TargetState="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
+-			DisplayTitle="[Webradio.Settings.Menu.Filter]"/>	
+-		<PushNavigationTransition Id="94FED17C-D1D2-47C4-B3C8-02A7ACC6CE47"
+-			Name="WebradioSettings->Favorites"
+-			DisplayCategory="a-Webradio"
+-			SortOrder="a"
+-			SourceStates="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
+-			TargetState="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
+-			DisplayTitle="[Webradio.Settings.Menu.Favorites]"/>
+-
+-		<!--                Entrys Filters                  -->
+-		<MethodCallAction Id="A70617D3-7A87-4FB9-BBC9-CA8B4B26BD6A"
+-			Name="AddFilter"
+-			DisplayCategory="a-Webradio"
+-			DisplayTitle="[Webradio.Filter.Add]"
+-			SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
+-			ModelId="FF29E03E-F4A9-4E21-A299-349E79010430"
+-			MethodName="Add"/>
+-		<MethodCallAction Id="73595548-1061-4F1A-94F2-447280813FDE"
+-			Name="RenameFilter"
+-			DisplayCategory="a-Webradio"
+-			DisplayTitle="[Webradio.Filter.Clear]"
+-			SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
+-			ModelId="FF29E03E-F4A9-4E21-A299-349E79010430"
+-			MethodName="Clear"/>	
+-		<MethodCallAction Id="7766CFB8-09D6-4A4F-8C8D-2AC859B6B115"
+-			Name="SaveFilter"
+-			DisplayCategory="a-Webradio"
+-			DisplayTitle="[Webradio.Filter.Save]"
+-			SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
+-			ModelId="FF29E03E-F4A9-4E21-A299-349E79010430"
+-			MethodName="Save"/>	
+-		<!-- Import Filter Dialog-->	
+-		<PushNavigationTransition Id="5A626D7B-BB4A-4882-9FFB-F72BE27D9792"
+-			Name="dialogImportFilter"
+-			DisplayCategory="a-Webradio"
+-			DisplayTitle="[Webradio.Filter.Import]"
+-			SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
+-			TargetState="5A626D7B-BB4A-4882-9FFB-F72BE27D9792"/>
+-			
+-		<!--                Entrys in Favorites                   -->
+-		<MethodCallAction Id="F9334D42-D0C3-48B9-89A3-293BD1AADEB4"
+-			Name="AddFavorit"
+-			DisplayCategory="a-Webradio"
+-			SortOrder="a"
+-			DisplayTitle="[Webradio.Favorites.Add]"
+-			SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
+-			ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
+-			MethodName="Add"/>
+-		<MethodCallAction Id="F9CE9537-8F78-476B-8724-B8348BCB5E43"
+-			Name="DeleteFavorit"
+-			DisplayCategory="a-Webradio"
+-			SortOrder="a"
+-			DisplayTitle="[Webradio.Favorites.Delete]"
+-			SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
+-			ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
+-			MethodName="Delete"/>
+-		<MethodCallAction Id="911CC334-7F8D-49F0-81D1-F4F17F9C0792"
+-			Name="RenameFavorit"
+-			DisplayCategory="a-Webradio"
+-			SortOrder="a"
+-			DisplayTitle="[Webradio.Favorites.Rename]"
+-			SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
+-			ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
+-			MethodName="Rename"/>	
+-		<MethodCallAction Id="60E44CF6-2932-4069-9129-3B2306893D52"
+-			Name="SaveFavorit"
+-			DisplayCategory="a-Webradio"
+-			SortOrder="a"
+-			DisplayTitle="[Webradio.Favorites.Save]"
+-			SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
+-			ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
+-			MethodName="Save"/>
+-  </MenuActions>
+-</Workflow>
++<?xml version="1.0" encoding="utf-8"?>
++<Workflow DescriptorVersion="1.0">
++  <MenuActions>
++    <!-- Entrys in Homemenu -->
++    <PushNavigationTransition Id="2DED75C0-5EAE-4E69-9913-6B50A9AB2956"
++      Name="Home->Webradio"
++      DisplayCategory="z-Webradio"
++      SortOrder="a"
++      SourceStates="7F702D9C-F2DD-42da-9ED8-0BA92F07787F"
++      TargetState="263FADFE-87BE-4563-83F0-E62707891E1B"
++      DisplayTitle="[Webradio.MenuEntry]"/>
++
++    <!--                  Entrys in Homescreen                    -->
++    <PushNavigationTransition Id="D3DED8FE-3AFE-4A90-A727-444E33582016"
++      Name="Webradio->Home"
++      DisplayCategory="a-Webradio"
++      SortOrder="a"
++      SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
++      TargetState="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"
++      DisplayTitle="[Webradio.Home.Menu.View]"/>
++    <MethodCallAction Id="6A7897A8-467C-4E41-8272-BA76A0E100EE"
++      Name="Webradio->Home"
++      DisplayCategory="a-Webradio"
++      SortOrder="a"
++      SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
++      ModelId="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"
++      MethodName="ShowFavorites"
++      DisplayTitle="[Webradio.Home.Menu.Favorites]"/>
++    <PushNavigationTransition Id="2ABFF249-2F05-4E25-8F3E-3F2B136A40FB"
++      Name="WebradioHome->Settings"
++      DisplayCategory="a-Webradio"
++      SortOrder="a"
++      SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
++      TargetState="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
++      DisplayTitle="[Webradio.Home.Menu.Settings]"/>
++
++    <!--                Entrys in Settings                    -->
++    <PushNavigationTransition Id="AD312631-E1C4-4FBD-BFBB-D3175D03CA66"
++      Name="WebradioSettings->Filter"
++      DisplayCategory="a-Webradio"
++      SortOrder="a"
++      SourceStates="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
++      TargetState="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
++      DisplayTitle="[Webradio.Settings.Menu.Filter]"/>
++    <PushNavigationTransition Id="94FED17C-D1D2-47C4-B3C8-02A7ACC6CE47"
++      Name="WebradioSettings->Favorites"
++      DisplayCategory="a-Webradio"
++      SortOrder="a"
++      SourceStates="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
++      TargetState="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
++      DisplayTitle="[Webradio.Settings.Menu.Favorites]"/>
++
++    <!--                Entrys Filters                  -->
++    <MethodCallAction Id="A70617D3-7A87-4FB9-BBC9-CA8B4B26BD6A"
++      Name="AddFilter"
++      DisplayCategory="a-Webradio"
++      DisplayTitle="[Webradio.Filter.Add]"
++      SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
++      ModelId="FF29E03E-F4A9-4E21-A299-349E79010430"
++      MethodName="Add"/>
++    <MethodCallAction Id="73595548-1061-4F1A-94F2-447280813FDE"
++      Name="RenameFilter"
++      DisplayCategory="a-Webradio"
++      DisplayTitle="[Webradio.Filter.Clear]"
++      SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
++      ModelId="FF29E03E-F4A9-4E21-A299-349E79010430"
++      MethodName="Clear"/>
++    <MethodCallAction Id="7766CFB8-09D6-4A4F-8C8D-2AC859B6B115"
++      Name="SaveFilter"
++      DisplayCategory="a-Webradio"
++      DisplayTitle="[Webradio.Filter.Save]"
++      SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
++      ModelId="FF29E03E-F4A9-4E21-A299-349E79010430"
++      MethodName="Save"/>
++    <!-- Import Filter Dialog-->
++    <PushNavigationTransition Id="5A626D7B-BB4A-4882-9FFB-F72BE27D9792"
++      Name="dialogImportFilter"
++      DisplayCategory="a-Webradio"
++      DisplayTitle="[Webradio.Filter.Import]"
++      SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
++      TargetState="5A626D7B-BB4A-4882-9FFB-F72BE27D9792"/>
++
++    <!--                Entrys in Favorites                   -->
++    <MethodCallAction Id="F9334D42-D0C3-48B9-89A3-293BD1AADEB4"
++      Name="AddFavorit"
++      DisplayCategory="a-Webradio"
++      SortOrder="a"
++      DisplayTitle="[Webradio.Favorites.Add]"
++      SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
++      ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
++      MethodName="Add"/>
++    <MethodCallAction Id="F9CE9537-8F78-476B-8724-B8348BCB5E43"
++      Name="DeleteFavorit"
++      DisplayCategory="a-Webradio"
++      SortOrder="a"
++      DisplayTitle="[Webradio.Favorites.Delete]"
++      SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
++      ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
++      MethodName="Delete"/>
++    <MethodCallAction Id="911CC334-7F8D-49F0-81D1-F4F17F9C0792"
++      Name="RenameFavorit"
++      DisplayCategory="a-Webradio"
++      SortOrder="a"
++      DisplayTitle="[Webradio.Favorites.Rename]"
++      SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
++      ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
++      MethodName="Rename"/>
++    <MethodCallAction Id="60E44CF6-2932-4069-9129-3B2306893D52"
++      Name="SaveFavorit"
++      DisplayCategory="a-Webradio"
++      SortOrder="a"
++      DisplayTitle="[Webradio.Favorites.Save]"
++      SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
++      ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
++      MethodName="Save"/>
++  </MenuActions>
++</Workflow>
+diff --git a/Webradio.csproj b/Webradio.csproj
+index 0b76a42..a37f8fa 100644
+--- a/Webradio.csproj
++++ b/Webradio.csproj
+@@ -1,5 +1,38 @@
+ ﻿<?xml version="1.0" encoding="utf-8"?>
+ <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
++    <DebugSymbols>true</DebugSymbols>
++    <OutputPath>bin\x86\Debug\</OutputPath>
++    <DefineConstants>DEBUG;TRACE</DefineConstants>
++    <DebugType>full</DebugType>
++    <PlatformTarget>x86</PlatformTarget>
++    <CodeAnalysisLogFile>C:\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\Webradio\Webradio.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
++    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
++    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
++    <ErrorReport>prompt</ErrorReport>
++    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
++    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
++    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
++    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
++    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
++    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
++    <OutputPath>bin\x86\Release\</OutputPath>
++    <DefineConstants>TRACE</DefineConstants>
++    <Optimize>true</Optimize>
++    <DebugType>pdbonly</DebugType>
++    <PlatformTarget>x86</PlatformTarget>
++    <CodeAnalysisLogFile>bin\Release\Webradio.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
++    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
++    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
++    <ErrorReport>prompt</ErrorReport>
++    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
++    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
++    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
++    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
++    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
++  </PropertyGroup>
+   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+   <PropertyGroup>
+     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+@@ -12,40 +45,10 @@
+     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+     <FileAlignment>512</FileAlignment>
+   </PropertyGroup>
+-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+-    <DebugSymbols>true</DebugSymbols>
+-    <DebugType>full</DebugType>
+-    <Optimize>false</Optimize>
+-    <OutputPath>C:\Program Files %28x86%29\Team MediaPortal\MP2-Client\Plugins\Webradio\</OutputPath>
+-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+-    <ErrorReport>prompt</ErrorReport>
+-    <WarningLevel>4</WarningLevel>
+-    <PlatformTarget>x86</PlatformTarget>
+-  </PropertyGroup>
+-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+-    <DebugType>pdbonly</DebugType>
+-    <Optimize>true</Optimize>
+-    <OutputPath>bin\Release\</OutputPath>
+-    <DefineConstants>TRACE</DefineConstants>
+-    <ErrorReport>prompt</ErrorReport>
+-    <WarningLevel>4</WarningLevel>
+-  </PropertyGroup>
+   <PropertyGroup>
+     <RunPostBuildEvent>Always</RunPostBuildEvent>
+   </PropertyGroup>
+   <ItemGroup>
+-    <Reference Include="MediaPortal.Common">
+-      <HintPath>C:\Program Files (x86)\Team MediaPortal\MP2-Client\MediaPortal.Common.dll</HintPath>
+-      <Private>False</Private>
+-    </Reference>
+-    <Reference Include="MediaPortal.UI">
+-      <HintPath>C:\Program Files (x86)\Team MediaPortal\MP2-Client\MediaPortal.UI.dll</HintPath>
+-      <Private>False</Private>
+-    </Reference>
+-    <Reference Include="MediaPortal.Utilities, Version=2.0.0.1306, Culture=neutral, processorArchitecture=x86">
+-      <HintPath>C:\Program Files (x86)\Team MediaPortal\MP2-Client\MediaPortal.Utilities.dll</HintPath>
+-      <Private>False</Private>
+-    </Reference>
+     <Reference Include="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+       <SpecificVersion>False</SpecificVersion>
+     </Reference>
+@@ -68,17 +71,45 @@
+     <Compile Include="Properties\AssemblyInfo.cs" />
+   </ItemGroup>
+   <ItemGroup>
+-    <Content Include="Data\WebradioFavorites.xml">
+-      <SubType>Designer</SubType>
+-    </Content>
++    <Content Include="Data\WebradioFavorites.xml" />
+     <Content Include="Data\WebradioFilters.xml" />
+     <Content Include="Data\WebradioSender.xml" />
+     <Content Include="Language\strings_en.xml" />
++    <Content Include="plugin.xml" />
++    <Content Include="Skin\default\images\2DED75C0-5EAE-4E69-9913-6B50A9AB2956.jpg" />
++    <Content Include="Skin\default\workflow\webradio-actions.xml" />
++    <Content Include="Skin\default\screens\webradio_dialogImportFilter.xaml" />
++    <Content Include="Skin\default\screens\webradio_Favorites.xaml" />
++    <Content Include="Skin\default\screens\webradio_Filter.xaml" />
++    <Content Include="Skin\default\screens\webradio_Home.xaml" />
++    <Content Include="Skin\default\screens\webradio_Settings.xaml" />
++    <Content Include="Skin\default\themes\default\styles\WebradioStyles.xaml" />
++  </ItemGroup>
++  <ItemGroup>
++    <ProjectReference Include="..\..\Source\Core\MediaPortal.Common\MediaPortal.Common.csproj">
++      <Project>{ECF060E7-CAA1-4466-851F-F80B857641EA}</Project>
++      <Name>MediaPortal.Common</Name>
++    </ProjectReference>
++    <ProjectReference Include="..\..\Source\Core\MediaPortal.UI\MediaPortal.UI.csproj">
++      <Project>{52E587D0-A274-44DA-8846-8EEAF5414923}</Project>
++      <Name>MediaPortal.UI</Name>
++    </ProjectReference>
++  </ItemGroup>
++  <ItemGroup>
++    <None Include="build.targets" />
+   </ItemGroup>
+   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
++  <Import Project="build.targets" />
+   <PropertyGroup>
+-    <PostBuildEvent>
+-    </PostBuildEvent>
++    <PostBuildEvent>mkdir "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\Language"
++robocopy "$(ProjectDir)Language" "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\Language" /MIR
++mkdir "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\Skin"
++robocopy "$(ProjectDir)Skin" "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\Skin" /MIR 
++mkdir "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\Data"
++robocopy "$(ProjectDir)Data" "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\Data" /MIR 
++xcopy /Y "$(ProjectDir)plugin.xml" "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\"
++xcopy /Y "$(TargetPath)" "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\"
++</PostBuildEvent>
+   </PropertyGroup>
+   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+        Other similar extension points exist, see Microsoft.Common.targets.
+diff --git a/build.targets b/build.targets
+new file mode 100644
+index 0000000..ba192e6
+--- /dev/null
++++ b/build.targets
+@@ -0,0 +1,33 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
++<!--TODO: replace postbuild events by this target file. Didn't work yet ...
++
++  <PropertyGroup>
++    <PluginDestination>$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\</PluginDestination>
++  </PropertyGroup>
++
++  <ItemGroup>
++    <PluginFiles Include="$(TargetDir)$(ProjectName).dll" />
++    <PluginFiles Include="$(ProjectDir)plugin.xml" />
++  </ItemGroup>
++
++  <ItemGroup>
++    <LanguageFiles Include="$(ProjectDir)Language\*.*" />
++  </ItemGroup>
++
++  <ItemGroup>
++    <DataFiles Include="$(ProjectDir)Data\*.*" />
++  </ItemGroup>
++
++  <ItemGroup>
++    <SkinFiles Include="$(ProjectDir)Skin\**\*.*" />
++  </ItemGroup>
++
++  <Target Name="AfterBuild">
++    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(PluginDestination)" />
++    <Copy SourceFiles="@(LanguageFiles)" DestinationFolder="$(PluginDestination)Language\" />
++    <Copy SourceFiles="@(DataFiles)" DestinationFolder="$(PluginDestination)Data\" />
++    <Copy SourceFiles="@(SkinFiles)" DestinationFiles="@(SkinFiles->'$(PluginDestination)Skin\%(RecursiveDir)%(Filename)%(Extension)')" />
++  </Target>
++-->
++</Project>
+\ No newline at end of file
+diff --git a/plugin.xml b/plugin.xml
+index 5ddadc6..b7db550 100644
+--- a/plugin.xml
++++ b/plugin.xml
+@@ -1,49 +1,49 @@
+ ﻿<Plugin
+-	DescriptorVersion="1.0"
+-	Name="Webradio"
+-	PluginId="{9CBA9944-C19B-4112-B082-70C745677A97}"
+-	Author="BigGranu"
+-	Copyright="GPL"
+-	Description="Play Webradiostreams"
+-	PluginVersion="1.0">
++  DescriptorVersion="1.0"
++  Name="Webradio"
++  PluginId="{9CBA9944-C19B-4112-B082-70C745677A97}"
++  Author="BigGranu"
++  Copyright="GPL"
++  Description="Play Webradiostreams"
++  PluginVersion="1.0">
+ 
+   <Runtime>
+     <Assembly FileName="Webradio.dll"/>
+   </Runtime>
+ 
+   <Register Location="/Models">
+-  <Model Id="EA3CC191-0BE5-4C8D-889F-E9C4616AB554" ClassName="Webradio.Models.WebradioHome"/>
+-	<Model Id="6378BD83-BF06-4AC3-ADD7-9A4B72DA878E" ClassName="Webradio.Models.WebradioSettings"/>
+-	<Model Id="FF29E03E-F4A9-4E21-A299-349E79010430" ClassName="Webradio.Models.WebradioFilter"/>
+-	<Model Id="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94" ClassName="Webradio.Models.WebradioFavorites"/>
++    <Model Id="EA3CC191-0BE5-4C8D-889F-E9C4616AB554" ClassName="Webradio.Models.WebradioHome"/>
++    <Model Id="6378BD83-BF06-4AC3-ADD7-9A4B72DA878E" ClassName="Webradio.Models.WebradioSettings"/>
++    <Model Id="FF29E03E-F4A9-4E21-A299-349E79010430" ClassName="Webradio.Models.WebradioFilter"/>
++    <Model Id="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94" ClassName="Webradio.Models.WebradioFavorites"/>
+   </Register>
+ 
+   <Register Location="/Workflow/States">
+     <WorkflowState Id="263FADFE-87BE-4563-83F0-E62707891E1B"
+       Name="WebradioHome" MainScreen="webradio_Home"
+       DisplayLabel="Home"
+-			WorkflowModel="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"/>		
+-		<WorkflowState Id="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
++      WorkflowModel="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"/>
++    <WorkflowState Id="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
+       Name="WebradioSettings" MainScreen="webradio_Settings"
+       DisplayLabel="Settings"
+-			WorkflowModel="6378BD83-BF06-4AC3-ADD7-9A4B72DA878E"/>		
+-		<WorkflowState Id="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
++      WorkflowModel="6378BD83-BF06-4AC3-ADD7-9A4B72DA878E"/>
++    <WorkflowState Id="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
+       Name="WebradioFilter" MainScreen="webradio_Filter"
+       DisplayLabel="Filter"
+-			WorkflowModel="FF29E03E-F4A9-4E21-A299-349E79010430"/>		
+-		<WorkflowState Id="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
++      WorkflowModel="FF29E03E-F4A9-4E21-A299-349E79010430"/>
++    <WorkflowState Id="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
+       Name="WebradioFavorites" MainScreen="webradio_Favorites"
+       DisplayLabel="Favorites"
+-			WorkflowModel="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"/>
+-		<DialogState Id="5A626D7B-BB4A-4882-9FFB-F72BE27D9792" 
+-			Name="ImportFilter" 
+-			DialogScreen="webradio_dialogImportFilter" 
+-			DisplayLabel="[Weather.WeatherLocationStateDisplayLabel]" 
+-			WorkflowModel="FF29E03E-F4A9-4E21-A299-349E79010430"/>
++      WorkflowModel="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"/>
++    <DialogState Id="5A626D7B-BB4A-4882-9FFB-F72BE27D9792"
++      Name="ImportFilter"
++      DialogScreen="webradio_dialogImportFilter"
++      DisplayLabel="[Weather.WeatherLocationStateDisplayLabel]"
++      WorkflowModel="FF29E03E-F4A9-4E21-A299-349E79010430"/>
+   </Register>
+ 
+   <Register Location="/Resources/Skin">
+-		<Resource Id="WebradioSkin" Directory="Skin" Type="Skin"/>
++    <Resource Id="WebradioSkin" Directory="Skin" Type="Skin"/>
+   </Register>
+   <Register Location="/Resources/Language">
+     <Resource Id="WebradioLanguge" Directory="Language" Type="Language"/>
+-- 
+1.8.0.msysgit.0
+

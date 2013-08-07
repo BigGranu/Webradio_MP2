@@ -24,10 +24,15 @@
 
 using System;
 using System.IO;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using System.Globalization;
+using System.Linq;
 using MediaPortal.Common;
-using MediaPortal.Common.Logging;
+using MediaPortal.Common.General;
+using MediaPortal.Common.Settings;
+using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
 
@@ -36,10 +41,11 @@ namespace Webradio.Models
   public class WebradioFavorites : IWorkflowModel
   {
     public const string MODEL_ID_STR = "EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94";
-    public static string _file = System.Windows.Forms.Application.StartupPath + "\\Plugins\\Webradio\\Data\\WebradioFavorites.xml";
+    public static List<MyFavorit> FavoritList = new List<MyFavorit>();
 
-    // List of all Favorites in Xmlfile
-    protected static Favorits _favoritList = new Favorits();
+    public WebradioFavorites()
+    {
+    }
 
     /// <summary>
     /// Remove a Entry
@@ -72,16 +78,17 @@ namespace Webradio.Models
     #region IWorkflowModel implementation
     public Guid ModelId
     {
-      get { return new Guid(MODEL_ID_STR); }
+        get { return new Guid(MODEL_ID_STR); }
     }
 
     public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
     {
-      return true;
+        return true;
     }
 
     public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
+      FavoritList = MyFavorits.Read().FavoritList;
     }
 
     public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
@@ -90,7 +97,7 @@ namespace Webradio.Models
 
     public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
     {
-      // We could initialize some data here when changing the media navigation state
+        // We could initialize some data here when changing the media navigation state
     }
 
     public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
@@ -107,75 +114,12 @@ namespace Webradio.Models
 
     public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
     {
-      return ScreenUpdateMode.AutoWorkflowManager;
+        return ScreenUpdateMode.AutoWorkflowManager;
     }
     #endregion
 
   }
 
-  #region Read/Write Xml
-  public class Favorits
-  {
-    public List<Favorit> FavoritList { get; set; }
 
-    public Favorits()
-    {
-      FavoritList = new List<Favorit>();
-    }
-
-    public static Favorits Read(string xmlFile)
-    {
-      if (!File.Exists(xmlFile)) { File.Create(xmlFile); }
-      Favorits list = new Favorits();
-      XmlSerializer serializer = new XmlSerializer(typeof(Favorits));
-      try
-      {
-        using (FileStream fs = new FileStream(xmlFile, FileMode.Open))
-          list = (Favorits) serializer.Deserialize(fs);
-      }
-      catch (Exception ex)
-      {
-        ServiceRegistration.Get<ILogger>().Error("WebRadio: Error reading favorites", ex);
-      }
-      return list;
-    }
-
-    public static bool Write(string xmlFile, Favorits mliste)
-    {
-      XmlSerializer serializer = new XmlSerializer(typeof(Favorits));
-      try
-      {
-        using (StreamWriter writer = new StreamWriter(xmlFile, false))
-          serializer.Serialize(writer, mliste);
-      }
-      catch (Exception ex)
-      {
-        ServiceRegistration.Get<ILogger>().Error("WebRadio: Error writing favorites", ex);
-      }
-      return true;
-    }
-  }
-
-  public class Favorit
-  {
-    public string Titel { get; set; }
-    public bool Active { get; set; }
-    public List<string> IDs { get; set; }
-
-    public Favorit()
-    {
-      Titel = "";
-      Active = true;
-      IDs = new List<string>();
-    }
-
-    public Favorit(String titel, bool active, List<string> ids)
-    {
-      Titel = titel;
-      Active = active;
-      IDs = ids;
-    }
-  }
-  #endregion
 
 }

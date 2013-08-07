@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="Webradio.MenuEntry">Webradio</string>
-  <string name="Webradio.StateDisplayLabel">Webradio</string>
+	<string name="Webradio.MenuEntry">Webradio</string> 
+	<string name="Webradio.StateDisplayLabel">Webradio</string>
 
-  <string name="Webradio.Home.ScreenTitle"> </string>
-  <string name="Webradio.Home.Menu.View">View</string>
-  <string name="Webradio.Home.Menu.Filter">Filter</string>
-  <string name="Webradio.Home.Menu.Favorites">Favorites</string>
-  <string name="Webradio.Home.Menu.Settings">Settings</string>
-  <string name="Webradio.Home.Genres">Genres</string>
-  <string name="Webradio.Home.Bitrate">Bitrate</string>
-  <string name="Webradio.Home.Country">Country</string>
-  <string name="Webradio.Home.City">City</string>
+	<string name="Webradio.Home.ScreenTitle">Home</string>
+	<string name="Webradio.Home.Menu.View">View</string>
+	<string name="Webradio.Home.Menu.ShowFilter">Show Filter</string>
+	<string name="Webradio.Home.Menu.ShowFavorites">Show Favorites</string>
+	<string name="Webradio.Home.Menu.ShowAll">Show All Streams</string>
+	<string name="Webradio.Home.Menu.Settings">Settings</string>
+	<string name="Webradio.Home.Menu.Search">Search</string>
+	<string name="Webradio.Home.Genres">Genres</string>
+	<string name="Webradio.Home.Bitrate">Bitrate</string>
+	<string name="Webradio.Home.Country">Country</string>
+	<string name="Webradio.Home.City">City</string>
+	
+	<string name="Webradio.Settings.ScreenTitle">Settings</string>
+	<string name="Webradio.Settings.Menu.Filter">Filter</string>
+	<string name="Webradio.Settings.Menu.Favorites">Favorites</string>
 
-  <string name="Webradio.Settings.ScreenTitle">Settings</string>
-  <string name="Webradio.Settings.Menu.Filter">Filter</string>
-  <string name="Webradio.Settings.Menu.Favorites">Favorites</string>
-
-  <string name="Webradio.Favorites.ScreenTitle">Favorites</string>
-  <string name="Webradio.Favorites.Add">Add</string>
-  <string name="Webradio.Favorites.Delete">Delete</string>
-  <string name="Webradio.Favorites.Rename">Rename</string>
-  <string name="Webradio.Favorites.Save">Save</string>
-
-  <string name="Webradio.Filter.ScreenTitle">Filter</string>
-  <string name="Webradio.Filter.Add">Add</string>
-  <string name="Webradio.Filter.Import">Import</string>
-  <string name="Webradio.Filter.Clear">Clear</string>
-  <string name="Webradio.Filter.Save">Save</string>
-  <string name="Webradio.Filter.Genres">Genres</string>
-  <string name="Webradio.Filter.Bitrate">Bitrate</string>
-  <string name="Webradio.Filter.Country">Country</string>
-  <string name="Webradio.Filter.City">City</string>
+	<string name="Webradio.Favorites.ScreenTitle">Favorites</string>
+	<string name="Webradio.Favorites.Add">Add</string>   
+	<string name="Webradio.Favorites.Delete">Delete</string>
+	<string name="Webradio.Favorites.Rename">Rename</string> 
+	<string name="Webradio.Favorites.Save">Save</string>
+  
+	<string name="Webradio.Filter.ScreenTitle">Filter</string>	
+	<string name="Webradio.Filter.Add">Add</string>
+	<string name="Webradio.Filter.Import">Import</string>
+	<string name="Webradio.Filter.Clear">Clear</string>
+	<string name="Webradio.Filter.Save">Save</string>
+	<string name="Webradio.Filter.Genres">Genres</string>
+	<string name="Webradio.Filter.Bitrate">Bitrate</string>
+	<string name="Webradio.Filter.Country">Country</string>
+	<string name="Webradio.Filter.City">City</string>
+	
+	<string name="Webradio.Dialog.ShowFilter.Header">Show Filter</string>
+	
+	<string name="Webradio.Dialog.ImportFilter.Header">Import Filter</string>
+	
+	<string name="Webradio.Dialog.ShowFavorites.Header">Show Favorites</string>
+	
+	<string name="Webradio.Dialog.ImportFavorites.Header">Import Filter</string>
+	
+	<string name="Webradio.Dialog.Search.Header">Search</string>
 </resources>
