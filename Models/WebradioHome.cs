@@ -35,6 +35,7 @@ using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
+using Webradio.Player;
 
 namespace Webradio.Models
 {
@@ -57,7 +58,7 @@ namespace Webradio.Models
       // beim ersten Start alle Listen füllen-
       if (AllRadioStreams == null)
       {
-        AllRadioStreams =  new ItemsList();
+        AllRadioStreams = new ItemsList();
         StreamList = MyStreams.Read(_file).StreamList;
         FillItemList(StreamList);
       }
@@ -65,7 +66,7 @@ namespace Webradio.Models
       //WebradioFilter.FilterList = Webradio.Models.MyFilters.Read(WebradioFilter._file);
     }
 
-    public static void FillItemList(List<MyStream> List)    
+    public static void FillItemList(List<MyStream> List)
     {
       AllRadioStreams.Clear();
       foreach (MyStream ms in List)
@@ -101,7 +102,7 @@ namespace Webradio.Models
     /// Play the Stream with the current StreamID and Set the Playcount +1
     /// </summary>
     private void Play(int _ID)
-    {           
+    {
       // Streamurl (GetStreamByID(_ID).URL) an den Player übergeben 
       // noch klären welcher Player dafür wie genutzt wird
 
@@ -110,7 +111,8 @@ namespace Webradio.Models
 
     public void SelectStream(ListItem item)
     {
-      MyStream ms = GetStreamByID((int)item.AdditionalProperties[STREAM_ID]);
+      MyStream ms = GetStreamByID((int) item.AdditionalProperties[STREAM_ID]);
+      WebRadioPlayerHelper.PlayStream(ms);
     }
 
     /// <summary>
@@ -120,9 +122,9 @@ namespace Webradio.Models
     {
       foreach (MyStream f in StreamList)
       {
-        if (f.ID == _ID) 
-        { 
-          f.PlayCount  += 1; 
+        if (f.ID == _ID)
+        {
+          f.PlayCount += 1;
         }
       }
       MyStreams.Write(_file, AllRadioStreams);
@@ -135,7 +137,7 @@ namespace Webradio.Models
     {
       foreach (MyStream f in StreamList)
       {
-        if (f.ID == _ID )
+        if (f.ID == _ID)
         {
           return f;
         }
@@ -196,8 +198,8 @@ namespace Webradio.Models
 
     public static MyStreams Read(string XmlFile)
     {
-      stream = new FileStream(XmlFile , FileMode.Open);
-      MyStreams _s = (MyStreams)serializer.Deserialize(stream);
+      stream = new FileStream(XmlFile, FileMode.Open);
+      MyStreams _s = (MyStreams) serializer.Deserialize(stream);
       stream.Close();
       return _s;
     }
@@ -205,7 +207,7 @@ namespace Webradio.Models
     public static void Write(string XmlFile, Object obj)
     {
       stream = new FileStream(XmlFile, FileMode.Create);
-      serializer.Serialize(stream,obj);
+      serializer.Serialize(stream, obj);
       stream.Close();
     }
   }
