@@ -87,30 +87,45 @@
     <Content Include="Language\strings_en.xml" />
     <Content Include="plugin.xml" />
     <Content Include="Skin\default\images\2DED75C0-5EAE-4E69-9913-6B50A9AB2956.jpg" />
+    <Content Include="Skin\default\images\DefaultLogo.png" />
     <Content Include="Skin\default\workflow\webradio-actions.xml" />
     <Content Include="Skin\default\screens\webradio_dialogImportFilter.xaml" />
-    <Content Include="Skin\default\screens\webradio_Favorites.xaml" />
+    <Content Include="Skin\default\screens\webradio_Favorites.xaml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Skin\default\screens\webradio_Filter.xaml" />
     <Content Include="Skin\default\screens\webradio_Home.xaml" />
     <Content Include="Skin\default\screens\webradio_Settings.xaml" />
     <Content Include="Skin\default\themes\default\styles\WebradioStyles.xaml" />
+    <Content Include="Todo.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Core\MediaPortal.Common\MediaPortal.Common.csproj">
+    <ProjectReference Include="..\MediaPortal-2-EXP_WiP\MediaPortal\Source\Core\MediaPortal.Common\MediaPortal.Common.csproj">
       <Project>{ECF060E7-CAA1-4466-851F-F80B857641EA}</Project>
       <Name>MediaPortal.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Source\Core\MediaPortal.UI\MediaPortal.UI.csproj">
+    <ProjectReference Include="..\MediaPortal-2-EXP_WiP\MediaPortal\Source\Core\MediaPortal.UI\MediaPortal.UI.csproj">
       <Project>{52E587D0-A274-44DA-8846-8EEAF5414923}</Project>
       <Name>MediaPortal.UI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Source\UI\UiComponents\Media\Media.csproj">
+    <ProjectReference Include="..\MediaPortal-2-EXP_WiP\MediaPortal\Source\UI\UiComponents\Media\Media.csproj">
       <Project>{CD37E2FF-4CF7-4F96-8C73-C6764988D408}</Project>
       <Name>Media</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="build.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Skin\default\screens\webradio_dialogSearchInStreams.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\default\screens\webradio_dialogShowFavorites.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\default\screens\webradio_dialogShowFilter.xaml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="build.targets" />

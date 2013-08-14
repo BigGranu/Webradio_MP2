@@ -19,10 +19,11 @@
 						<ColumnDefinition Width="50*" />
 						</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
-						<RowDefinition Height="70*" />
+						<RowDefinition Height="60*" />
 						<RowDefinition Height="10*" />
 						<RowDefinition Height="10*" />
 						<RowDefinition Height="10*" />
+            <RowDefinition Height="10*" />
 				</Grid.RowDefinitions>
 						<ListView x:Name="lv" Grid.ColumnSpan="2" Margin="10,5,10,5" HorizontalAlignment="Stretch" 
 							VerticalAlignment="Stretch" Style="{ThemeResource ContentsMenuListViewStyle}"
@@ -38,19 +39,23 @@
 							</ListView.Resources>
 						</ListView>
 						
-						<Label Grid.ColumnSpan="2" Content="Temporary Quick Filter" HorizontalContentAlignment="Center" 
-							Margin="10,0,10,0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
-						
-						<Button Content="Country" Margin="10,5,5,5" Grid.Row="2" Grid.Column="0" 
-							VerticalAlignment="Stretch"
+						<Label Grid.ColumnSpan="2" Content="[Webradio.Dialog.ShowFilter.Quickfilter]" HorizontalContentAlignment="Center" 
+							Margin="10,0,10,0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+              Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" />
+
+            <Button Content="[Webradio.Dialog.ShowFilter.ShowFilter]" Margin="10,5,10,5" Grid.Row="2" Grid.ColumnSpan="2"
+              VerticalAlignment="Stretch" HorizontalContentAlignment="Center" 
+              Command="{Command ShowFilter}"/>
+            <Button Content="[Webradio.Dialog.ShowFilter.Country]" Margin="10,5,5,5" Grid.Row="3" Grid.Column="0" 
+							VerticalAlignment="Stretch" VerticalContentAlignment="Center"
 							Command="{Command QuickCountry}"/>					
-						<Button Content="City" Margin="5,5,10,5" Grid.Row="2" Grid.Column="1" 
+						<Button Content="[Webradio.Dialog.ShowFilter.City]" Margin="5,5,10,5" Grid.Row="3" Grid.Column="1" 
 							VerticalAlignment="Stretch"
 							Command="{Command QuickCity}"/>						
-						<Button Content="Genre" Margin="10,5,5,5" Grid.Row="3" Grid.Column="0" 
+						<Button Content="[Webradio.Dialog.ShowFilter.Genre]" Margin="10,5,5,5" Grid.Row="4" Grid.Column="0" 
 							VerticalAlignment="Stretch"
 							Command="{Command QuickGenre}"/>						
-						<Button Content="Bitrate" Margin="5,5,10,5" Grid.Row="3" Grid.Column="1" 
+						<Button Content="[Webradio.Dialog.ShowFilter.Bitrate]" Margin="5,5,10,5" Grid.Row="4" Grid.Column="1" 
 							VerticalAlignment="Stretch"
 							Command="{Command QuickBitrate}"/>      
 						

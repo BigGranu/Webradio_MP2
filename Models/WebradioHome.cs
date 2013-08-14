@@ -47,23 +47,19 @@ namespace Webradio.Models
 
     public static string _file = System.Windows.Forms.Application.StartupPath + "\\Plugins\\Webradio\\Data\\WebradioSender.xml";
 
-    //public static ObservableCollection<MyStream> AllRadioStreams { get; private set; }
-
     public static ItemsList AllRadioStreams;
 
     public static List<MyStream> StreamList = new List<MyStream>();
 
     public WebradioHome()
     {
-      // beim ersten Start alle Listen füllen-
+      // beim ersten Start alle Listen füllen
       if (AllRadioStreams == null)
       {
         AllRadioStreams = new ItemsList();
         StreamList = MyStreams.Read(_file).StreamList;
         FillItemList(StreamList);
       }
-
-      //WebradioFilter.FilterList = Webradio.Models.MyFilters.Read(WebradioFilter._file);
     }
 
     public static void FillItemList(List<MyStream> List)
@@ -72,17 +68,29 @@ namespace Webradio.Models
       foreach (MyStream ms in List)
       {
         ListItem item = new ListItem();
+        item.AdditionalProperties[STREAM_ID] = ms.ID;
         item.SetLabel("Name", ms.Titel);
         item.SetLabel("Country", ms.Country);
         item.SetLabel("City", ms.City);
         item.SetLabel("Genres", ms.Genres);
         item.SetLabel("Bitrate", ms.Bitrate);
-        item.SetLabel("Logo", ms.Logo);
-        item.AdditionalProperties[STREAM_ID] = ms.ID;
-        item.SetLabel("ImageSrc", ms.Logo);
+        item.SetLabel("Logo", SetStreamLogo(ms));
+        item.SetLabel("ImageSrc", SetStreamLogo(ms));
+        item.SetLabel("Description", ms.Description);
+
         AllRadioStreams.Add(item);
       }
       AllRadioStreams.FireChange();
+    }
+
+    public static string SetStreamLogo(MyStream ms)
+    {
+      string s = "DefaultLogo.png";
+      if (ms.Logo != "")
+      {
+        s = ms.Logo;
+      }
+      return s;
     }
 
     /// <summary>

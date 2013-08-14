@@ -24,6 +24,10 @@
 		<Model Id="BD1BA004-1BC0-49F5-9107-AD8FFD07BAAE" ClassName="Webradio.Models.WebradioData"/>	
 	</Register>
 
+	<Register Location="/ResourceProviders">
+    <Instance Id="96364E39-DFD9-462F-B117-EF0D2E87ACE8" ClassName="Webradio.Player.RawUrlMediaProvider"/>
+  </Register>
+	
   <Register Location="/Workflow/States">
     <WorkflowState Id="263FADFE-87BE-4563-83F0-E62707891E1B"
       Name="WebradioHome" MainScreen="webradio_Home"
