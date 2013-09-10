@@ -3,6 +3,7 @@
   <FilterList>
     <MyFilter>
       <Titel>DE/AU/CH 80er Top Quali</Titel>
+      <ID>1</ID>
       <fCountrys>
         <string>Deutschland</string>
         <string>Österreich</string>
@@ -568,6 +569,7 @@
     </MyFilter>
     <MyFilter>
       <Titel>Salza</Titel>
+      <ID>2</ID>
       <fCountrys />
       <fCitys />
       <fGenres>

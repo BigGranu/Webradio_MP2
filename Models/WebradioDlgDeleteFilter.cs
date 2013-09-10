@@ -38,113 +38,74 @@ using MediaPortal.UI.Presentation.Workflow;
 
 namespace Webradio.Models
 {
-  internal class WebradioDlgShowFavorites : IWorkflowModel
+  internal class WebradioDlgDeleteFilter : IWorkflowModel 
   {
-    #region Consts
-
-    public const string MODEL_ID_STR = "9723DCC8-969D-470E-B156-F4E6E639DD18";
+    public const string MODEL_ID_STR = "59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89";
     public const string NAME = "name";
+    public const string ID = "id";
 
-    public string SelectedStream = "";
-    public bool _changed = false;
+    public static List<MyFilter> FilterList = new List<MyFilter>();
 
-    #endregion
+    public ItemsList FilterItems = new ItemsList();
 
-    public static List<MyFavorit> FavoritList = new List<MyFavorit>();
-
-    public ItemsList FavoritItems = new ItemsList();
-    
-
-    public WebradioDlgShowFavorites()
+    public WebradioDlgDeleteFilter()
     {
     }
 
     public void Init()
     {
-      FavoritList = MyFavorits.Read().FavoritList;      
-      ImportFavorits(Convert.ToString(WebradioHome.SelectedStream.ID));
-      SelectedStream = WebradioHome.SelectedStream.Titel;
+      FilterList = WebradioFilter.FilterList;
+      ImportFilter();
     }
 
-
-    public void ImportFavorits(string _ID)
+    public void ImportFilter()
     {
-      FavoritItems.Clear();
-      foreach (MyFavorit f in FavoritList)
+      FilterItems.Clear();
+      int id = 0;
+      foreach (MyFilter mf in FilterList)
       {
         ListItem item = new ListItem();
-        item.AdditionalProperties[NAME] = f.Titel;
-        item.SetLabel("Name", f.Titel);
-        if (f.IDs.Contains(_ID))
-        {
-          item.Selected = true;
-        }
-        else
-        {
-          item.Selected = false;
-        }
-        FavoritItems.Add(item);
+        item.AdditionalProperties[NAME] = mf.Titel;
+        item.AdditionalProperties[ID] = mf.ID;
+        item.SetLabel("Name", mf.Titel);
+        FilterItems.Add(item);
+        id += 1;
       }
+      FilterItems.FireChange();
     }
 
-    /// <summary>
-    /// Import selected Filter
-    /// </summary>
-    public void SelectFavorite(ListItem item)
+    public void Select(ListItem item)
     {
-      List<MyStream> list = new List<MyStream>();
-      foreach (MyFavorit f in FavoritList)
+      if (item.Selected == true)
       {
-        if (f.Titel == (string)item.AdditionalProperties[NAME]) 
-        {
-          IEnumerable<MyStream> query = from r in WebradioHome.StreamList where _contains(f.IDs, Convert.ToString(r.ID)) select r;
-          foreach (MyStream ms in query)
-          {
-            if (!list.Contains(ms)) { list.Add(ms); }
-          }
-          break;
-        }
+        item.Selected = false;
       }
-      WebradioHome.FillItemList(list);
+      else
+      {
+        item.Selected = true;
+      }
+      item.FireChange();
     }
 
-    private static bool _contains(List<string> L, string S)
+    public void Delete()
     {
-      if (L.Count == 0) { return true; }
-
-      string[] split = S.Split(new Char[] { ',' });
-      foreach (string s in split)
+      foreach (ListItem item in FilterItems)
       {
-        if (L.Contains(s))
+        if (item.Selected == true)
         {
-          return true;
+          foreach (MyFilter mf in FilterList)
+          { 
+            if(mf.ID == (string)item.AdditionalProperties[ID])
+            {
+              FilterList.Remove(mf);
+              break;
+            }
+          }
         }
       }
-      return false;
-    }
-
-    public void SetFavorite(ListItem item)
-    {
-      string s = (string)item.AdditionalProperties[NAME];
-      string id = Convert.ToString(WebradioHome.SelectedStream.ID);
-
-      foreach (MyFavorit f in FavoritList)
-      {
-        if (f.Titel == s)
-        {
-          if (item.Selected == true)
-          {
-            item.Selected = false;
-            f.IDs.Remove(id);
-          }
-          else
-          {
-            item.Selected = true;
-            f.IDs.Add(id);
-          }
-          _changed = true;
-        }
-      }
+      WebradioFilter.SaveImage = "Unsaved.png";
+      WebradioFilter.FilterTitel = "";
+      ImportFilter();
     }
 
     #region IWorkflowModel implementation
@@ -166,10 +127,6 @@ namespace Webradio.Models
 
     public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
-      if (_changed == true) 
-      {
-        MyFavorits.Write(new MyFavorits(FavoritList));
-      }
     }
 
     public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
@@ -195,5 +152,6 @@ namespace Webradio.Models
     }
 
     #endregion
+
   }
 }

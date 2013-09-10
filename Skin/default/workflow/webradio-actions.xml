@@ -11,13 +11,13 @@
 			DisplayTitle="[Webradio.MenuEntry]"/>
 		
 		<!--                  Entrys in Homescreen                    -->
-		<PushNavigationTransition Id="D3DED8FE-3AFE-4A90-A727-444E33582016"
+		<!--<PushNavigationTransition Id="D3DED8FE-3AFE-4A90-A727-444E33582016"
 			Name="Webradio->Home"
 			DisplayCategory="a-Webradio"
 			SortOrder="a"
 			SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
 			TargetState="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"
-			DisplayTitle="[Webradio.Home.Menu.View]"/>
+			DisplayTitle="[Webradio.Home.Menu.View]"/>-->
 		<PushNavigationTransition Id="2ABFF249-2F05-4E25-8F3E-3F2B136A40FB"
 			Name="WebradioHome->Settings"
 			DisplayCategory="a-Webradio"
@@ -97,6 +97,13 @@
 			DisplayTitle="[Webradio.Filter.Import]"
 			SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
 			TargetState="EB57D60B-0490-46C9-B6D8-0170DA37A926"/>
+    <!-- Delete Favorite Dialog-->
+    <PushNavigationTransition Id="AAA7C211-93D4-40A8-96B3-2CCE6C7CB0A8"
+			Name="dialogDeleteFilter"
+			DisplayCategory="a-Webradio"
+			DisplayTitle="[Webradio.Filter.Delete]"
+			SourceStates="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
+			TargetState="AAA7C211-93D4-40A8-96B3-2CCE6C7CB0A8"/>
 			
 		<!--                Entrys in Favorites                   -->
 		<MethodCallAction Id="F9334D42-D0C3-48B9-89A3-293BD1AADEB4"
@@ -115,14 +122,6 @@
 			SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
 			ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
 			MethodName="Delete"/>
-		<MethodCallAction Id="911CC334-7F8D-49F0-81D1-F4F17F9C0792"
-			Name="RenameFavorit"
-			DisplayCategory="a-Webradio"
-			SortOrder="a"
-			DisplayTitle="[Webradio.Favorites.Rename]"
-			SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
-			ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
-			MethodName="Rename"/>	
 		<MethodCallAction Id="60E44CF6-2932-4069-9129-3B2306893D52"
 			Name="SaveFavorit"
 			DisplayCategory="a-Webradio"

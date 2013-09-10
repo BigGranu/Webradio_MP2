@@ -6,7 +6,7 @@
 	xmlns:wrh="clr-namespace:Webradio.Models"
 	DependsOnStyleResources="Buttons,Colors,Consts">
 
-	<!-- A data template which shows an image and the Name of the ListItem -->
+  <!-- A data template which shows an image and the Name of the ListItem -->
   <DataTemplate x:Key="WebradioFilterItemDataTemplate" DataType="{x:Type collections:ListItem}">
     <DockPanel x:Name="ItemControl" LastChildFill="False">
       <CheckBox DockPanel.Dock="Left" IsChecked="{Binding Selected}" />
@@ -15,9 +15,9 @@
 				Color="{ThemeResource TextColor}"/>
     </DockPanel>
   </DataTemplate>
-		
-	<!-- ListView style to be used in the content area of the screens -->
-	<Style x:Key="WebradioFilterListViewStyle" BasedOn="{ThemeResource DefaultListViewStyle}">
+  
+  <!-- ListView style to be used in the content area of the screens -->
+  <Style x:Key="WebradioFilterListViewStyle" BasedOn="{ThemeResource DefaultListViewStyle}">
     <Setter Property="ItemTemplate" Value="{ThemeResource WebradioFilterItemDataTemplate}"/>
     <Setter Property="DataStringProvider" Value="{ThemeResource ContentsMenuItemDataStringProvider}"/>
     <Setter Property="ItemContainerStyle" Value="{ThemeResource DefaultMenuItemContainerStyle}"/>

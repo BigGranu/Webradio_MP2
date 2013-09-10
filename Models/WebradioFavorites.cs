@@ -24,6 +24,7 @@
 
 using System;
 using System.IO;
+using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -39,9 +40,45 @@ using MediaPortal.UI.Presentation.Workflow;
 namespace Webradio.Models
 {
   public class WebradioFavorites : IWorkflowModel
+
   {
     public const string MODEL_ID_STR = "EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94";
+    
+    public const string NAME = "name";
+    public const string ID = "id";
+
     public static List<MyFavorit> FavoritList = new List<MyFavorit>();
+    public static ItemsList FavoritItems = new ItemsList();
+
+    public string SelectedID = "";
+
+    private static AbstractProperty _TitelProperty = null;
+    public AbstractProperty TitelProperty
+    {
+      get { return _TitelProperty; }
+    }
+    public string SelectedTitel
+    {
+      get { return (string)_TitelProperty.GetValue(); }
+      set
+      {
+        _TitelProperty.SetValue(value);
+      }
+    }
+
+    private static AbstractProperty _SaveImage = null;
+    public AbstractProperty SaveImageProperty
+    {
+      get { return _SaveImage; }
+    }
+    public string SaveImage
+    {
+      get { return (string)_SaveImage.GetValue(); }
+      set
+      {
+        _SaveImage.SetValue(value);
+      }
+    }
 
     public WebradioFavorites()
     {
@@ -52,6 +89,13 @@ namespace Webradio.Models
     /// </summary>
     public void Delete()
     {
+      if (SelectedID != "")
+      { 
+        FavoritList.RemoveRange(Convert.ToInt32(SelectedID), 1);
+        ImportFavorits();
+        SelectedTitel = "";
+        SelectedID = "";
+      }
     }
 
     /// <summary>
@@ -59,6 +103,21 @@ namespace Webradio.Models
     /// </summary>
     public void Rename()
     {
+      if (SelectedID != "")
+      {
+        int id = 0;
+        foreach (MyFavorit mf in FavoritList)
+        {
+          if (id == Convert.ToInt32(SelectedID))
+          {
+            mf.Titel = SelectedTitel;
+            break;
+          }
+          id += 1;
+        }
+        ImportFavorits();
+        SaveImage = "Unsaved.png";
+      }
     }
 
     /// <summary>
@@ -66,6 +125,9 @@ namespace Webradio.Models
     /// </summary>
     public void Add()
     {
+      FavoritList.Add(new MyFavorit("New Favorite", true, new List<string>()));
+      ImportFavorits();
+      SelectedTitel = "New Favorite";
     }
 
     /// <summary>
@@ -73,6 +135,30 @@ namespace Webradio.Models
     /// </summary>
     public void Save()
     {
+      MyFavorits.Write(new MyFavorits(FavoritList));
+      SaveImage = "Saved.png";
+    }
+
+    public void Selected(ListItem item)
+    {
+      SelectedTitel = (string)item.AdditionalProperties[NAME];
+      SelectedID = (string)item.AdditionalProperties[ID];
+    }
+
+    private void ImportFavorits()
+    {
+      FavoritItems.Clear();
+      int id = 0;
+      foreach (MyFavorit f in FavoritList)
+      {
+        ListItem item = new ListItem();
+        item.AdditionalProperties[NAME] = f.Titel;
+        item.AdditionalProperties[ID] = Convert.ToString(id);
+        item.SetLabel("Name", f.Titel);
+        id += 1;
+        FavoritItems.Add(item);
+      }
+      FavoritItems.FireChange();
     }
 
     #region IWorkflowModel implementation
@@ -88,7 +174,11 @@ namespace Webradio.Models
 
     public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
+      _SaveImage = new WProperty(typeof(string), string.Empty);
+      _TitelProperty = new WProperty(typeof(string), string.Empty);
       FavoritList = MyFavorits.Read().FavoritList;
+      ImportFavorits();
+      SaveImage = "Saved.png";
     }
 
     public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
@@ -119,7 +209,4 @@ namespace Webradio.Models
     #endregion
 
   }
-
-
-
 }

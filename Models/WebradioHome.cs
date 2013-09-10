@@ -36,21 +36,23 @@ using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
 using Webradio.Player;
+using MediaPortal.Common.PathManager;
 
 namespace Webradio.Models
 {
   public class WebradioHome : IWorkflowModel
   {
     public const string MODEL_ID_STR = "EA3CC191-0BE5-4C8D-889F-E9C4616AB554";
+    public const string STREAM_ID = "StreamID";
 
-    const string STREAM_ID = "StreamID";
+    public static string DataPath = ServiceRegistration.Get<IPathManager>().GetPath("<DATA>") + "\\Webradio\\";
+    public string _file = DataPath + "WebradioSender.xml";
 
-    public static string _file = System.Windows.Forms.Application.StartupPath + "\\Plugins\\Webradio\\Data\\WebradioSender.xml";
-
+    public static MyStream SelectedStream = new MyStream();
     public static ItemsList AllRadioStreams;
 
     public static List<MyStream> StreamList = new List<MyStream>();
-
+    
     public WebradioHome()
     {
       // beim ersten Start alle Listen füllen
@@ -109,18 +111,16 @@ namespace Webradio.Models
     /// <summary>
     /// Play the Stream with the current StreamID and Set the Playcount +1
     /// </summary>
-    private void Play(int _ID)
+    private void Play(MyStream ms)
     {
-      // Streamurl (GetStreamByID(_ID).URL) an den Player übergeben 
-      // noch klären welcher Player dafür wie genutzt wird
-
-      SetPlayCount(_ID);
+      WebRadioPlayerHelper.PlayStream(ms);
+     // SetPlayCount(_ID);
     }
 
     public void SelectStream(ListItem item)
     {
-      MyStream ms = GetStreamByID((int) item.AdditionalProperties[STREAM_ID]);
-      WebRadioPlayerHelper.PlayStream(ms);
+      SelectedStream = GetStreamByID((int)item.AdditionalProperties[STREAM_ID]);
+      Play(SelectedStream);
     }
 
     /// <summary>

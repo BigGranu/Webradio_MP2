@@ -18,6 +18,7 @@
 		<Model Id="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94" ClassName="Webradio.Models.WebradioFavorites"/>
 		<Model Id="63F1DA3E-E87F-4478-83E7-C13966447869" ClassName="Webradio.Models.WebradioDlgShowFilter"/>
 		<Model Id="9723DCC8-969D-470E-B156-F4E6E639DD18" ClassName="Webradio.Models.WebradioDlgShowFavorites"/>
+    <Model Id="59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89" ClassName="Webradio.Models.WebradioDlgDeleteFilter"/>
 		<Model Id="7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA" ClassName="Webradio.Models.WebradioDlgSearchInStreams"/>	
 		<Model Id="10D0E2AB-AE84-406F-8AA9-5A3FB2A86360" ClassName="Webradio.Models.WebradioDlgImportFilter"/>
 		
@@ -70,6 +71,11 @@
 			DisplayLabel="[Webradio.Dialog.ShowFavorites.Header]" 
 			WorkflowModel="9723DCC8-969D-470E-B156-F4E6E639DD18"/>
 			
+		<DialogState Id="AAA7C211-93D4-40A8-96B3-2CCE6C7CB0A8" 
+			Name="Webradio.Dialog.DeleteFilter.Header" 
+			DialogScreen="webradio_dialogDeleteFilter" 
+			DisplayLabel="[Webradio.Dialog.DeleteFilter.Header]" 
+			WorkflowModel="59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89"/>			
 			
   </Register>
 

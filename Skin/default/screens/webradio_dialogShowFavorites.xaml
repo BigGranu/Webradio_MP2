@@ -13,19 +13,54 @@
 
 		<ControlTemplate x:Key="Contents_Template">
 			<DockPanel DataContext="{Binding Source={StaticResource Model}}">
-				<ListView x:Name="lvFilter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{ThemeResource ContentsMenuListViewStyle}"
-					ItemsSource="{Binding Path=FavoritItems}" >	
-					<ListView.Resources> 
-						<CommandList x:Key="Menu_Command">
-							<Command Source="{StaticResource Model}" Path="Selected">
-								<Command.Parameters> 
-									<LateBoundValue BindingValue="{Binding}"/> 
-								</Command.Parameters>
-							</Command>
-						</CommandList>
-					</ListView.Resources>
-				</ListView>
-			</DockPanel>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="45*" />
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="45*" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="80*" />
+          </Grid.RowDefinitions>
+          
+          <ListView x:Name="lvFav" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{ThemeResource ContentsMenuListViewStyle}"
+            ItemsSource="{Binding Path=FavoritItems}" Grid.Column="0" Grid.Row="2">
+            <ListView.Resources>
+              <CommandList x:Key="Menu_Command">
+                <Command Source="{StaticResource Model}" Path="SelectFavorite">
+                  <Command.Parameters>
+                    <LateBoundValue BindingValue="{Binding}"/>
+                  </Command.Parameters>
+                </Command>
+              </CommandList>
+            </ListView.Resources>
+          </ListView>
+
+          <Label Grid.ColumnSpan="3" Grid.Row="0" Content="{Binding Path=SelectedStream}" HorizontalContentAlignment="Center"
+              Margin="10,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+              Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" />
+          
+          <Label Grid.Column="2" Grid.Row="1" Content="[Webradio.Dialog.ShowFavorites.SetFav]" HorizontalContentAlignment="Center"
+							Margin="10,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+              Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}" />
+          
+          <ListView x:Name="lvFavSelected" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{ThemeResource WebradioFilterListViewStyle}"
+            ItemsSource="{Binding Path=FavoritItems, Mode=TwoWay}" Grid.Column="2" Grid.Row="2">
+            <ListView.Resources>
+              <CommandList x:Key="Menu_Command">
+                <Command Source="{StaticResource Model}" Path="SetFavorite">
+                  <Command.Parameters>
+                    <LateBoundValue BindingValue="{Binding}"/>
+                  </Command.Parameters>
+                </Command>
+              </CommandList>
+            </ListView.Resources>
+          </ListView>
+
+        </Grid>
+      </DockPanel>
     </ControlTemplate>		
   </Include.Resources>
 </Include>

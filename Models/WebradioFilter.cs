@@ -66,7 +66,7 @@ namespace Webradio.Models
     private static List<string> Genr_List = new List<string>();
     #endregion
 
-    #region Labels
+    #region Propertys
     private static AbstractProperty _FilterTitelProperty = null;
     public AbstractProperty FilterTitelProperty
     {
@@ -149,6 +149,21 @@ namespace Webradio.Models
         _GenreStateProperty.SetValue(value);
       }
     }
+
+    private static AbstractProperty _SaveImage = null;
+    public AbstractProperty SaveImageProperty
+    {
+      get { return _SaveImage; }
+    }
+    public static string SaveImage
+    {
+      get { return (string)_SaveImage.GetValue(); }
+      set
+      {
+        _SaveImage.SetValue(value);
+      }
+    }
+
     #endregion
 
     public WebradioFilter()
@@ -164,6 +179,8 @@ namespace Webradio.Models
       _CityStateProperty = new WProperty(typeof(string), string.Empty);
       _BitrateStateProperty = new WProperty(typeof(string), string.Empty);
       _GenreStateProperty = new WProperty(typeof(string), string.Empty);
+      _SaveImage = new WProperty(typeof(string), string.Empty);
+      SaveImage = "Saved.png";
       FillAllLists();
     }
 
@@ -175,6 +192,7 @@ namespace Webradio.Models
     public static void SetFilter(MyFilter filter)
     {
       ClearSelected();
+      FilterTitel = filter.Titel;
 
       foreach (string s in filter.fCountrys)
       {
@@ -206,6 +224,8 @@ namespace Webradio.Models
       //FilterTitel = string.Empty;
       ClearSelected();
       FillAllItemsList();
+      FilterTitel = "";
+      SaveImage = "Unsaved.png";
     }
 
     /// <summary>
@@ -214,7 +234,9 @@ namespace Webradio.Models
     public void Add()
     {
       Clear();
-      FilterList.Add(new MyFilter(FilterTitel, selectedCountrys, selectedCitys, selectedGenres, selectedBitrate));
+      FilterList.Add(new MyFilter("New Filter", Convert.ToString(FilterList.Count + 1), selectedCountrys, selectedCitys, selectedGenres, selectedBitrate));
+      FilterTitel = "New Filter";
+      SaveImage = "Unsaved.png";
     }
 
     /// <summary>
@@ -237,9 +259,10 @@ namespace Webradio.Models
 
       if (find == false)
       {
-        FilterList.Add(new MyFilter(FilterTitel, selectedCountrys, selectedCitys, selectedGenres, selectedBitrate));
+        FilterList.Add(new MyFilter(FilterTitel,"1", selectedCountrys, selectedCitys, selectedGenres, selectedBitrate));
       }
       MyFilters.Write(new MyFilters(FilterList));
+      SaveImage = "Saved.png";
     }
     #endregion
 
@@ -277,7 +300,7 @@ namespace Webradio.Models
           }
         }
       }
-
+      SaveImage = "Unsaved.png";
       Refresh(Countrys,item);
     }
 
@@ -314,7 +337,7 @@ namespace Webradio.Models
           }
         }
       }
-
+      SaveImage = "Unsaved.png";
       Refresh(Citys, item);
     }
 
@@ -331,6 +354,7 @@ namespace Webradio.Models
         selectedBitrate.Add(s);
         item.Selected = true;
       }
+      SaveImage = "Unsaved.png";
       Refresh(Bitrate, item);
     }
 
@@ -347,6 +371,7 @@ namespace Webradio.Models
         selectedGenres.Add(s);
         item.Selected = true;
       }
+      SaveImage = "Unsaved.png";
       Refresh(Genres, item);
     }
     #endregion

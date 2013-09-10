@@ -5,8 +5,8 @@
 
 	<string name="Webradio.Home.ScreenTitle">Home</string>
 	<string name="Webradio.Home.Menu.View">View</string>
-	<string name="Webradio.Home.Menu.ShowFilter">Show Filter</string>
-	<string name="Webradio.Home.Menu.ShowFavorites">Show Favorites</string>
+	<string name="Webradio.Home.Menu.ShowFilter">Filter</string>
+	<string name="Webradio.Home.Menu.ShowFavorites">Favorites</string>
 	<string name="Webradio.Home.Menu.ShowAll">Show All Streams</string>
 	<string name="Webradio.Home.Menu.Settings">Settings</string>
 	<string name="Webradio.Home.Menu.Search">Search</string>
@@ -25,7 +25,8 @@
 	<string name="Webradio.Favorites.Rename">Rename</string> 
 	<string name="Webradio.Favorites.Save">Save</string>
   
-	<string name="Webradio.Filter.ScreenTitle">Filter</string>	
+	<string name="Webradio.Filter.ScreenTitle">Filter</string>
+  <string name="Webradio.Filter.Delete">Delete</string>
 	<string name="Webradio.Filter.Add">Add</string>
 	<string name="Webradio.Filter.Import">Import</string>
 	<string name="Webradio.Filter.Clear">Clear</string>
@@ -44,9 +45,13 @@
   <string name="Webradio.Dialog.ShowFilter.Quickfilter">Temporary Quick Filter</string>
 	
 	<string name="Webradio.Dialog.ImportFilter.Header">Import Filter</string>
-	
-	<string name="Webradio.Dialog.ShowFavorites.Header">Show Favorites</string>
-	
+
+  <string name="Webradio.Dialog.DeleteFilter.Header">Delete Filter</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Delete</string>
+  
+  <string name="Webradio.Dialog.ShowFavorites.Header">Show Favorites</string>
+  <string name="Webradio.Dialog.ShowFavorites.SetFav">Added or Remove selected Stream from Favorites</string>
+  
 	<string name="Webradio.Dialog.ImportFavorites.Header">Import Filter</string>
 	
 	<string name="Webradio.Dialog.Search.Header">Search</string>
