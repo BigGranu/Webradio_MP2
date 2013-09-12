@@ -75,8 +75,6 @@
     <Compile Include="Models\WebradioFilter.cs" />
     <Compile Include="Models\WebradioHome.cs" />
     <Compile Include="Models\WebradioSettings.cs" />
-    <Compile Include="Player\RawUrlMediaProvider.cs" />
-    <Compile Include="Player\RawUrlResourceAccessor.cs" />
     <Compile Include="Player\WebRadioBassPlayer.cs" />
     <Compile Include="Player\WebRadioPlayerBuilder.cs" />
     <Compile Include="Player\WebRadioPlayerHelper.cs" />
