@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include
-	xmlns="www.team-mediaportal.com/2008/mpf/directx"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
-	Source="screens\master_configuration_dialog_wb.xaml">
+  xmlns="www.team-mediaportal.com/2008/mpf/directx"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
+  Source="screens\master_configuration_dialog_wb.xaml">
   <Include.Resources>
 
     <!-- Header -->
     <ResourceWrapper x:Key="Dialog_Header_Text" Resource="[Webradio.Dialog.DeleteFilter.Header]"/>
 
-		<Model x:Key="Model" Id="59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89"/>
+    <Model x:Key="Model" Id="59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89"/>
 
-		<ControlTemplate x:Key="Contents_Template">
-			<DockPanel DataContext="{Binding Source={StaticResource Model}}">
+    <ControlTemplate x:Key="Contents_Template">
+      <DockPanel DataContext="{Binding Source={StaticResource Model}}">
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="90*" />
@@ -36,6 +36,6 @@
 
         </Grid>
       </DockPanel>
-    </ControlTemplate>		
+    </ControlTemplate>
   </Include.Resources>
 </Include>

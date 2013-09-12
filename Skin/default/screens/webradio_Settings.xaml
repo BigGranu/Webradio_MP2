@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include
-	xmlns="www.team-mediaportal.com/2008/mpf/directx"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	Source="screens\master_menu.xaml">
+  xmlns="www.team-mediaportal.com/2008/mpf/directx"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  Source="screens\master_menu.xaml">
   <Include.Resources>
     <!-- Header -->
     <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Settings.ScreenTitle]"/>
@@ -10,7 +10,7 @@
     <!-- Contents -->
     <ControlTemplate x:Key="Contents_Template">
       <DockPanel Context="{Model Id=6378BD83-BF06-4AC3-ADD7-9A4B72DA878E}" LastChildFill="False">
-        
+
       </DockPanel>
     </ControlTemplate>
   </Include.Resources>
