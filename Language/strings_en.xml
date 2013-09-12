@@ -3,7 +3,7 @@
 	<string name="Webradio.MenuEntry">Webradio</string> 
 	<string name="Webradio.StateDisplayLabel">Webradio</string>
 
-	<string name="Webradio.Home.ScreenTitle">Home</string>
+	<string name="Webradio.Home.ScreenTitle">Webradio</string>
 	<string name="Webradio.Home.Menu.View">View</string>
 	<string name="Webradio.Home.Menu.ShowFilter">Filter</string>
 	<string name="Webradio.Home.Menu.ShowFavorites">Favorites</string>
