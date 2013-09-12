@@ -35,7 +35,7 @@ namespace Webradio.Player
 {
   class WebRadioPlayerHelper
   {
-    public const string WEBRADIO_MIMETYPE = "audio/stream";
+    public const string WEBRADIO_MIMETYPE = "webradio/stream";
 
     /// <summary>
     /// Constructs a dynamic <see cref="MediaItem"/> that contains the URL for the given <paramref name="stream"/> and starts the playback.

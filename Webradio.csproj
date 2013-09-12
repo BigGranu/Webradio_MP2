@@ -49,6 +49,7 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bass.Net, Version=2.4.10.1, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -76,7 +77,10 @@
     <Compile Include="Models\WebradioSettings.cs" />
     <Compile Include="Player\RawUrlMediaProvider.cs" />
     <Compile Include="Player\RawUrlResourceAccessor.cs" />
+    <Compile Include="Player\WebRadioBassPlayer.cs" />
+    <Compile Include="Player\WebRadioPlayerBuilder.cs" />
     <Compile Include="Player\WebRadioPlayerHelper.cs" />
+    <Compile Include="Player\WebRadioUIContributor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -122,15 +126,19 @@
     <Content Include="Todo.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MediaPortal-2-EXP_WiP\MediaPortal\Source\Core\MediaPortal.Common\MediaPortal.Common.csproj">
+    <ProjectReference Include="..\MediaPortal-2-Setup\MediaPortal\Source\Core\MediaPortal.Common\MediaPortal.Common.csproj">
       <Project>{ECF060E7-CAA1-4466-851F-F80B857641EA}</Project>
       <Name>MediaPortal.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MediaPortal-2-EXP_WiP\MediaPortal\Source\Core\MediaPortal.UI\MediaPortal.UI.csproj">
+    <ProjectReference Include="..\MediaPortal-2-Setup\MediaPortal\Source\Core\MediaPortal.UI\MediaPortal.UI.csproj">
       <Project>{52E587D0-A274-44DA-8846-8EEAF5414923}</Project>
       <Name>MediaPortal.UI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MediaPortal-2-EXP_WiP\MediaPortal\Source\UI\UiComponents\Media\Media.csproj">
+    <ProjectReference Include="..\MediaPortal-2-Setup\MediaPortal\Source\UI\Players\BassPlayer\BassPlayer.csproj">
+      <Project>{1A980621-B711-4235-B98C-C4276D6FA9FD}</Project>
+      <Name>BassPlayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MediaPortal-2-Setup\MediaPortal\Source\UI\UiComponents\Media\Media.csproj">
       <Project>{CD37E2FF-4CF7-4F96-8C73-C6764988D408}</Project>
       <Name>Media</Name>
     </ProjectReference>
@@ -151,6 +159,26 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\default\screens\webradio_dialogDeleteFilter.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Skin\default\screens\webradio_CurrentlyPlaying.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Skin\default\screens\webradio_FullScreenContent.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Skin\Titanium\screens\webradio_FullScreenContent.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Skin\Reflexion\screens\webradio_FullScreenContent.xaml">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
