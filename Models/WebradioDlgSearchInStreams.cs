@@ -70,7 +70,7 @@ namespace Webradio.Models
       List<MyStream> list = new List<MyStream>();
       foreach (MyStream ms in WebradioHome.StreamList)
       {
-        if (ms.Titel.IndexOf(SearchText) > 0)
+        if (ms.Titel.ToUpper().IndexOf(SearchText.ToUpper()) >= 0)
         {
           list.Add(ms);
         }
@@ -83,7 +83,7 @@ namespace Webradio.Models
       List<MyStream> list = new List<MyStream>();
       foreach (MyStream ms in WebradioHome.StreamList)
       {
-        if (ms.Description.IndexOf(SearchText) > 0)
+        if (ms.Description.ToUpper().IndexOf(SearchText.ToUpper()) >= 0)
         {
           list.Add(ms);
         }
@@ -96,12 +96,7 @@ namespace Webradio.Models
       List<MyStream> list = new List<MyStream>();
       foreach (MyStream ms in WebradioHome.StreamList)
       {
-        if (ms.Titel.IndexOf(SearchText) > 0)
-        {
-          list.Add(ms);
-        }
-
-        if (ms.Description.IndexOf(SearchText) > 0)
+        if (ms.Titel.ToUpper().IndexOf(SearchText.ToUpper()) >= 0 | ms.Description.ToUpper().IndexOf(SearchText.ToUpper()) >= 0)
         {
           list.Add(ms);
         }
