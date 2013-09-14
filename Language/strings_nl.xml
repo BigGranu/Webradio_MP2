@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.View">Bekijk</string>
+  <string name="Webradio.Home.Menu.ShowFilter">Filter</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Favorieten</string>
+  <string name="Webradio.Home.Menu.Settings">Settings</string>
+  <string name="Webradio.Home.Menu.Search">Zoek</string>
+  <string name="Webradio.Settings.ScreenTitle">Settings</string>
+  <string name="Webradio.Settings.Menu.Filter">Filter</string>
+  <string name="Webradio.Settings.Menu.Favorites">Favorieten</string>
+  <string name="Webradio.Favorites.ScreenTitle">Favorieten</string>
+  <string name="Webradio.Favorites.Add">Toevoegen</string>
+  <string name="Webradio.Favorites.Delete">Verwijderen</string>
+  <string name="Webradio.Filter.ScreenTitle">Filter</string>
+  <string name="Webradio.Filter.Delete">Verwijderen</string>
+  <string name="Webradio.Filter.Add">Toevoegen</string>
+  <string name="Webradio.Filter.Clear">Helder</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Filter</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Genre</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Verwijderen</string>
+  <string name="Webradio.Dialog.Search.Header">Zoek</string>
+</resources>

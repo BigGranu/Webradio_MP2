@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">Филтър</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Любими</string>
+  <string name="Webradio.Home.Menu.Search">Търси</string>
+  <string name="Webradio.Settings.Menu.Filter">Филтър</string>
+  <string name="Webradio.Settings.Menu.Favorites">Любими</string>
+  <string name="Webradio.Favorites.ScreenTitle">Любими</string>
+  <string name="Webradio.Favorites.Delete">Изтрий</string>
+  <string name="Webradio.Filter.ScreenTitle">Филтър</string>
+  <string name="Webradio.Filter.Delete">Изтрий</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Филтър</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Жанр</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Изтрий</string>
+  <string name="Webradio.Dialog.Search.Header">Търси</string>
+</resources>

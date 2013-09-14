@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.Search">Procurar</string>
+  <string name="Webradio.Filter.Clear">Limpo</string>
+  <string name="Webradio.Dialog.Search.Header">Procurar</string>
+</resources>

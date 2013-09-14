@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.View">Išvaizda</string>
+  <string name="Webradio.Home.Menu.ShowFilter">Filtras</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Megstamiausi</string>
+  <string name="Webradio.Home.Menu.Settings">Nustatymai</string>
+  <string name="Webradio.Home.Menu.Search">Paieska</string>
+  <string name="Webradio.Settings.ScreenTitle">Nustatymai</string>
+  <string name="Webradio.Settings.Menu.Filter">Filtras</string>
+  <string name="Webradio.Settings.Menu.Favorites">Megstamiausi</string>
+  <string name="Webradio.Favorites.ScreenTitle">Megstamiausi</string>
+  <string name="Webradio.Favorites.Add">Pridėti</string>
+  <string name="Webradio.Favorites.Delete">Trinti</string>
+  <string name="Webradio.Filter.ScreenTitle">Filtras</string>
+  <string name="Webradio.Filter.Delete">Trinti</string>
+  <string name="Webradio.Filter.Add">Pridėti</string>
+  <string name="Webradio.Filter.Clear">Giedra</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Filtras</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Zanras</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Trinti</string>
+  <string name="Webradio.Dialog.Search.Header">Paieska</string>
+</resources>

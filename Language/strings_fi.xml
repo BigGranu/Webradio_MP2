@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">Suodata</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Suosikit</string>
+  <string name="Webradio.Home.Menu.Settings">Asetukset</string>
+  <string name="Webradio.Home.Menu.Search">Haku</string>
+  <string name="Webradio.Settings.ScreenTitle">Asetukset</string>
+  <string name="Webradio.Settings.Menu.Filter">Suodata</string>
+  <string name="Webradio.Settings.Menu.Favorites">Suosikit</string>
+  <string name="Webradio.Favorites.ScreenTitle">Suosikit</string>
+  <string name="Webradio.Favorites.Add">Lisää</string>
+  <string name="Webradio.Favorites.Delete">Poista</string>
+  <string name="Webradio.Filter.ScreenTitle">Suodata</string>
+  <string name="Webradio.Filter.Delete">Poista</string>
+  <string name="Webradio.Filter.Add">Lisää</string>
+  <string name="Webradio.Filter.Clear">Selkeä</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Suodata</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Genre</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Poista</string>
+  <string name="Webradio.Dialog.Search.Header">Haku</string>
+</resources>
