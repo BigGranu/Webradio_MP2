@@ -24,6 +24,12 @@
 
     <Exec Command='"$(TransifexClientExePath)" pull -a -f'
           WorkingDirectory="$(TransifexDir)"/>
+
+    <ItemGroup>
+      <LanguageFiles Include="$(MSBuildProjectDirectory)\..\Language\*.xml"/>
+    </ItemGroup>
+    <NormalizeLineBreaks Items="@(LanguageFiles)" />
+
   </Target>
 
   <Target Name="UploadEnglishLanguageFiles"
