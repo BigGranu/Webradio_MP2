@@ -45,8 +45,6 @@
             </ListView.Resources>
           </ListView>
 
-
-
         </Grid>
       </DockPanel>
     </ControlTemplate>

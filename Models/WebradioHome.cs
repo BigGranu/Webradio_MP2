@@ -52,6 +52,8 @@ namespace Webradio.Models
     public static ItemsList AllRadioStreams;
 
     public static List<MyStream> StreamList = new List<MyStream>();
+
+    public static string CurrentStreamLogo;
     
     public WebradioHome()
     {
@@ -100,7 +102,7 @@ namespace Webradio.Models
     /// </summary>
     public void SelectedFavorites(ListItem item)
     {
-
+      
     }
 
     public void ShowAllStreams()
@@ -113,6 +115,7 @@ namespace Webradio.Models
     /// </summary>
     private void Play(MyStream ms)
     {
+      CurrentStreamLogo = SetStreamLogo(ms);
       WebRadioPlayerHelper.PlayStream(ms);
      // SetPlayCount(_ID);
     }

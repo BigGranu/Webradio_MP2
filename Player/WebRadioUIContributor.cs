@@ -47,6 +47,7 @@ namespace Webradio.Player
     protected AbstractProperty _artistProperty;
     protected AbstractProperty _titleProperty;
     protected AbstractProperty _albumProperty;
+    protected AbstractProperty _CurrentStreamLogoProperty;
 
     #region Constructor & maintainance
 
@@ -56,6 +57,7 @@ namespace Webradio.Player
       _artistProperty = new WProperty(typeof(string), string.Empty);
       _titleProperty = new WProperty(typeof(string), string.Empty);
       _albumProperty = new WProperty(typeof(string), string.Empty);
+      _CurrentStreamLogoProperty = new WProperty(typeof(string), string.Empty);
       StartTimer();
     }
 
@@ -116,6 +118,17 @@ namespace Webradio.Player
       set { _albumProperty.SetValue(value); }
     }
 
+    public AbstractProperty CurrentStreamLogoProperty
+    {
+      get { return _CurrentStreamLogoProperty; }
+    }
+
+    public string CurrentStreamLogo
+    {
+      get { return (string)_CurrentStreamLogoProperty.GetValue(); }
+      set { _CurrentStreamLogoProperty.SetValue(value); }
+    }
+
     public virtual void Initialize(MediaWorkflowStateType stateType, IPlayer player)
     {
       _mediaWorkflowStateType = stateType;
@@ -142,11 +155,13 @@ namespace Webradio.Player
           Artist = tags.artist;
           Title = tags.title;
           Album = tags.album;
+          CurrentStreamLogo = Webradio.Models.WebradioHome.CurrentStreamLogo;
           return;
         }
         Artist = string.Empty;
         Title = string.Empty;
         Album = string.Empty;
+        CurrentStreamLogo = string.Empty;
       }
       finally
       {
