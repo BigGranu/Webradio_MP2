@@ -23,15 +23,8 @@
 #endregion
 
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Xml.Serialization;
-using System.Globalization;
 using System.Linq;
-using MediaPortal.Common;
-using MediaPortal.Common.General;
-using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
@@ -45,15 +38,13 @@ namespace Webradio.Models
     public const string MODEL_ID_STR = "9723DCC8-969D-470E-B156-F4E6E639DD18";
     public const string NAME = "name";
 
-    public string SelectedStream = "";
-    public bool _changed = false;
+    public string SelectedStream = string.Empty;
+    public bool Changed = false;
 
     #endregion
 
     public static List<MyFavorit> FavoritList = new List<MyFavorit>();
-
-    public ItemsList FavoritItems = new ItemsList();
-    
+    public ItemsList FavoritItems = new ItemsList();   
 
     public WebradioDlgShowFavorites()
     {
@@ -66,8 +57,7 @@ namespace Webradio.Models
       SelectedStream = WebradioHome.SelectedStream.Titel;
     }
 
-
-    public void ImportFavorits(string _ID)
+    public void ImportFavorits(string id)
     {
       FavoritItems.Clear();
       foreach (MyFavorit f in FavoritList)
@@ -75,14 +65,7 @@ namespace Webradio.Models
         ListItem item = new ListItem();
         item.AdditionalProperties[NAME] = f.Titel;
         item.SetLabel("Name", f.Titel);
-        if (f.IDs.Contains(_ID))
-        {
-          item.Selected = true;
-        }
-        else
-        {
-          item.Selected = false;
-        }
+        item.Selected = f.IDs.Contains(id);
         FavoritItems.Add(item);
       }
     }
@@ -93,34 +76,22 @@ namespace Webradio.Models
     public void SelectFavorite(ListItem item)
     {
       List<MyStream> list = new List<MyStream>();
-      foreach (MyFavorit f in FavoritList)
+      foreach (IEnumerable<MyStream> query in from f in FavoritList where f.Titel == (string)item.AdditionalProperties[NAME] select (from r in WebradioHome.StreamList where _contains(f.IDs, Convert.ToString(r.ID)) select r))
       {
-        if (f.Titel == (string)item.AdditionalProperties[NAME]) 
+        foreach (MyStream ms in query.Where(ms => !list.Contains(ms)))
         {
-          IEnumerable<MyStream> query = from r in WebradioHome.StreamList where _contains(f.IDs, Convert.ToString(r.ID)) select r;
-          foreach (MyStream ms in query)
-          {
-            if (!list.Contains(ms)) { list.Add(ms); }
-          }
-          break;
+          list.Add(ms);
         }
+        break;
       }
       WebradioHome.FillItemList(list);
     }
 
-    private static bool _contains(List<string> L, string S)
+    private static bool _contains(List<string> l, string s)
     {
-      if (L.Count == 0) { return true; }
-
-      string[] split = S.Split(new Char[] { ',' });
-      foreach (string s in split)
-      {
-        if (L.Contains(s))
-        {
-          return true;
-        }
-      }
-      return false;
+      if (l.Count == 0) { return true; }
+      string[] sp = s.Split(new Char[] { ',' });
+      return sp.Any(l.Contains);
     }
 
     public void SetFavorite(ListItem item)
@@ -128,22 +99,19 @@ namespace Webradio.Models
       string s = (string)item.AdditionalProperties[NAME];
       string id = Convert.ToString(WebradioHome.SelectedStream.ID);
 
-      foreach (MyFavorit f in FavoritList)
+      foreach (MyFavorit f in FavoritList.Where(f => f.Titel == s))
       {
-        if (f.Titel == s)
+        if (item.Selected == true)
         {
-          if (item.Selected == true)
-          {
-            item.Selected = false;
-            f.IDs.Remove(id);
-          }
-          else
-          {
-            item.Selected = true;
-            f.IDs.Add(id);
-          }
-          _changed = true;
+          item.Selected = false;
+          f.IDs.Remove(id);
         }
+        else
+        {
+          item.Selected = true;
+          f.IDs.Add(id);
+        }
+        Changed = true;
       }
     }
 
@@ -166,7 +134,7 @@ namespace Webradio.Models
 
     public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
-      if (_changed == true) 
+      if (Changed == true) 
       {
         MyFavorits.Write(new MyFavorits(FavoritList));
       }

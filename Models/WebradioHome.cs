@@ -24,13 +24,10 @@
 
 using System;
 using System.IO;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Xml.Serialization;
-using System.Globalization;
 using System.Linq;
 using MediaPortal.Common;
-using MediaPortal.Common.General;
 using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
@@ -45,33 +42,49 @@ namespace Webradio.Models
     public const string MODEL_ID_STR = "EA3CC191-0BE5-4C8D-889F-E9C4616AB554";
     public const string STREAM_ID = "StreamID";
 
+    public static string CurrentStreamLogo = string.Empty;
     public static string DataPath = ServiceRegistration.Get<IPathManager>().GetPath("<DATA>") + "\\Webradio\\";
-    public string _file = DataPath + "WebradioSender.xml";
+    public string File = DataPath + "WebradioSender.xml";
 
     public static MyStream SelectedStream = new MyStream();
-    public static ItemsList AllRadioStreams;
-
+    public static ItemsList AllRadioStreams = new ItemsList();
     public static List<MyStream> StreamList = new List<MyStream>();
 
-    public static string CurrentStreamLogo;
-    
+
     public WebradioHome()
     {
-      // beim ersten Start alle Listen füllen
-      if (AllRadioStreams == null)
-      {
-        AllRadioStreams = new ItemsList();
-        StreamList = MyStreams.Read(_file).StreamList;
-        FillItemList(StreamList);
-      }
+      StreamList = MyStreams.Read(File).StreamList;
+      FillItemList(StreamList);
+
+
+     // settings = new WeatherSettings();
+     // settings.LocationsList = new List<CitySetupInfo>();
+      ServiceRegistration.Get<ISettingsManager>().Save(new MyStreams(StreamList));
+
+      //// test
+      //string[] lines = System.IO.File.ReadAllLines(@"D:\Test.txt");
+      //List<MyStream> testlist = new List<MyStream>();
+
+      //foreach (MyStream ms in StreamList)
+      //{
+      //  if (!lines.Contains(ms.URL ))
+      //  {
+      //    testlist.Add(ms);
+      //  }
+
+      //}
+      //MyStreams.Write(@"D:\test.xml",new MyStreams(testlist) );
     }
 
-    public static void FillItemList(List<MyStream> List)
+    /// <summary>
+    /// Fill the List and set the Labels
+    /// </summary>
+    public static void FillItemList(List<MyStream> list)
     {
       AllRadioStreams.Clear();
-      foreach (MyStream ms in List)
+      foreach (MyStream ms in list)
       {
-        ListItem item = new ListItem();
+        var item = new ListItem();
         item.AdditionalProperties[STREAM_ID] = ms.ID;
         item.SetLabel("Name", ms.Titel);
         item.SetLabel("Country", ms.Country);
@@ -87,6 +100,9 @@ namespace Webradio.Models
       AllRadioStreams.FireChange();
     }
 
+    /// <summary>
+    /// Set the Logo of a Stream or use the DefaultLogo
+    /// </summary>
     public static string SetStreamLogo(MyStream ms)
     {
       string s = "DefaultLogo.png";
@@ -98,13 +114,8 @@ namespace Webradio.Models
     }
 
     /// <summary>
-    /// Show Dialog to select the Favoritfunctions
+    /// Reset the List and show all Streams
     /// </summary>
-    public void SelectedFavorites(ListItem item)
-    {
-      
-    }
-
     public void ShowAllStreams()
     {
       FillItemList(StreamList);
@@ -120,40 +131,33 @@ namespace Webradio.Models
      // SetPlayCount(_ID);
     }
 
+    /// <summary>
+    /// Get the selected Stream
+    /// </summary>
     public void SelectStream(ListItem item)
     {
-      SelectedStream = GetStreamByID((int)item.AdditionalProperties[STREAM_ID]);
+      SelectedStream = GetStreamById((int)item.AdditionalProperties[STREAM_ID]);
       Play(SelectedStream);
     }
 
     /// <summary>
     /// Set the Playcount of playing Stream +1
     /// </summary>
-    private void SetPlayCount(int _ID)
+    private void SetPlayCount(int id)
     {
-      foreach (MyStream f in StreamList)
+      foreach (var f in StreamList.Where(f => f.ID == id))
       {
-        if (f.ID == _ID)
-        {
-          f.PlayCount += 1;
-        }
+        f.PlayCount += 1;
       }
-      MyStreams.Write(_file, AllRadioStreams);
+      MyStreams.Write(File, AllRadioStreams);
     }
 
     /// <summary>
     /// Get the Stream of selected ID
     /// </summary>
-    public MyStream GetStreamByID(int _ID)
+    public MyStream GetStreamById(int id)
     {
-      foreach (MyStream f in StreamList)
-      {
-        if (f.ID == _ID)
-        {
-          return f;
-        }
-      }
-      return null;
+      return StreamList.FirstOrDefault(f => f.ID == id);
     }
 
     #region IWorkflowModel implementation
@@ -206,6 +210,15 @@ namespace Webradio.Models
 
     static XmlSerializer serializer = new XmlSerializer(typeof(MyStreams));
     static FileStream stream;
+
+    public MyStreams ()
+    {
+    }
+
+    public MyStreams(List<MyStream> streams)
+    {
+      StreamList = streams;
+    }
 
     public static MyStreams Read(string XmlFile)
     {

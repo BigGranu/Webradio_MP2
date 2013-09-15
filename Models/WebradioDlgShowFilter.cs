@@ -36,17 +36,12 @@ namespace Webradio.Models
     public const string MODEL_ID_STR = "63F1DA3E-E87F-4478-83E7-C13966447869";
     const string KEY_FILTER = "filter";
 
-    protected ItemsList _items = new ItemsList();
-    protected List<MyFilter> _filterList;
+    public static ItemsList FilterItems = new ItemsList();
+    public static List<MyFilter> FilterList = new List<MyFilter>();
 
-    private bool Quick = false;
+    private bool _quick = false;
 
     protected delegate Func<MyStream, bool> CreateFilterDelegate(string filter);
-
-    public ItemsList Items
-    {
-      get { return _items; }
-    }
 
     public void Init()
     {    
@@ -55,21 +50,20 @@ namespace Webradio.Models
 
     public void ShowFilter()
     { 
-      Quick = false;
-      _filterList = new List<MyFilter>();
-      _filterList = MyFilters.Read().FilterList;
+      _quick = false;
+      FilterList = MyFilters.Read().FilterList;
       List<string> list = new List<string>();
 
-      foreach (MyFilter f in _filterList)
+      foreach (MyFilter f in FilterList.Where(f => !list.Contains(f.Titel)))
       {
-        if (!list.Contains(f.Titel)) { list.Add(f.Titel); }
+        list.Add(f.Titel);
       }
       FillItems(list);
     }
 
     public void Selected(ListItem item)
     {
-      if (Quick == true)
+      if (_quick == true)
       {
         SelectedQuick(item);
       }
@@ -82,24 +76,19 @@ namespace Webradio.Models
     public void SelectedFilter(ListItem item)
     {
       List<MyStream> list = new List<MyStream>();
-      foreach (MyFilter f in _filterList)
+      foreach (IEnumerable<MyStream> query in from f in FilterList where f.Titel == (string)item.AdditionalProperties[KEY_FILTER] select (from r in WebradioHome.StreamList
+        where
+          Contains(f.fCountrys, r.Country)
+          && Contains(f.fCitys, r.City)
+          && Contains2(f.fGenres, r.Genres)
+          && Contains(f.fBitrate, r.Bitrate)
+        select r))
       {
-        if (f.Titel == (string)item.AdditionalProperties[KEY_FILTER])
+        foreach (MyStream ms in query.Where(ms => !list.Contains(ms)))
         {
-          IEnumerable<MyStream> query = from r in WebradioHome.StreamList
-                                        where
-                                          Contains(f.fCountrys, r.Country)
-                                          && Contains(f.fCitys, r.City)
-                                          && Contains2(f.fGenres, r.Genres)
-                                          && Contains(f.fBitrate, r.Bitrate)
-                                        select r;
-
-          foreach (MyStream ms in query)
-          {
-            if (!list.Contains(ms)) { list.Add(ms); }
-          }
-          break;
+          list.Add(ms);
         }
+        break;
       }
       WebradioHome.FillItemList(list);
     }
@@ -125,31 +114,31 @@ namespace Webradio.Models
 
     public void QuickCountry()
     {
-      Quick = true;
+      _quick = true;
       CreateFilters(s => !string.IsNullOrWhiteSpace(s.Country), s => s.Country, filterValue => s => s.Country == filterValue);
     }
 
     public void QuickCity()
     {
-      Quick = true;
+      _quick = true;
       CreateFilters(s => !string.IsNullOrWhiteSpace(s.City), s => s.City, filterValue => s => s.City == filterValue);
     }
 
     public void QuickBitrate()
     {
-      Quick = true;
+      _quick = true;
       CreateFilters(s => !string.IsNullOrWhiteSpace(s.Bitrate), s => s.Bitrate, filterValue => s => s.Bitrate == filterValue);
     }
 
     public void QuickGenre()
     {
-      Quick = true;
+      _quick = true;
       CreateFiltersMulti(s => !string.IsNullOrWhiteSpace(s.Genres), s => s.Genres.Split(','), filterValue => s => Contains2(s.Genres.Split(','), filterValue));
     }
 
     private void FillItems(IEnumerable<string> list, CreateFilterDelegate createFilterDelegate)
     {
-      _items.Clear();
+      FilterItems.Clear();
       var sorted = list.ToList();
       sorted.Sort();
       foreach (string s in sorted)
@@ -157,30 +146,28 @@ namespace Webradio.Models
         ListItem item = new ListItem();
         item.AdditionalProperties[KEY_FILTER] = createFilterDelegate(s); // Creates a dynamic filter like s => s.Titel="Radio 100"
         item.SetLabel("Name", s);
-        _items.Add(item);
+        FilterItems.Add(item);
       }
-      _items.FireChange();
+      FilterItems.FireChange();
     }
 
     private void FillItems(List<string> list)
     {
-      Items.Clear();
+      FilterItems.Clear();
       list.Sort();
       foreach (string s in list)
       {
         ListItem item = new ListItem();
         item.AdditionalProperties[KEY_FILTER] = s;
         item.SetLabel("Name", s);
-        Items.Add(item);
+        FilterItems.Add(item);
       }
-      Items.FireChange();
+      FilterItems.FireChange();
     }
 
-    private static bool Contains(List<string> L, string S)
+    private static bool Contains(List<string> l, string s)
     {
-      if (L.Count == 0)
-        return true;
-      return L.Contains(S);
+      return l.Count == 0 || l.Contains(s);
     }
 
     private static bool Contains2(ICollection<string> l, string s)

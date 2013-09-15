@@ -13,8 +13,8 @@ namespace Webradio.Models
   {
     public const string DATA_ID_STR = "BD1BA004-1BC0-49F5-9107-AD8FFD07BAAE";
 
-    public static string xmlFilter = WebradioHome.DataPath + "WebradioFilters.xml";
-    public static string xmlFavorites = WebradioHome.DataPath + "WebradioFavorites.xml";
+    public static string XmlFilter = WebradioHome.DataPath + "WebradioFilters.xml";
+    public static string XmlFavorites = WebradioHome.DataPath + "WebradioFavorites.xml";
 
     public WebradioData()
     {
@@ -69,51 +69,51 @@ namespace Webradio.Models
     {
       public List<MyFilter> FilterList = new List<MyFilter>();
       
-      static XmlSerializer serializer; 
-      static FileStream stream;
+      static XmlSerializer _serializer; 
+      static FileStream _stream;
 
       public MyFilters()
       {
       }
 
-      public MyFilters(List<MyFilter> _filters)
+      public MyFilters(List<MyFilter> filters)
       {
-        FilterList = _filters;
+        FilterList = filters;
       }
 
       public static MyFilters Read()
       {
-        MyFilters _mf = new MyFilters();
-        string XmlFile = WebradioData.xmlFilter;
+        MyFilters mfs = new MyFilters();
+        string xmlFile = WebradioData.XmlFilter;
 
         try
         { 
-          if (!File.Exists(XmlFile)) 
+          if (!File.Exists(xmlFile)) 
           { 
             MyFilter mf = new MyFilter("New Filter", "1", new List<string>(), new List<string>(), new List<string>(), new List<string>());
-            _mf.FilterList.Add(mf);
-            MyFilters.Write(_mf);
+            mfs.FilterList.Add(mf);
+            MyFilters.Write(mfs);
           }
-          stream = new FileStream(XmlFile, FileMode.Open);
-          serializer = new XmlSerializer(typeof(MyFilters));
-          _mf = (MyFilters)serializer.Deserialize(stream);
+          _stream = new FileStream(xmlFile, FileMode.Open);
+          _serializer = new XmlSerializer(typeof(MyFilters));
+          mfs = (MyFilters)_serializer.Deserialize(_stream);
         }
         finally
         {
-          stream.Close();
-          serializer = null;
+          _stream.Close();
+          _serializer = null;
         }
-        return _mf;
+        return mfs;
       }
 
       public static bool Write(Object obj)
       {
-        string XmlFile = WebradioData.xmlFilter;
+        string xmlFile = WebradioData.XmlFilter;
         try
         {
-          stream = new FileStream(XmlFile, FileMode.Create);
-          serializer = new XmlSerializer(typeof(MyFilters));
-          serializer.Serialize(stream, obj);
+          _stream = new FileStream(xmlFile, FileMode.Create);
+          _serializer = new XmlSerializer(typeof(MyFilters));
+          _serializer.Serialize(_stream, obj);
         }
         catch (Exception ex)
         {
@@ -121,8 +121,8 @@ namespace Webradio.Models
         }
         finally
         {
-          stream.Close();
-          serializer = null;
+          _stream.Close();
+          _serializer = null;
         }
         return true;
       }
@@ -148,14 +148,14 @@ namespace Webradio.Models
         fBitrate = new List<string>();
       }
 
-      public MyFilter(String _Titel, String _ID, List<string> _Countrys, List<string> _Citys, List<string> _Genres, List<string> _Bitrate)
+      public MyFilter(String titel, String id, List<string> countrys, List<string> citys, List<string> genres, List<string> bitrate)
       {
-        Titel = _Titel;
-        ID = _ID;
-        fCountrys = _Countrys;
-        fCitys = _Citys;
-        fGenres = _Genres;
-        fBitrate = _Bitrate;
+        Titel = titel;
+        ID = id;
+        fCountrys = countrys;
+        fCitys = citys;
+        fGenres = genres;
+        fBitrate = bitrate;
       }
     }
 
@@ -179,7 +179,7 @@ namespace Webradio.Models
       public static MyFavorits Read()
       {
         MyFavorits _s = new MyFavorits();
-        string XmlFile = WebradioData.xmlFavorites;
+        string XmlFile = WebradioData.XmlFavorites;
 
         try
         {
@@ -204,7 +204,7 @@ namespace Webradio.Models
 
       public static bool Write(Object obj)
       {
-        string XmlFile = WebradioData.xmlFavorites;
+        string XmlFile = WebradioData.XmlFavorites;
         try
         {
           stream = new FileStream(XmlFile, FileMode.Create);

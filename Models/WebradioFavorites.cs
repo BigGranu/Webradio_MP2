@@ -23,16 +23,8 @@
 #endregion
 
 using System;
-using System.IO;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.Xml.Serialization;
-using System.Globalization;
-using System.Linq;
-using MediaPortal.Common;
 using MediaPortal.Common.General;
-using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
@@ -42,41 +34,40 @@ namespace Webradio.Models
   public class WebradioFavorites : IWorkflowModel
 
   {
-    public const string MODEL_ID_STR = "EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94";
-    
+    public const string MODEL_ID_STR = "EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94";  
     public const string NAME = "name";
     public const string ID = "id";
 
     public static List<MyFavorit> FavoritList = new List<MyFavorit>();
     public static ItemsList FavoritItems = new ItemsList();
 
-    public string SelectedID = "";
+    public string SelectedId = "";
 
-    private static AbstractProperty _TitelProperty = null;
+    private static AbstractProperty _titelProperty = null;
     public AbstractProperty TitelProperty
     {
-      get { return _TitelProperty; }
+      get { return _titelProperty; }
     }
     public string SelectedTitel
     {
-      get { return (string)_TitelProperty.GetValue(); }
+      get { return (string)_titelProperty.GetValue(); }
       set
       {
-        _TitelProperty.SetValue(value);
+        _titelProperty.SetValue(value);
       }
     }
 
-    private static AbstractProperty _SaveImage = null;
+    private static AbstractProperty _saveImage = null;
     public AbstractProperty SaveImageProperty
     {
-      get { return _SaveImage; }
+      get { return _saveImage; }
     }
     public string SaveImage
     {
-      get { return (string)_SaveImage.GetValue(); }
+      get { return (string)_saveImage.GetValue(); }
       set
       {
-        _SaveImage.SetValue(value);
+        _saveImage.SetValue(value);
       }
     }
 
@@ -89,13 +80,11 @@ namespace Webradio.Models
     /// </summary>
     public void Delete()
     {
-      if (SelectedID != "")
-      { 
-        FavoritList.RemoveRange(Convert.ToInt32(SelectedID), 1);
-        ImportFavorits();
-        SelectedTitel = "";
-        SelectedID = "";
-      }
+      if (SelectedId == "") return;
+      FavoritList.RemoveRange(Convert.ToInt32(SelectedId), 1);
+      ImportFavorits();
+      SelectedTitel = "";
+      SelectedId = "";
     }
 
     /// <summary>
@@ -103,21 +92,19 @@ namespace Webradio.Models
     /// </summary>
     public void Rename()
     {
-      if (SelectedID != "")
+      if (SelectedId == "") return;
+      int id = 0;
+      foreach (MyFavorit mf in FavoritList)
       {
-        int id = 0;
-        foreach (MyFavorit mf in FavoritList)
+        if (id == Convert.ToInt32(SelectedId))
         {
-          if (id == Convert.ToInt32(SelectedID))
-          {
-            mf.Titel = SelectedTitel;
-            break;
-          }
-          id += 1;
+          mf.Titel = SelectedTitel;
+          break;
         }
-        ImportFavorits();
-        SaveImage = "Unsaved.png";
+        id += 1;
       }
+      ImportFavorits();
+      SaveImage = "Unsaved.png";
     }
 
     /// <summary>
@@ -142,7 +129,7 @@ namespace Webradio.Models
     public void Selected(ListItem item)
     {
       SelectedTitel = (string)item.AdditionalProperties[NAME];
-      SelectedID = (string)item.AdditionalProperties[ID];
+      SelectedId = (string)item.AdditionalProperties[ID];
     }
 
     private void ImportFavorits()
@@ -174,8 +161,8 @@ namespace Webradio.Models
 
     public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
-      _SaveImage = new WProperty(typeof(string), string.Empty);
-      _TitelProperty = new WProperty(typeof(string), string.Empty);
+      _saveImage = new WProperty(typeof(string), string.Empty);
+      _titelProperty = new WProperty(typeof(string), string.Empty);
       FavoritList = MyFavorits.Read().FavoritList;
       ImportFavorits();
       SaveImage = "Saved.png";

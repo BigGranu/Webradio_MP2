@@ -23,16 +23,9 @@
 #endregion
 
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Xml.Serialization;
-using System.Globalization;
 using System.Linq;
-using MediaPortal.Common;
 using MediaPortal.Common.General;
-using MediaPortal.Common.Settings;
-using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
 
@@ -42,65 +35,42 @@ namespace Webradio.Models
   {
     public const string MODEL_ID_STR = "7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA";
 
-    private static AbstractProperty _SearchTextProperty = null;
+    private static AbstractProperty _searchTextProperty = null;
+
     public AbstractProperty SearchTextProperty
     {
-      get { return _SearchTextProperty; }
-    }
-    public static string SearchText
-    {
-      get { return (string)_SearchTextProperty.GetValue(); }
-      set
-      {
-        _SearchTextProperty.SetValue(value);
-      }
+      get { return _searchTextProperty; }
     }
 
-    public WebradioDlgSearchInStreams()
+    public static string SearchText
     {
+      get { return (string)_searchTextProperty.GetValue(); }
+      set
+      {
+        _searchTextProperty.SetValue(value);
+      }
     }
 
     public void Init()
     {
-      _SearchTextProperty = new WProperty(typeof(string), string.Empty);
+      _searchTextProperty = new WProperty(typeof(string), string.Empty);
     }
 
     public void SearchTitel()
     {
-      List<MyStream> list = new List<MyStream>();
-      foreach (MyStream ms in WebradioHome.StreamList)
-      {
-        if (ms.Titel.ToUpper().IndexOf(SearchText.ToUpper()) >= 0)
-        {
-          list.Add(ms);
-        }
-      }
+      var list = WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), System.StringComparison.Ordinal) >= 0).ToList();
       WebradioHome.FillItemList(list);
     }
 
     public void SearchDescription()
     {
-      List<MyStream> list = new List<MyStream>();
-      foreach (MyStream ms in WebradioHome.StreamList)
-      {
-        if (ms.Description.ToUpper().IndexOf(SearchText.ToUpper()) >= 0)
-        {
-          list.Add(ms);
-        }
-      }
+      var list = WebradioHome.StreamList.Where(ms => ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), System.StringComparison.Ordinal) >= 0).ToList();
       WebradioHome.FillItemList(list);
     }
 
     public void SearchAll()
     {
-      List<MyStream> list = new List<MyStream>();
-      foreach (MyStream ms in WebradioHome.StreamList)
-      {
-        if (ms.Titel.ToUpper().IndexOf(SearchText.ToUpper()) >= 0 | ms.Description.ToUpper().IndexOf(SearchText.ToUpper()) >= 0)
-        {
-          list.Add(ms);
-        }
-      }
+      var list = WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), System.StringComparison.Ordinal) >= 0 | ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), System.StringComparison.Ordinal) >= 0).ToList();
       WebradioHome.FillItemList(list);
     }
 

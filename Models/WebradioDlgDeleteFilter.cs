@@ -23,15 +23,8 @@
 #endregion
 
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Xml.Serialization;
-using System.Globalization;
 using System.Linq;
-using MediaPortal.Common;
-using MediaPortal.Common.General;
-using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
@@ -45,12 +38,7 @@ namespace Webradio.Models
     public const string ID = "id";
 
     public static List<MyFilter> FilterList = new List<MyFilter>();
-
     public ItemsList FilterItems = new ItemsList();
-
-    public WebradioDlgDeleteFilter()
-    {
-    }
 
     public void Init()
     {
@@ -76,31 +64,19 @@ namespace Webradio.Models
 
     public void Select(ListItem item)
     {
-      if (item.Selected == true)
-      {
-        item.Selected = false;
-      }
-      else
-      {
-        item.Selected = true;
-      }
+      item.Selected = item.Selected != true;
       item.FireChange();
     }
 
     public void Delete()
     {
-      foreach (ListItem item in FilterItems)
+      foreach (ListItem item in FilterItems.Where(item => item.Selected == true))
       {
-        if (item.Selected == true)
+        foreach (MyFilter mf in FilterList)
         {
-          foreach (MyFilter mf in FilterList)
-          { 
-            if(mf.ID == (string)item.AdditionalProperties[ID])
-            {
-              FilterList.Remove(mf);
-              break;
-            }
-          }
+          if (mf.ID != (string)item.AdditionalProperties[ID]) continue;
+          FilterList.Remove(mf);
+          break;
         }
       }
       WebradioFilter.SaveImage = "Unsaved.png";

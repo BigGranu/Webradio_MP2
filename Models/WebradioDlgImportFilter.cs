@@ -23,15 +23,8 @@
 #endregion
 
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Xml.Serialization;
-using System.Globalization;
 using System.Linq;
-using MediaPortal.Common;
-using MediaPortal.Common.General;
-using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
@@ -41,13 +34,9 @@ namespace Webradio.Models
   internal class WebradioDlgImportFilter : IWorkflowModel 
   {
     public const string MODEL_ID_STR = "10D0E2AB-AE84-406F-8AA9-5A3FB2A86360";
- 
-    public ItemsList FilterItems = new ItemsList();
-    const string NAME = "name";
+    public const string NAME = "name";
 
-    public WebradioDlgImportFilter()
-    {
-    }
+    public ItemsList FilterItems = new ItemsList();   
 
     public void ImportFilter()
     {
@@ -66,12 +55,9 @@ namespace Webradio.Models
     /// </summary>
     public void SelectedFilter(ListItem item)
     {
-      foreach (MyFilter f in WebradioFilter.FilterList)
+      foreach (MyFilter f in WebradioFilter.FilterList.Where(f => f.Titel == (string)item.AdditionalProperties[NAME]))
       {
-        if (f.Titel == (string)item.AdditionalProperties[NAME])
-        {
-          WebradioFilter.SetFilter(f);
-        }
+        WebradioFilter.SetFilter(f);
       }
     }
 

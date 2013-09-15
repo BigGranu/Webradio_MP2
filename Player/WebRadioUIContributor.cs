@@ -29,6 +29,7 @@ using MediaPortal.UI.Players.BassPlayer.Interfaces;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Players;
 using MediaPortal.UiComponents.Media.Models;
+using Webradio.Models;
 using Un4seen.Bass.AddOn.Tags;
 
 namespace Webradio.Player
@@ -155,7 +156,7 @@ namespace Webradio.Player
           Artist = tags.artist;
           Title = tags.title;
           Album = tags.album;
-          CurrentStreamLogo = Webradio.Models.WebradioHome.CurrentStreamLogo;
+          CurrentStreamLogo = WebradioHome.CurrentStreamLogo;
           return;
         }
         Artist = string.Empty;
