@@ -13,7 +13,7 @@ namespace Webradio.Models
   {
     public const string DATA_ID_STR = "BD1BA004-1BC0-49F5-9107-AD8FFD07BAAE";
 
-    public static string XmlFilter = WebradioHome.DataPath + "WebradioFilters.xml";
+   // public static string XmlFilter = WebradioHome.DataPath + "WebradioFilters.xml";
     public static string XmlFavorites = WebradioHome.DataPath + "WebradioFavorites.xml";
 
     public WebradioData()
@@ -65,99 +65,99 @@ namespace Webradio.Models
     #endregion
   }
 
-    public class MyFilters
-    {
-      public List<MyFilter> FilterList = new List<MyFilter>();
+    //public class MyFilters
+    //{
+    //  public List<MyFilter> FilterList = new List<MyFilter>();
       
-      static XmlSerializer _serializer; 
-      static FileStream _stream;
+    //  static XmlSerializer _serializer; 
+    //  static FileStream _stream;
 
-      public MyFilters()
-      {
-      }
+    //  public MyFilters()
+    //  {
+    //  }
 
-      public MyFilters(List<MyFilter> filters)
-      {
-        FilterList = filters;
-      }
+    //  public MyFilters(List<MyFilter> filters)
+    //  {
+    //    FilterList = filters;
+    //  }
 
-      public static MyFilters Read()
-      {
-        MyFilters mfs = new MyFilters();
-        string xmlFile = WebradioData.XmlFilter;
+    //  public static MyFilters Read()
+    //  {
+    //    MyFilters mfs = new MyFilters();
+    //    string xmlFile = WebradioData.XmlFilter;
 
-        try
-        { 
-          if (!File.Exists(xmlFile)) 
-          { 
-            MyFilter mf = new MyFilter("New Filter", "1", new List<string>(), new List<string>(), new List<string>(), new List<string>());
-            mfs.FilterList.Add(mf);
-            MyFilters.Write(mfs);
-          }
-          _stream = new FileStream(xmlFile, FileMode.Open);
-          _serializer = new XmlSerializer(typeof(MyFilters));
-          mfs = (MyFilters)_serializer.Deserialize(_stream);
-        }
-        finally
-        {
-          _stream.Close();
-          _serializer = null;
-        }
-        return mfs;
-      }
+    //    try
+    //    { 
+    //      if (!File.Exists(xmlFile)) 
+    //      { 
+    //        MyFilter mf = new MyFilter("New Filter", "1", new List<string>(), new List<string>(), new List<string>(), new List<string>());
+    //        mfs.FilterList.Add(mf);
+    //        MyFilters.Write(mfs);
+    //      }
+    //      _stream = new FileStream(xmlFile, FileMode.Open);
+    //      _serializer = new XmlSerializer(typeof(MyFilters));
+    //      mfs = (MyFilters)_serializer.Deserialize(_stream);
+    //    }
+    //    finally
+    //    {
+    //      _stream.Close();
+    //      _serializer = null;
+    //    }
+    //    return mfs;
+    //  }
 
-      public static bool Write(Object obj)
-      {
-        string xmlFile = WebradioData.XmlFilter;
-        try
-        {
-          _stream = new FileStream(xmlFile, FileMode.Create);
-          _serializer = new XmlSerializer(typeof(MyFilters));
-          _serializer.Serialize(_stream, obj);
-        }
-        catch (Exception ex)
-        {
-          Console.WriteLine(ex.StackTrace);
-        }
-        finally
-        {
-          _stream.Close();
-          _serializer = null;
-        }
-        return true;
-      }
+    //  public static bool Write(Object obj)
+    //  {
+    //    string xmlFile = WebradioData.XmlFilter;
+    //    try
+    //    {
+    //      _stream = new FileStream(xmlFile, FileMode.Create);
+    //      _serializer = new XmlSerializer(typeof(MyFilters));
+    //      _serializer.Serialize(_stream, obj);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //      Console.WriteLine(ex.StackTrace);
+    //    }
+    //    finally
+    //    {
+    //      _stream.Close();
+    //      _serializer = null;
+    //    }
+    //    return true;
+    //  }
 
-    }
+    //}
 
-    public class MyFilter
-    {
-      public string Titel;
-      public string ID;
-      public List<string> fCountrys;
-      public List<string> fCitys;
-      public List<string> fGenres;
-      public List<string> fBitrate;
+    //public class MyFilter
+    //{
+    //  public string Titel;
+    //  public string ID;
+    //  public List<string> fCountrys;
+    //  public List<string> fCitys;
+    //  public List<string> fGenres;
+    //  public List<string> fBitrate;
 
-      public MyFilter()
-      {
-        Titel = "";
-        ID = "";
-        fCountrys = new List<string>();
-        fCitys = new List<string>();
-        fGenres = new List<string>();
-        fBitrate = new List<string>();
-      }
+    //  public MyFilter()
+    //  {
+    //    Titel = "";
+    //    ID = "";
+    //    fCountrys = new List<string>();
+    //    fCitys = new List<string>();
+    //    fGenres = new List<string>();
+    //    fBitrate = new List<string>();
+    //  }
 
-      public MyFilter(String titel, String id, List<string> countrys, List<string> citys, List<string> genres, List<string> bitrate)
-      {
-        Titel = titel;
-        ID = id;
-        fCountrys = countrys;
-        fCitys = citys;
-        fGenres = genres;
-        fBitrate = bitrate;
-      }
-    }
+    //  public MyFilter(String titel, String id, List<string> countrys, List<string> citys, List<string> genres, List<string> bitrate)
+    //  {
+    //    Titel = titel;
+    //    ID = id;
+    //    fCountrys = countrys;
+    //    fCitys = citys;
+    //    fGenres = genres;
+    //    fBitrate = bitrate;
+    //  }
+    //}
 
     #region Read/Write Favorites
     public class MyFavorits

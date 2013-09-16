@@ -25,11 +25,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MediaPortal.Common;
+using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
+using Webradio.Helper_Classes;
+using Webradio.Models;
+using Webradio.Settings;
 
-namespace Webradio.Models
+namespace Webradio.Dialogues
 {
   internal class WebradioDlgShowFavorites : IWorkflowModel
   {
@@ -43,7 +48,7 @@ namespace Webradio.Models
 
     #endregion
 
-    public static List<MyFavorit> FavoritList = new List<MyFavorit>();
+    public List<FavoriteSetupInfo> FavoritList = new List<FavoriteSetupInfo>();
     public ItemsList FavoritItems = new ItemsList();   
 
     public WebradioDlgShowFavorites()
@@ -52,7 +57,12 @@ namespace Webradio.Models
 
     public void Init()
     {
-      FavoritList = MyFavorits.Read().FavoritList;      
+      FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList;
+      if (FavoritList == null)
+      {
+        FavoritList = new List<FavoriteSetupInfo> { new FavoriteSetupInfo("New Favorite", true, new List<string>()) };
+      }
+
       ImportFavorits(Convert.ToString(WebradioHome.SelectedStream.ID));
       SelectedStream = WebradioHome.SelectedStream.Titel;
     }
@@ -60,12 +70,12 @@ namespace Webradio.Models
     public void ImportFavorits(string id)
     {
       FavoritItems.Clear();
-      foreach (MyFavorit f in FavoritList)
+      foreach (FavoriteSetupInfo f in FavoritList)
       {
         ListItem item = new ListItem();
         item.AdditionalProperties[NAME] = f.Titel;
         item.SetLabel("Name", f.Titel);
-        item.Selected = f.IDs.Contains(id);
+        item.Selected = f.Ids.Contains(id);
         FavoritItems.Add(item);
       }
     }
@@ -76,7 +86,7 @@ namespace Webradio.Models
     public void SelectFavorite(ListItem item)
     {
       List<MyStream> list = new List<MyStream>();
-      foreach (IEnumerable<MyStream> query in from f in FavoritList where f.Titel == (string)item.AdditionalProperties[NAME] select (from r in WebradioHome.StreamList where _contains(f.IDs, Convert.ToString(r.ID)) select r))
+      foreach (IEnumerable<MyStream> query in from f in FavoritList where f.Titel == (string)item.AdditionalProperties[NAME] select (from r in WebradioHome.StreamList where _contains(f.Ids, Convert.ToString(r.ID)) select r))
       {
         foreach (MyStream ms in query.Where(ms => !list.Contains(ms)))
         {
@@ -99,17 +109,17 @@ namespace Webradio.Models
       string s = (string)item.AdditionalProperties[NAME];
       string id = Convert.ToString(WebradioHome.SelectedStream.ID);
 
-      foreach (MyFavorit f in FavoritList.Where(f => f.Titel == s))
+      foreach (FavoriteSetupInfo f in FavoritList.Where(f => f.Titel == s))
       {
         if (item.Selected == true)
         {
           item.Selected = false;
-          f.IDs.Remove(id);
+          f.Ids.Remove(id);
         }
         else
         {
           item.Selected = true;
-          f.IDs.Add(id);
+          f.Ids.Add(id);
         }
         Changed = true;
       }
@@ -134,9 +144,9 @@ namespace Webradio.Models
 
     public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
-      if (Changed == true) 
+      if (Changed == true)
       {
-        MyFavorits.Write(new MyFavorits(FavoritList));
+        ServiceRegistration.Get<ISettingsManager>().Save(new FavoritesSettings(FavoritList));
       }
     }
 

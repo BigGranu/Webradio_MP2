@@ -25,11 +25,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MediaPortal.Common;
+using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
+using Webradio.Helper_Classes;
+using Webradio.Models;
+using Webradio.Settings;
 
-namespace Webradio.Models
+namespace Webradio.Dialogues
 {
   internal class WebradioDlgShowFilter : IWorkflowModel
   {
@@ -37,11 +42,11 @@ namespace Webradio.Models
     const string KEY_FILTER = "filter";
 
     public static ItemsList FilterItems = new ItemsList();
-    public static List<MyFilter> FilterList = new List<MyFilter>();
+    public static List<FilterSetupInfo> FilterList = new List<FilterSetupInfo>();
 
     private bool _quick = false;
 
-    protected delegate Func<MyStream, bool> CreateFilterDelegate(string filter);
+    protected delegate Func<MyStream , bool> CreateFilterDelegate(string filter);
 
     public void Init()
     {    
@@ -51,10 +56,15 @@ namespace Webradio.Models
     public void ShowFilter()
     { 
       _quick = false;
-      FilterList = MyFilters.Read().FilterList;
+      FilterList = ServiceRegistration.Get<ISettingsManager>().Load<FilterSettings>().FilterSetupList;
+      if (FilterList == null)
+      {
+        FilterList = new List<FilterSetupInfo> { new FilterSetupInfo("New Filter","0",new List<string>(),new List<string>(), new List<string>(),new List<string>()) };
+      }
+
       List<string> list = new List<string>();
 
-      foreach (MyFilter f in FilterList.Where(f => !list.Contains(f.Titel)))
+      foreach (FilterSetupInfo f in FilterList.Where(f => !list.Contains(f.Titel)))
       {
         list.Add(f.Titel);
       }
@@ -76,13 +86,15 @@ namespace Webradio.Models
     public void SelectedFilter(ListItem item)
     {
       List<MyStream> list = new List<MyStream>();
-      foreach (IEnumerable<MyStream> query in from f in FilterList where f.Titel == (string)item.AdditionalProperties[KEY_FILTER] select (from r in WebradioHome.StreamList
-        where
-          Contains(f.fCountrys, r.Country)
-          && Contains(f.fCitys, r.City)
-          && Contains2(f.fGenres, r.Genres)
-          && Contains(f.fBitrate, r.Bitrate)
-        select r))
+      foreach (IEnumerable<MyStream> query in from f in FilterList
+                                              where f.Titel == (string)item.AdditionalProperties[KEY_FILTER]
+                                              select (from r in WebradioHome.StreamList
+                                                      where
+                                                        Contains(f.Countrys, r.Country)
+                                                        && Contains(f.Citys, r.City)
+                                                        && Contains2(f.Genres, r.Genres)
+                                                        && Contains(f.Bitrate, r.Bitrate)
+                                                      select r))
       {
         foreach (MyStream ms in query.Where(ms => !list.Contains(ms)))
         {
@@ -95,7 +107,7 @@ namespace Webradio.Models
 
     public void SelectedQuick(ListItem item)
     {
-      Func<MyStream, bool> predicate = (Func<MyStream, bool>) item.AdditionalProperties[KEY_FILTER];
+      Func<MyStream, bool> predicate = (Func<MyStream, bool>)item.AdditionalProperties[KEY_FILTER];
       var filtered = WebradioHome.StreamList.Where(predicate).ToList();
       WebradioHome.FillItemList(filtered);
     }

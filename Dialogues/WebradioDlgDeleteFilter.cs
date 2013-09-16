@@ -25,53 +25,65 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MediaPortal.Common.General;
+using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
+using Webradio.Helper_Classes;
+using Webradio.Models;
 
-namespace Webradio.Models
+namespace Webradio.Dialogues
 {
-  internal class WebradioDlgSearchInStreams : IWorkflowModel
+  internal class WebradioDlgDeleteFilter : IWorkflowModel 
   {
-    public const string MODEL_ID_STR = "7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA";
+    public const string MODEL_ID_STR = "59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89";
+    public const string NAME = "name";
+    public const string ID = "id";
 
-    private static AbstractProperty _searchTextProperty = null;
-
-    public AbstractProperty SearchTextProperty
-    {
-      get { return _searchTextProperty; }
-    }
-
-    public static string SearchText
-    {
-      get { return (string)_searchTextProperty.GetValue(); }
-      set
-      {
-        _searchTextProperty.SetValue(value);
-      }
-    }
+    public static List<FilterSetupInfo> FilterList = new List<FilterSetupInfo>();
+    public ItemsList FilterItems = new ItemsList();
 
     public void Init()
     {
-      _searchTextProperty = new WProperty(typeof(string), string.Empty);
+      FilterList = WebradioFilter.FilterList;
+      ImportFilter();
     }
 
-    public void SearchTitel()
+    public void ImportFilter()
     {
-      var list = WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), System.StringComparison.Ordinal) >= 0).ToList();
-      WebradioHome.FillItemList(list);
+      FilterItems.Clear();
+      int id = 0;
+      foreach (FilterSetupInfo mf in FilterList)
+      {
+        ListItem item = new ListItem();
+        item.AdditionalProperties[NAME] = mf.Titel;
+        item.AdditionalProperties[ID] = mf.Id;
+        item.SetLabel("Name", mf.Titel);
+        FilterItems.Add(item);
+        id += 1;
+      }
+      FilterItems.FireChange();
     }
 
-    public void SearchDescription()
+    public void Select(ListItem item)
     {
-      var list = WebradioHome.StreamList.Where(ms => ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), System.StringComparison.Ordinal) >= 0).ToList();
-      WebradioHome.FillItemList(list);
+      item.Selected = item.Selected != true;
+      item.FireChange();
     }
 
-    public void SearchAll()
+    public void Delete()
     {
-      var list = WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), System.StringComparison.Ordinal) >= 0 | ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), System.StringComparison.Ordinal) >= 0).ToList();
-      WebradioHome.FillItemList(list);
+      foreach (ListItem item in FilterItems.Where(item => item.Selected == true))
+      {
+        foreach (FilterSetupInfo mf in FilterList)
+        {
+          if (mf.Id != (string)item.AdditionalProperties[ID]) continue;
+          FilterList.Remove(mf);
+          break;
+        }
+      }
+      WebradioFilter.SaveImage = "Unsaved.png";
+      WebradioFilter.FilterTitel = "";
+      ImportFilter();
     }
 
     #region IWorkflowModel implementation
@@ -118,5 +130,6 @@ namespace Webradio.Models
     }
 
     #endregion
+
   }
 }

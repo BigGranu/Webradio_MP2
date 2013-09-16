@@ -28,60 +28,39 @@ using System.Linq;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
+using Webradio.Helper_Classes;
+using Webradio.Models;
 
-namespace Webradio.Models
+namespace Webradio.Dialogues
 {
-  internal class WebradioDlgDeleteFilter : IWorkflowModel 
+  internal class WebradioDlgImportFilter : IWorkflowModel 
   {
-    public const string MODEL_ID_STR = "59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89";
+    public const string MODEL_ID_STR = "10D0E2AB-AE84-406F-8AA9-5A3FB2A86360";
     public const string NAME = "name";
-    public const string ID = "id";
 
-    public static List<MyFilter> FilterList = new List<MyFilter>();
-    public ItemsList FilterItems = new ItemsList();
-
-    public void Init()
-    {
-      FilterList = WebradioFilter.FilterList;
-      ImportFilter();
-    }
+    public ItemsList FilterItems = new ItemsList();   
 
     public void ImportFilter()
     {
       FilterItems.Clear();
-      int id = 0;
-      foreach (MyFilter mf in FilterList)
+      foreach (FilterSetupInfo f in WebradioFilter.FilterList)
       {
         ListItem item = new ListItem();
-        item.AdditionalProperties[NAME] = mf.Titel;
-        item.AdditionalProperties[ID] = mf.ID;
-        item.SetLabel("Name", mf.Titel);
+        item.AdditionalProperties[NAME] = f.Titel;
+        item.SetLabel("Name", f.Titel);
         FilterItems.Add(item);
-        id += 1;
       }
-      FilterItems.FireChange();
     }
 
-    public void Select(ListItem item)
+    /// <summary>
+    /// Import selected Filter
+    /// </summary>
+    public void SelectedFilter(ListItem item)
     {
-      item.Selected = item.Selected != true;
-      item.FireChange();
-    }
-
-    public void Delete()
-    {
-      foreach (ListItem item in FilterItems.Where(item => item.Selected == true))
+      foreach (FilterSetupInfo f in WebradioFilter.FilterList.Where(f => f.Titel == (string)item.AdditionalProperties[NAME]))
       {
-        foreach (MyFilter mf in FilterList)
-        {
-          if (mf.ID != (string)item.AdditionalProperties[ID]) continue;
-          FilterList.Remove(mf);
-          break;
-        }
+        WebradioFilter.SetFilter(f);
       }
-      WebradioFilter.SaveImage = "Unsaved.png";
-      WebradioFilter.FilterTitel = "";
-      ImportFilter();
     }
 
     #region IWorkflowModel implementation
@@ -98,7 +77,7 @@ namespace Webradio.Models
 
     public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
-      Init();
+      ImportFilter();
     }
 
     public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)

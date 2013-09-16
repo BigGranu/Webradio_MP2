@@ -24,10 +24,14 @@
 
 using System;
 using System.Collections.Generic;
+using MediaPortal.Common;
 using MediaPortal.Common.General;
+using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
+using Webradio.Helper_Classes;
+using Webradio.Settings;
 
 namespace Webradio.Models
 {
@@ -38,7 +42,7 @@ namespace Webradio.Models
     public const string NAME = "name";
     public const string ID = "id";
 
-    public static List<MyFavorit> FavoritList = new List<MyFavorit>();
+    public List<FavoriteSetupInfo> FavoritList = new List<FavoriteSetupInfo>();
     public static ItemsList FavoritItems = new ItemsList();
 
     public string SelectedId = "";
@@ -94,7 +98,7 @@ namespace Webradio.Models
     {
       if (SelectedId == "") return;
       int id = 0;
-      foreach (MyFavorit mf in FavoritList)
+      foreach (FavoriteSetupInfo mf in FavoritList)
       {
         if (id == Convert.ToInt32(SelectedId))
         {
@@ -112,7 +116,7 @@ namespace Webradio.Models
     /// </summary>
     public void Add()
     {
-      FavoritList.Add(new MyFavorit("New Favorite", true, new List<string>()));
+      FavoritList.Add(new FavoriteSetupInfo("New Favorite", true, new List<string>()));
       ImportFavorits();
       SelectedTitel = "New Favorite";
     }
@@ -122,7 +126,7 @@ namespace Webradio.Models
     /// </summary>
     public void Save()
     {
-      MyFavorits.Write(new MyFavorits(FavoritList));
+      ServiceRegistration.Get<ISettingsManager>().Save(new FavoritesSettings(FavoritList));
       SaveImage = "Saved.png";
     }
 
@@ -134,9 +138,15 @@ namespace Webradio.Models
 
     private void ImportFavorits()
     {
+      FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList;
+      if (FavoritList == null)
+      {
+        FavoritList = new List<FavoriteSetupInfo> { new FavoriteSetupInfo("New Favorite", true, new List<string>()) };
+      }
+
       FavoritItems.Clear();
       int id = 0;
-      foreach (MyFavorit f in FavoritList)
+      foreach (FavoriteSetupInfo f in FavoritList)
       {
         ListItem item = new ListItem();
         item.AdditionalProperties[NAME] = f.Titel;
@@ -163,7 +173,6 @@ namespace Webradio.Models
     {
       _saveImage = new WProperty(typeof(string), string.Empty);
       _titelProperty = new WProperty(typeof(string), string.Empty);
-      FavoritList = MyFavorits.Read().FavoritList;
       ImportFavorits();
       SaveImage = "Saved.png";
     }

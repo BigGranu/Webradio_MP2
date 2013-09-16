@@ -28,12 +28,12 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Linq;
 using MediaPortal.Common;
-using MediaPortal.Common.Settings;
+using MediaPortal.Common.PathManager;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
+using Webradio.Helper_Classes;
 using Webradio.Player;
-using MediaPortal.Common.PathManager;
 
 namespace Webradio.Models
 {
@@ -43,8 +43,7 @@ namespace Webradio.Models
     public const string STREAM_ID = "StreamID";
 
     public static string CurrentStreamLogo = string.Empty;
-    public static string DataPath = ServiceRegistration.Get<IPathManager>().GetPath("<DATA>") + "\\Webradio\\";
-    public string File = DataPath + "WebradioSender.xml";
+    public string File = ServiceRegistration.Get<IPathManager>().GetPath("<DATA>") + "\\Webradio\\WebradioSender.xml";
 
     public static MyStream SelectedStream = new MyStream();
     public static ItemsList AllRadioStreams = new ItemsList();
@@ -55,25 +54,6 @@ namespace Webradio.Models
     {
       StreamList = MyStreams.Read(File).StreamList;
       FillItemList(StreamList);
-
-
-     // settings = new WeatherSettings();
-     // settings.LocationsList = new List<CitySetupInfo>();
-      ServiceRegistration.Get<ISettingsManager>().Save(new MyStreams(StreamList));
-
-      //// test
-      //string[] lines = System.IO.File.ReadAllLines(@"D:\Test.txt");
-      //List<MyStream> testlist = new List<MyStream>();
-
-      //foreach (MyStream ms in StreamList)
-      //{
-      //  if (!lines.Contains(ms.URL ))
-      //  {
-      //    testlist.Add(ms);
-      //  }
-
-      //}
-      //MyStreams.Write(@"D:\test.xml",new MyStreams(testlist) );
     }
 
     /// <summary>
@@ -128,7 +108,7 @@ namespace Webradio.Models
     {
       CurrentStreamLogo = SetStreamLogo(ms);
       WebRadioPlayerHelper.PlayStream(ms);
-     // SetPlayCount(_ID);
+      SetPlayCount(ms.ID);
     }
 
     /// <summary>
@@ -149,7 +129,7 @@ namespace Webradio.Models
       {
         f.PlayCount += 1;
       }
-      MyStreams.Write(File, AllRadioStreams);
+      MyStreams.Write(File, new MyStreams(StreamList));
     }
 
     /// <summary>
@@ -207,11 +187,10 @@ namespace Webradio.Models
   public class MyStreams
   {
     public List<MyStream> StreamList = new List<MyStream>();
+    static readonly XmlSerializer Serializer = new XmlSerializer(typeof(MyStreams));
+    static FileStream _stream;
 
-    static XmlSerializer serializer = new XmlSerializer(typeof(MyStreams));
-    static FileStream stream;
-
-    public MyStreams ()
+    public MyStreams()
     {
     }
 
@@ -220,58 +199,20 @@ namespace Webradio.Models
       StreamList = streams;
     }
 
-    public static MyStreams Read(string XmlFile)
+    public static MyStreams Read(string xmlFile)
     {
-      stream = new FileStream(XmlFile, FileMode.Open);
-      MyStreams _s = (MyStreams) serializer.Deserialize(stream);
-      stream.Close();
-      return _s;
+      _stream = new FileStream(xmlFile, FileMode.Open);
+      MyStreams s = (MyStreams)Serializer.Deserialize(_stream);
+      _stream.Close();
+      return s;
     }
 
-    public static void Write(string XmlFile, Object obj)
+    public static void Write(string xmlFile, Object obj)
     {
-      stream = new FileStream(XmlFile, FileMode.Create);
-      serializer.Serialize(stream, obj);
-      stream.Close();
+      _stream = new FileStream(xmlFile, FileMode.Create);
+      Serializer.Serialize(_stream, obj);
+      _stream.Close();
     }
-  }
-
-  public class MyStream
-  {
-    public int ID { get; set; }
-    private string _Titel;
-    public string Titel { get { return _Titel; } set { _Titel = value; } }
-    private string _URL;
-    public string URL { get { return _URL; } set { _URL = value; } }
-    private string _Country;
-    public string Country { get { return _Country; } set { _Country = value; } }
-    private string _City;
-    public string City { get { return _City; } set { _City = value; } }
-    private string _Genres;
-    public string Genres { get { return _Genres; } set { _Genres = value; } }
-    private string _Bitrate;
-    public string Bitrate { get { return _Bitrate; } set { _Bitrate = value; } }
-    private string _Description;
-    public string Description { get { return _Description; } set { _Description = value; } }
-    private string _Home;
-    public string Home { get { return _Home; } set { _Home = value; } }
-    private string _Logo;
-    public string Logo { get { return _Logo; } set { _Logo = value; } }
-    private string _Facebook;
-    public string Facebook { get { return _Facebook; } set { _Facebook = value; } }
-    private string _Twitter;
-    public string Twitter { get { return _Twitter; } set { _Twitter = value; } }
-    public bool Love { get; set; }
-    public bool Block { get; set; }
-    public int PlayCount { get; set; }
-    private string _tag1;
-    public string tag1 { get { return _tag1; } set { _tag1 = value; } }
-    private string _tag2;
-    public string tag2 { get { return _tag2; } set { _tag2 = value; } }
-    private string _tag3;
-    public string tag3 { get { return _tag3; } set { _tag3 = value; } }
-    private string _tag4;
-    public string tag4 { get { return _tag4; } set { _tag4 = value; } }
   }
   #endregion
 
