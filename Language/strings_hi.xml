@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">फ़िल्टर</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">पसंदीदा</string>
+  <string name="Webradio.Home.Menu.Settings">सेटिंग्स</string>
+  <string name="Webradio.Home.Menu.Search">खोजें</string>
+  <string name="Webradio.Settings.ScreenTitle">सेटिंग्स</string>
+  <string name="Webradio.Settings.Menu.Filter">फ़िल्टर</string>
+  <string name="Webradio.Settings.Menu.Favorites">पसंदीदा</string>
+  <string name="Webradio.Favorites.ScreenTitle">पसंदीदा</string>
+  <string name="Webradio.Favorites.Add">जोड़ना</string>
+  <string name="Webradio.Favorites.Delete">मिटाएँ</string>
+  <string name="Webradio.Filter.ScreenTitle">फ़िल्टर</string>
+  <string name="Webradio.Filter.Delete">मिटाएँ</string>
+  <string name="Webradio.Filter.Add">जोड़ना</string>
+  <string name="Webradio.Filter.Clear">साफ</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">फ़िल्टर</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">घराना</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">मिटाएँ</string>
+  <string name="Webradio.Dialog.Search.Header">खोजें</string>
+</resources>

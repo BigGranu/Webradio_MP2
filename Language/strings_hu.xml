@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.Settings">Beállítások</string>
+  <string name="Webradio.Home.Menu.Search">Keresés</string>
+  <string name="Webradio.Settings.ScreenTitle">Beállítások</string>
+  <string name="Webradio.Favorites.Add">Hozzáadás</string>
+  <string name="Webradio.Filter.Add">Hozzáadás</string>
+  <string name="Webradio.Filter.Clear">Tiszta</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Műfaj</string>
+  <string name="Webradio.Dialog.Search.Header">Keresés</string>
+</resources>

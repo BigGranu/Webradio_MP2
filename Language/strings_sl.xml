@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">Filter</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Priljubljene</string>
+  <string name="Webradio.Home.Menu.Settings">Nastavitve</string>
+  <string name="Webradio.Home.Menu.Search">Iskanje</string>
+  <string name="Webradio.Settings.ScreenTitle">Nastavitve</string>
+  <string name="Webradio.Settings.Menu.Filter">Filter</string>
+  <string name="Webradio.Settings.Menu.Favorites">Priljubljene</string>
+  <string name="Webradio.Favorites.ScreenTitle">Priljubljene</string>
+  <string name="Webradio.Favorites.Add">Dodaj</string>
+  <string name="Webradio.Favorites.Delete">Izbriši</string>
+  <string name="Webradio.Filter.ScreenTitle">Filter</string>
+  <string name="Webradio.Filter.Delete">Izbriši</string>
+  <string name="Webradio.Filter.Add">Dodaj</string>
+  <string name="Webradio.Filter.Clear">jasno</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Filter</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Žanr</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Izbriši</string>
+  <string name="Webradio.Dialog.Search.Header">Iskanje</string>
+</resources>

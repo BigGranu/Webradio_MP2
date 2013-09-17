@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">Φίλτρο</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Αγαπημένα</string>
+  <string name="Webradio.Home.Menu.Settings">Ρυθμίσεις</string>
+  <string name="Webradio.Home.Menu.Search">Αναζήτηση</string>
+  <string name="Webradio.Settings.ScreenTitle">Ρυθμίσεις</string>
+  <string name="Webradio.Settings.Menu.Filter">Φίλτρο</string>
+  <string name="Webradio.Settings.Menu.Favorites">Αγαπημένα</string>
+  <string name="Webradio.Favorites.ScreenTitle">Αγαπημένα</string>
+  <string name="Webradio.Favorites.Add">Πρόσθεση</string>
+  <string name="Webradio.Favorites.Delete">Διαγραφή</string>
+  <string name="Webradio.Filter.ScreenTitle">Φίλτρο</string>
+  <string name="Webradio.Filter.Delete">Διαγραφή</string>
+  <string name="Webradio.Filter.Add">Πρόσθεση</string>
+  <string name="Webradio.Filter.Clear">Καθαρό</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Φίλτρο</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Είδος</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Διαγραφή</string>
+  <string name="Webradio.Dialog.Search.Header">Αναζήτηση</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.View">Syn</string>
+  <string name="Webradio.Home.Menu.ShowFilter">Filtrer</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Favoritter</string>
+  <string name="Webradio.Home.Menu.Settings">Indstillinger</string>
+  <string name="Webradio.Home.Menu.Search">Søg</string>
+  <string name="Webradio.Settings.ScreenTitle">Indstillinger</string>
+  <string name="Webradio.Settings.Menu.Filter">Filtrer</string>
+  <string name="Webradio.Settings.Menu.Favorites">Favoritter</string>
+  <string name="Webradio.Favorites.ScreenTitle">Favoritter</string>
+  <string name="Webradio.Favorites.Add">Tilføj</string>
+  <string name="Webradio.Favorites.Delete">Slet</string>
+  <string name="Webradio.Filter.ScreenTitle">Filtrer</string>
+  <string name="Webradio.Filter.Delete">Slet</string>
+  <string name="Webradio.Filter.Add">Tilføj</string>
+  <string name="Webradio.Filter.Clear">Klar</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Filtrer</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Genre</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Slet</string>
+  <string name="Webradio.Dialog.Search.Header">Søg</string>
+</resources>
