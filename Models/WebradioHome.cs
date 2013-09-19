@@ -39,20 +39,33 @@ namespace Webradio.Models
 {
   public class WebradioHome : IWorkflowModel
   {
+    #region Consts
+
     public const string MODEL_ID_STR = "EA3CC191-0BE5-4C8D-889F-E9C4616AB554";
     public const string STREAM_ID = "StreamID";
 
-    public static string CurrentStreamLogo = string.Empty;
-    public string File = ServiceRegistration.Get<IPathManager>().GetPath("<DATA>") + "\\Webradio\\WebradioSender.xml";
+    #endregion
 
+    public static string CurrentStreamLogo = string.Empty;
+    public static string StreamListFile = ServiceRegistration.Get<IPathManager>().GetPath("<DATA>") + "\\Webradio\\StreamList.xml";
     public static MyStream SelectedStream = new MyStream();
     public static ItemsList AllRadioStreams = new ItemsList();
     public static List<MyStream> StreamList = new List<MyStream>();
 
-
-    public WebradioHome()
+    public void Init()
     {
-      StreamList = MyStreams.Read(File).StreamList;
+      // if no Streamlist found, load a new List from Web
+      if (!File.Exists(StreamListFile))
+      {
+        StreamlistUpdate.MakeUpdate();
+      }
+      else
+      {
+        StreamlistUpdate.CheckUpdate();
+      }
+
+      MyStreams ms = MyStreams.Read(StreamListFile);
+      StreamList = ms.StreamList;     
       FillItemList(StreamList);
     }
 
@@ -129,7 +142,7 @@ namespace Webradio.Models
       {
         f.PlayCount += 1;
       }
-      MyStreams.Write(File, new MyStreams(StreamList));
+      MyStreams.Write(StreamListFile, new MyStreams(StreamList));
     }
 
     /// <summary>
@@ -153,6 +166,7 @@ namespace Webradio.Models
 
     public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
+      Init();
     }
 
     public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
@@ -186,7 +200,9 @@ namespace Webradio.Models
   #region Read/Write
   public class MyStreams
   {
+    public string Version = "1";
     public List<MyStream> StreamList = new List<MyStream>();
+
     static readonly XmlSerializer Serializer = new XmlSerializer(typeof(MyStreams));
     static FileStream _stream;
 
@@ -196,6 +212,12 @@ namespace Webradio.Models
 
     public MyStreams(List<MyStream> streams)
     {
+      StreamList = streams;
+    }
+
+    public MyStreams(List<MyStream> streams, string version)
+    {
+      Version = version;
       StreamList = streams;
     }
 

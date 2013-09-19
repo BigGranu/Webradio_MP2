@@ -9,17 +9,17 @@ Homesite
 		// - Player erstellen
 		
 	- Menü
-		- Favoriten Hinzufügen/Entfernen 
+		// - Favoriten Hinzufügen/Entfernen 
 			entweder Button mit wechselnder Bezeichnung oder Button je nachdem einblenden
 		- View Button? evtl. Logoansicht wie in MP1
 
-	- ShowFilter
+	//- ShowFilter
 		- Anscheinend werde noch nicht alle Sender angezeigt
 
-	- Suche
+	//- Suche
 		- muß noch angepasst werden
 
-	- XmlImport 
+	//- XmlImport 
 		- auslagern in WebradioData
 
 	- Suche(Alle) 
@@ -29,7 +29,7 @@ Settings
 	- fehlt noch komplett
 
 Favoriten
-	- fehlt noch komplett
+	//- fehlt noch komplett
 
 Filter
 	- Save 
@@ -43,11 +43,11 @@ FilterShowDialog
 
 
 Generell
-	- evtl. Umstieg auf Datenbank
-	- Xml lesen geht nur als Admin 
-	- Updatefunktion erstellen
+	//- evtl. Umstieg auf Datenbank
+	//- Xml lesen geht nur als Admin 
+	//- Updatefunktion erstellen
 	- User sollen eigene Streams hinzufügn können (diese, wenn möglich für alle verfügbar machen)
-	- restlichen Strings aus den xaml in Language eintragen
+	//- restlichen Strings aus den xaml in Language eintragen
 
 
     

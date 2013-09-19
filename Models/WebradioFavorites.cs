@@ -36,48 +36,38 @@ using Webradio.Settings;
 namespace Webradio.Models
 {
   public class WebradioFavorites : IWorkflowModel
-
   {
+    #region Consts
+
     public const string MODEL_ID_STR = "EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94";  
     public const string NAME = "name";
     public const string ID = "id";
 
+    #endregion
+
     public List<FavoriteSetupInfo> FavoritList = new List<FavoriteSetupInfo>();
     public static ItemsList FavoritItems = new ItemsList();
-
     public string SelectedId = "";
 
-    private static AbstractProperty _titelProperty = null;
-    public AbstractProperty TitelProperty
-    {
-      get { return _titelProperty; }
-    }
+    #region Propertys
+
+    private static AbstractProperty _titelProperty = new WProperty(typeof(string), string.Empty);
+    public AbstractProperty TitelProperty { get { return _titelProperty; } }
     public string SelectedTitel
     {
       get { return (string)_titelProperty.GetValue(); }
-      set
-      {
-        _titelProperty.SetValue(value);
-      }
+      set { _titelProperty.SetValue(value); }
     }
 
-    private static AbstractProperty _saveImage = null;
-    public AbstractProperty SaveImageProperty
-    {
-      get { return _saveImage; }
-    }
+    private static AbstractProperty _saveImage = new WProperty(typeof(string), string.Empty);
+    public AbstractProperty SaveImageProperty { get { return _saveImage; } }
     public string SaveImage
     {
       get { return (string)_saveImage.GetValue(); }
-      set
-      {
-        _saveImage.SetValue(value);
-      }
+      set { _saveImage.SetValue(value); }
     }
 
-    public WebradioFavorites()
-    {
-    }
+    #endregion
 
     /// <summary>
     /// Remove a Entry
@@ -171,8 +161,6 @@ namespace Webradio.Models
 
     public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
-      _saveImage = new WProperty(typeof(string), string.Empty);
-      _titelProperty = new WProperty(typeof(string), string.Empty);
       ImportFavorits();
       SaveImage = "Saved.png";
     }

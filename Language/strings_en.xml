@@ -55,4 +55,9 @@
 	<string name="Webradio.Dialog.ImportFavorites.Header">Import Filter</string>
 	
 	<string name="Webradio.Dialog.Search.Header">Search</string>
+
+  <string name="Webradio.Dialog.LoadUpdate.Header">Update the Streamlist</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">Download Complete</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadError">Download Error</string>
+  <string name="Webradio.Dialog.LoadUpdate.Button">Start Update</string>
 </resources>

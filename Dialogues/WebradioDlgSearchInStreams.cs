@@ -34,28 +34,23 @@ namespace Webradio.Dialogues
 {
   internal class WebradioDlgSearchInStreams : IWorkflowModel
   {
+    #region Consts
+
     public const string MODEL_ID_STR = "7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA";
 
-    private static AbstractProperty _searchTextProperty = null;
+    #endregion
 
-    public AbstractProperty SearchTextProperty
-    {
-      get { return _searchTextProperty; }
-    }
+    #region Propertys
 
+    private static AbstractProperty _searchTextProperty = new WProperty(typeof(string), string.Empty);
+    public AbstractProperty SearchTextProperty { get { return _searchTextProperty; } }
     public static string SearchText
     {
       get { return (string)_searchTextProperty.GetValue(); }
-      set
-      {
-        _searchTextProperty.SetValue(value);
-      }
+      set { _searchTextProperty.SetValue(value); }
     }
 
-    public void Init()
-    {
-      _searchTextProperty = new WProperty(typeof(string), string.Empty);
-    }
+    #endregion
 
     public void SearchTitel()
     {
@@ -89,7 +84,6 @@ namespace Webradio.Dialogues
 
     public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
-      Init();
     }
 
     public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)

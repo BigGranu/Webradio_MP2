@@ -36,10 +36,14 @@ using Webradio.Settings;
 
 namespace Webradio.Models
 {
-  class WebradioFilter : IWorkflowModel  
+  class WebradioFilter : IWorkflowModel
   {
+    #region Consts
+
     public const string MODEL_ID_STR = "FF29E03E-F4A9-4E21-A299-349E79010430";
     public const string NAME = "name";
+
+    #endregion
 
     public static List<FilterSetupInfo> FilterList = new List<FilterSetupInfo>();
     
@@ -65,101 +69,60 @@ namespace Webradio.Models
     #endregion
 
     #region Propertys
-    private static AbstractProperty _filterTitelProperty = null;
-    public AbstractProperty FilterTitelProperty
-    {
-      get { return _filterTitelProperty; }
-    }
+    private static AbstractProperty _filterTitelProperty = new WProperty(typeof(string), string.Empty);
+    public AbstractProperty FilterTitelProperty { get { return _filterTitelProperty; } }
     public static string FilterTitel
     {
       get { return (string)_filterTitelProperty.GetValue(); }
-      set { 
-          _filterTitelProperty.SetValue(value);
-          }
+      set { _filterTitelProperty.SetValue(value); }
     }
 
-    private static AbstractProperty _selectedStreamsCountProperty = null;
-    public AbstractProperty SelectedStreamsCountProperty
-    {
-      get { return _selectedStreamsCountProperty; }
-    }
+    private static AbstractProperty _selectedStreamsCountProperty = new WProperty(typeof(string), string.Empty);
+    public AbstractProperty SelectedStreamsCountProperty { get { return _selectedStreamsCountProperty; } }
     public static string SelectedStreamsCount
     {
       get { return (string)_selectedStreamsCountProperty.GetValue(); }
-      set
-      {
-        _selectedStreamsCountProperty.SetValue(value);
-      }
+      set { _selectedStreamsCountProperty.SetValue(value); }
     }
 
-    private static AbstractProperty _countryStateProperty = null;
-    public AbstractProperty CountryStateProperty
-    {
-      get { return _countryStateProperty; }
-    }
+    private static AbstractProperty _countryStateProperty = new WProperty(typeof(string), string.Empty);
+    public AbstractProperty CountryStateProperty { get { return _countryStateProperty; } }
     public static string CountryState
     {
       get { return (string)_countryStateProperty.GetValue(); }
-      set
-      {
-        _countryStateProperty.SetValue(value);
-      }
+      set { _countryStateProperty.SetValue(value); }
     }
 
-    private static AbstractProperty _cityStateProperty = null;
-    public AbstractProperty CityStateProperty
-    {
-      get { return _cityStateProperty; }
-    }
+    private static AbstractProperty _cityStateProperty = new WProperty(typeof(string), string.Empty);
+    public AbstractProperty CityStateProperty { get { return _cityStateProperty; } }
     public static string CityState
     {
       get { return (string)_cityStateProperty.GetValue(); }
-      set
-      {
-        _cityStateProperty.SetValue(value);
-      }
+      set { _cityStateProperty.SetValue(value); }
     }
 
-    private static AbstractProperty _bitrateStateProperty = null;
-    public AbstractProperty BitrateStateProperty
-    {
-      get { return _bitrateStateProperty; }
-    }
+    private static AbstractProperty _bitrateStateProperty = new WProperty(typeof(string), string.Empty);
+    public AbstractProperty BitrateStateProperty { get { return _bitrateStateProperty; } }
     public static string BitrateState
     {
       get { return (string)_bitrateStateProperty.GetValue(); }
-      set
-      {
-        _bitrateStateProperty.SetValue(value);
-      }
+      set { _bitrateStateProperty.SetValue(value); }
     }
 
-    private static AbstractProperty _genreStateProperty = null;
-    public AbstractProperty GenreStateProperty
-    {
-      get { return _genreStateProperty; }
-    }
+    private static AbstractProperty _genreStateProperty = new WProperty(typeof(string), string.Empty);
+    public AbstractProperty GenreStateProperty { get { return _genreStateProperty; } }
     public static string GenreState
     {
       get { return (string)_genreStateProperty.GetValue(); }
-      set
-      {
-        _genreStateProperty.SetValue(value);
-      }
+      set { _genreStateProperty.SetValue(value); }
     }
 
-    private static AbstractProperty _saveImage = null;
-    public AbstractProperty SaveImageProperty
-    {
-      get { return _saveImage; }
-    }
+    private static AbstractProperty _saveImage = new WProperty(typeof(string), string.Empty);
+    public AbstractProperty SaveImageProperty { get { return _saveImage; } }
     public static string SaveImage
     {
       get { return (string)_saveImage.GetValue(); }
-      set
-      {
-        _saveImage.SetValue(value);
-      }
+      set { _saveImage.SetValue(value); }
     }
 
     #endregion
@@ -171,19 +134,7 @@ namespace Webradio.Models
 
     private void Init()
     {
-      _filterTitelProperty = new WProperty(typeof(string), string.Empty);
-      _selectedStreamsCountProperty = new WProperty(typeof(string), string.Empty);
-      _countryStateProperty = new WProperty(typeof(string), string.Empty);
-      _cityStateProperty = new WProperty(typeof(string), string.Empty);
-      _bitrateStateProperty = new WProperty(typeof(string), string.Empty);
-      _genreStateProperty = new WProperty(typeof(string), string.Empty);
-      _saveImage = new WProperty(typeof(string), string.Empty);
-      FilterList = ServiceRegistration.Get<ISettingsManager>().Load<FilterSettings>().FilterSetupList;
-      if (FilterList == null)
-      {
-        FilterList = new List<FilterSetupInfo> { new FilterSetupInfo("New Filter", "0", new List<string>(), new List<string>(), new List<string>(), new List<string>()) };
-      }
-
+      FilterList = ServiceRegistration.Get<ISettingsManager>().Load<FilterSettings>().FilterSetupList ?? new List<FilterSetupInfo> { new FilterSetupInfo("New Filter", "0", new List<string>(), new List<string>(), new List<string>(), new List<string>()) };
       SaveImage = "Saved.png";
       FillAllLists();
     }

@@ -33,10 +33,14 @@ using Webradio.Models;
 
 namespace Webradio.Dialogues
 {
-  internal class WebradioDlgImportFilter : IWorkflowModel 
+  internal class WebradioDlgImportFilter : IWorkflowModel
   {
+    #region Consts
+
     public const string MODEL_ID_STR = "10D0E2AB-AE84-406F-8AA9-5A3FB2A86360";
     public const string NAME = "name";
+
+    #endregion
 
     public ItemsList FilterItems = new ItemsList();   
 

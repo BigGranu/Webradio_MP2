@@ -33,11 +33,15 @@ using Webradio.Models;
 
 namespace Webradio.Dialogues
 {
-  internal class WebradioDlgDeleteFilter : IWorkflowModel 
+  internal class WebradioDlgDeleteFilter : IWorkflowModel
   {
+    #region Consts
+
     public const string MODEL_ID_STR = "59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89";
     public const string NAME = "name";
     public const string ID = "id";
+
+    #endregion
 
     public static List<FilterSetupInfo> FilterList = new List<FilterSetupInfo>();
     public ItemsList FilterItems = new ItemsList();
@@ -130,6 +134,5 @@ namespace Webradio.Dialogues
     }
 
     #endregion
-
   }
 }
