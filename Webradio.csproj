@@ -65,6 +65,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogues\WebradioDlgLoadUpdate.cs" />
     <Compile Include="Helper Classes\FavoriteSetupInfo.cs" />
     <Compile Include="Helper Classes\FilterSetupInfo.cs" />
     <Compile Include="Helper Classes\MyStream.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Dialogues\WebradioDlgSearchInStreams.cs" />
     <Compile Include="Dialogues\WebradioDlgShowFavorites.cs" />
     <Compile Include="Dialogues\WebradioDlgShowFilter.cs" />
+    <Compile Include="Helper Classes\StreamlistUpdate.cs" />
     <Compile Include="Models\WebradioFavorites.cs" />
     <Compile Include="Models\WebradioFilter.cs" />
     <Compile Include="Models\WebradioHome.cs" />
@@ -86,9 +88,7 @@
     <Compile Include="Settings\FilterSettings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\WebradioSender.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Data\StreamList.xml" />
     <Content Include="Language\strings_de.xml" />
     <Content Include="Language\strings_en.xml">
       <SubType>Designer</SubType>
@@ -183,6 +183,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\Reflexion\screens\webradio_FullScreenContent.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Skin\default\screens\webradio_dialogLoadUpdate.xaml">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>

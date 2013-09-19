@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.Settings">Налаштування</string>
+  <string name="Webradio.Settings.ScreenTitle">Налаштування</string>
+  <string name="Webradio.Favorites.Add">Додати</string>
+  <string name="Webradio.Filter.Add">Додати</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Жанр</string>
+</resources>

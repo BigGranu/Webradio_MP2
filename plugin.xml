@@ -28,6 +28,7 @@
     <Model Id="59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89" ClassName="Webradio.Dialogues.WebradioDlgDeleteFilter"/>
     <Model Id="7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA" ClassName="Webradio.Dialogues.WebradioDlgSearchInStreams"/>
     <Model Id="10D0E2AB-AE84-406F-8AA9-5A3FB2A86360" ClassName="Webradio.Dialogues.WebradioDlgImportFilter"/>
+    <Model Id="028ABECD-9885-48F6-B39F-F252EC0115EF" ClassName="Webradio.Dialogues.WebradioDlgLoadUpdate"/>
   </Register>
 
   <Register Location="/ResourceProviders">
@@ -78,16 +79,22 @@
       WorkflowModel="7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA"/>
 
     <DialogState Id="56694DC2-041E-4D93-AD52-747D3394EB52"
-      Name="Webradio.Dialog.ShowFavorites.Header"
+      Name="ShowFavorites"
       DialogScreen="webradio_dialogShowFavorites"
       DisplayLabel="[Webradio.Dialog.ShowFavorites.Header]"
       WorkflowModel="9723DCC8-969D-470E-B156-F4E6E639DD18"/>
 
     <DialogState Id="AAA7C211-93D4-40A8-96B3-2CCE6C7CB0A8"
-      Name="Webradio.Dialog.DeleteFilter.Header"
+      Name="DeleteFilter"
       DialogScreen="webradio_dialogDeleteFilter"
       DisplayLabel="[Webradio.Dialog.DeleteFilter.Header]"
       WorkflowModel="59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89"/>
+
+    <DialogState Id="7EB62BD5-3401-45B8-A622-C3A073D5BFDF"
+      Name="LoadUpdate"
+      DialogScreen="webradio_dialogLoadUpdate"
+      DisplayLabel="[Webradio.Dialog.LoadUpdate.Header]"
+      WorkflowModel="028ABECD-9885-48F6-B39F-F252EC0115EF"/>
   </Register>
 
   <Register Location="/Resources/Skin">

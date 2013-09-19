@@ -38,15 +38,17 @@ namespace Webradio.Dialogues
 {
   internal class WebradioDlgShowFilter : IWorkflowModel
   {
+    #region Consts
+
     public const string MODEL_ID_STR = "63F1DA3E-E87F-4478-83E7-C13966447869";
-    const string KEY_FILTER = "filter";
+    public const string KEY_FILTER = "filter";
+
+    #endregion
 
     public static ItemsList FilterItems = new ItemsList();
     public static List<FilterSetupInfo> FilterList = new List<FilterSetupInfo>();
-
     private bool _quick = false;
-
-    protected delegate Func<MyStream , bool> CreateFilterDelegate(string filter);
+    protected delegate Func<MyStream, bool> CreateFilterDelegate(string filter);
 
     public void Init()
     {    

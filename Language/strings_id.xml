@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">Saring</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Favorit</string>
+  <string name="Webradio.Home.Menu.Settings">Setelan</string>
+  <string name="Webradio.Home.Menu.Search">Cari</string>
+  <string name="Webradio.Settings.ScreenTitle">Setelan</string>
+  <string name="Webradio.Settings.Menu.Filter">Saring</string>
+  <string name="Webradio.Settings.Menu.Favorites">Favorit</string>
+  <string name="Webradio.Favorites.ScreenTitle">Favorit</string>
+  <string name="Webradio.Favorites.Add">Tambah</string>
+  <string name="Webradio.Favorites.Delete">Hapus</string>
+  <string name="Webradio.Filter.ScreenTitle">Saring</string>
+  <string name="Webradio.Filter.Delete">Hapus</string>
+  <string name="Webradio.Filter.Add">Tambah</string>
+  <string name="Webradio.Filter.Clear">Jelas</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Saring</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Genre</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Hapus</string>
+  <string name="Webradio.Dialog.Search.Header">Cari</string>
+</resources>

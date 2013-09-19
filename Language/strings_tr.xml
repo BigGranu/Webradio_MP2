@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">Filter</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Favorites</string>
+  <string name="Webradio.Home.Menu.Settings">Ayarlar</string>
+  <string name="Webradio.Home.Menu.Search">Ara</string>
+  <string name="Webradio.Settings.ScreenTitle">Ayarlar</string>
+  <string name="Webradio.Settings.Menu.Filter">Filter</string>
+  <string name="Webradio.Settings.Menu.Favorites">Favorites</string>
+  <string name="Webradio.Favorites.ScreenTitle">Favorites</string>
+  <string name="Webradio.Favorites.Add">Ekle</string>
+  <string name="Webradio.Favorites.Delete">Sil</string>
+  <string name="Webradio.Filter.ScreenTitle">Filter</string>
+  <string name="Webradio.Filter.Delete">Sil</string>
+  <string name="Webradio.Filter.Add">Ekle</string>
+  <string name="Webradio.Filter.Clear">Açık</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Filter</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Genre</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Sil</string>
+  <string name="Webradio.Dialog.Search.Header">Ara</string>
+</resources>

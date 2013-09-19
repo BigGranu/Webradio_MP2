@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">Filter</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Obľúbené</string>
+  <string name="Webradio.Home.Menu.Settings">Nastavenie</string>
+  <string name="Webradio.Home.Menu.Search">Hľadať</string>
+  <string name="Webradio.Settings.ScreenTitle">Nastavenie</string>
+  <string name="Webradio.Settings.Menu.Filter">Filter</string>
+  <string name="Webradio.Settings.Menu.Favorites">Obľúbené</string>
+  <string name="Webradio.Favorites.ScreenTitle">Obľúbené</string>
+  <string name="Webradio.Favorites.Add">Pridať</string>
+  <string name="Webradio.Favorites.Delete">Vymazať</string>
+  <string name="Webradio.Filter.ScreenTitle">Filter</string>
+  <string name="Webradio.Filter.Delete">Vymazať</string>
+  <string name="Webradio.Filter.Add">Pridať</string>
+  <string name="Webradio.Filter.Clear">Jasno</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Filter</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Genre</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Vymazať</string>
+  <string name="Webradio.Dialog.Search.Header">Hľadať</string>
+</resources>

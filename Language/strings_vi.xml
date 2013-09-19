@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.Settings">Thiết lập</string>
+  <string name="Webradio.Settings.ScreenTitle">Thiết lập</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Loại</string>
+</resources>

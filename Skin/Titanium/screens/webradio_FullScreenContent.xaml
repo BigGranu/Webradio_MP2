@@ -6,8 +6,7 @@
     xmlns:mp_audio_viz="clr-namespace:MediaPortal.UiComponents.Media.Controls;assembly=Media"
     mp_special_workflow:WorkflowContext.StateSlot="Root"
     xmlns:mp_special_controls="clr-namespace:MediaPortal.UI.SkinEngine.SpecialElements.Controls"
-    x:Name="FullscreenContentAudioScreen"
-    >
+    x:Name="FullscreenContentAudioScreen">
   <Grid>
     <Grid.Resources>
       <Model x:Key="Model" Id="D8998340-DA2D-42be-A29B-6D7A72AEA2DC" /> <!-- AudioPlayerModel -->
