@@ -29,13 +29,13 @@ using MediaPortal.UI.Presentation.Workflow;
 
 namespace Webradio.Models
 {
-  class WebradioSettings :IWorkflowModel 
+  class WebradioSettings :IWorkflowModel
   {
+    #region Consts
+
     public const string MODEL_ID_STR = "6378BD83-BF06-4AC3-ADD7-9A4B72DA878E";
 
-    public WebradioSettings()
-    {
-    }
+    #endregion
 
     #region IWorkflowModel implementation
     public Guid ModelId
@@ -48,7 +48,7 @@ namespace Webradio.Models
       return true;
     }
 
-    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
+    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)   
     {
     }
 

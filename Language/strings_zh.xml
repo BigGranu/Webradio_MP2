@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">过滤器</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">收藏夹</string>
+  <string name="Webradio.Home.Menu.Search">搜索</string>
+  <string name="Webradio.Settings.Menu.Filter">过滤器</string>
+  <string name="Webradio.Settings.Menu.Favorites">收藏夹</string>
+  <string name="Webradio.Favorites.ScreenTitle">收藏夹</string>
+  <string name="Webradio.Favorites.Delete">删除</string>
+  <string name="Webradio.Filter.ScreenTitle">过滤器</string>
+  <string name="Webradio.Filter.Delete">删除</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">过滤器</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">流派</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">删除</string>
+  <string name="Webradio.Dialog.Search.Header">搜索</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">מסנן</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">מועדפים</string>
+  <string name="Webradio.Home.Menu.Settings">הגדרות</string>
+  <string name="Webradio.Home.Menu.Search">חיפוש</string>
+  <string name="Webradio.Settings.ScreenTitle">הגדרות</string>
+  <string name="Webradio.Settings.Menu.Filter">מסנן</string>
+  <string name="Webradio.Settings.Menu.Favorites">מועדפים</string>
+  <string name="Webradio.Favorites.ScreenTitle">מועדפים</string>
+  <string name="Webradio.Favorites.Add">הוסף</string>
+  <string name="Webradio.Favorites.Delete">מחק</string>
+  <string name="Webradio.Filter.ScreenTitle">מסנן</string>
+  <string name="Webradio.Filter.Delete">מחק</string>
+  <string name="Webradio.Filter.Add">הוסף</string>
+  <string name="Webradio.Filter.Clear">בהיר</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">מסנן</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">ז\'אנר</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">מחק</string>
+  <string name="Webradio.Dialog.Search.Header">חיפוש</string>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">Sía</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Uppáhald</string>
+  <string name="Webradio.Home.Menu.Settings">Stillingar</string>
+  <string name="Webradio.Home.Menu.Search">Leita</string>
+  <string name="Webradio.Settings.ScreenTitle">Stillingar</string>
+  <string name="Webradio.Settings.Menu.Filter">Sía</string>
+  <string name="Webradio.Settings.Menu.Favorites">Uppáhald</string>
+  <string name="Webradio.Favorites.ScreenTitle">Uppáhald</string>
+  <string name="Webradio.Favorites.Add">Bæta við</string>
+  <string name="Webradio.Favorites.Delete">Eyða</string>
+  <string name="Webradio.Filter.ScreenTitle">Sía</string>
+  <string name="Webradio.Filter.Delete">Eyða</string>
+  <string name="Webradio.Filter.Add">Bæta við</string>
+  <string name="Webradio.Filter.Clear">Heiðskýrt</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Sía</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Flokkun</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Eyða</string>
+  <string name="Webradio.Dialog.Search.Header">Leita</string>
+</resources>

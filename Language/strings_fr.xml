@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">Tri par</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Favoris</string>
+  <string name="Webradio.Home.Menu.Settings">Réglages</string>
+  <string name="Webradio.Home.Menu.Search">Recherche</string>
+  <string name="Webradio.Home.Genres">Genres</string>
+  <string name="Webradio.Home.Bitrate">Bitrate</string>
+  <string name="Webradio.Home.Country">Pays</string>
+  <string name="Webradio.Home.City">Ville</string>
+  <string name="Webradio.Settings.ScreenTitle">Réglages</string>
+  <string name="Webradio.Settings.Menu.Filter">Tri par</string>
+  <string name="Webradio.Settings.Menu.Favorites">Favoris</string>
+  <string name="Webradio.Favorites.ScreenTitle">Favoris</string>
+  <string name="Webradio.Favorites.Add">Ajouter</string>
+  <string name="Webradio.Favorites.Delete">Effacer</string>
+  <string name="Webradio.Favorites.Rename">Renommer</string>
+  <string name="Webradio.Favorites.Save">Sauvegarder</string>
+  <string name="Webradio.Filter.ScreenTitle">Tri par</string>
+  <string name="Webradio.Filter.Delete">Effacer</string>
+  <string name="Webradio.Filter.Add">Ajouter</string>
+  <string name="Webradio.Filter.Import">Importer</string>
+  <string name="Webradio.Filter.Clear">Dégagé</string>
+  <string name="Webradio.Filter.Save">Sauvegarder</string>
+  <string name="Webradio.Filter.Genres">Genres</string>
+  <string name="Webradio.Filter.Bitrate">Bitrate</string>
+  <string name="Webradio.Filter.Country">Pays</string>
+  <string name="Webradio.Filter.City">Ville</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Tri par</string>
+  <string name="Webradio.Dialog.ShowFilter.Country">Pays</string>
+  <string name="Webradio.Dialog.ShowFilter.City">Ville</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Genre</string>
+  <string name="Webradio.Dialog.ShowFilter.Bitrate">Bitrate</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Effacer</string>
+  <string name="Webradio.Dialog.Search.Header">Recherche</string>
+</resources>

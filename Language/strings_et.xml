@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">Filter</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Lemmikud</string>
+  <string name="Webradio.Home.Menu.Settings">Seaded</string>
+  <string name="Webradio.Home.Menu.Search">Otsi</string>
+  <string name="Webradio.Settings.ScreenTitle">Seaded</string>
+  <string name="Webradio.Settings.Menu.Filter">Filter</string>
+  <string name="Webradio.Settings.Menu.Favorites">Lemmikud</string>
+  <string name="Webradio.Favorites.ScreenTitle">Lemmikud</string>
+  <string name="Webradio.Favorites.Add">Lisa</string>
+  <string name="Webradio.Favorites.Delete">Kustuta</string>
+  <string name="Webradio.Filter.ScreenTitle">Filter</string>
+  <string name="Webradio.Filter.Delete">Kustuta</string>
+  <string name="Webradio.Filter.Add">Lisa</string>
+  <string name="Webradio.Filter.Clear">selge</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Filter</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Žanr</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Kustuta</string>
+  <string name="Webradio.Dialog.Search.Header">Otsi</string>
+</resources>

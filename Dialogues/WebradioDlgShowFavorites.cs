@@ -43,26 +43,16 @@ namespace Webradio.Dialogues
     public const string MODEL_ID_STR = "9723DCC8-969D-470E-B156-F4E6E639DD18";
     public const string NAME = "name";
 
-    public string SelectedStream = string.Empty;
-    public bool Changed = false;
-
     #endregion
 
+    public string SelectedStream = string.Empty;
+    public bool Changed = false;
     public List<FavoriteSetupInfo> FavoritList = new List<FavoriteSetupInfo>();
     public ItemsList FavoritItems = new ItemsList();   
 
-    public WebradioDlgShowFavorites()
-    {
-    }
-
     public void Init()
     {
-      FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList;
-      if (FavoritList == null)
-      {
-        FavoritList = new List<FavoriteSetupInfo> { new FavoriteSetupInfo("New Favorite", true, new List<string>()) };
-      }
-
+      FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList ?? new List<FavoriteSetupInfo> { new FavoriteSetupInfo("New Favorite", true, new List<string>()) };
       ImportFavorits(Convert.ToString(WebradioHome.SelectedStream.ID));
       SelectedStream = WebradioHome.SelectedStream.Titel;
     }

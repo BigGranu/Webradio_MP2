@@ -2,7 +2,6 @@
 <Include
   xmlns="www.team-mediaportal.com/2008/mpf/directx"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:wrh="clr-namespace:Webradio.Models;assembly=Webradio"
   Source="screens\master_configuration_dialog_wb.xaml">
   <Include.Resources>
 

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="Webradio.Home.Menu.ShowFilter">Филтер</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Фаворити</string>
+  <string name="Webradio.Home.Menu.Settings">Подешавања</string>
+  <string name="Webradio.Home.Menu.Search">Потражи</string>
+  <string name="Webradio.Settings.ScreenTitle">Подешавања</string>
+  <string name="Webradio.Settings.Menu.Filter">Филтер</string>
+  <string name="Webradio.Settings.Menu.Favorites">Фаворити</string>
+  <string name="Webradio.Favorites.ScreenTitle">Фаворити</string>
+  <string name="Webradio.Favorites.Add">Додај</string>
+  <string name="Webradio.Favorites.Delete">Обриши</string>
+  <string name="Webradio.Filter.ScreenTitle">Филтер</string>
+  <string name="Webradio.Filter.Delete">Обриши</string>
+  <string name="Webradio.Filter.Add">Додај</string>
+  <string name="Webradio.Filter.Clear">Ведро</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Филтер</string>
+  <string name="Webradio.Dialog.ShowFilter.Genre">Жанр</string>
+  <string name="Webradio.Dialog.DeleteFilter.Delete">Обриши</string>
+  <string name="Webradio.Dialog.Search.Header">Потражи</string>
+</resources>
