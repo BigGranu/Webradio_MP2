@@ -26,12 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net;
-using MediaPortal.Common;
 using MediaPortal.Common.General;
-using MediaPortal.Common.Logging;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
-using Webradio.Models;
 
 namespace Webradio.Dialogues
 {
@@ -66,25 +63,6 @@ namespace Webradio.Dialogues
 
     #endregion
 
-    public void Init()
-    {
-    }
-
-    public void LoadSenderListe()
-    {
-      try
-      {
-        WebClient webclient1 = new WebClient();
-        webclient1.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadCompleted);
-        webclient1.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadStatusChanged);
-        webclient1.DownloadFileAsync(new Uri("http://www.zum-fliegenden-bauern.de/StreamList.xml"), WebradioHome.StreamListFile);
-      }
-      catch (Exception ex)
-      {
-        ServiceRegistration.Get<ILogger>().Error("Webradio: Error read Online Stationslist '{0}'", ex);
-      }
-    }
-
     private void DownloadCompleted(object sender, AsyncCompletedEventArgs e)
     {
       Info = e.Error == null ? DOWNLOAD_COMPLETE : DOWNLOAD_ERROR;
@@ -109,7 +87,6 @@ namespace Webradio.Dialogues
 
     public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
-      Init();
     }
 
     public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
