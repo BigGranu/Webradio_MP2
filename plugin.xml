@@ -31,10 +31,6 @@
     <Model Id="028ABECD-9885-48F6-B39F-F252EC0115EF" ClassName="Webradio.Dialogues.WebradioDlgLoadUpdate"/>
   </Register>
 
-  <Register Location="/ResourceProviders">
-    <Instance Id="96364E39-DFD9-462F-B117-EF0D2E87ACE8" ClassName="Webradio.Player.RawUrlMediaProvider"/>
-  </Register>
-
   <Register Location="/Players/Builders">
     <PlayerBuilder Id="78C3403B-CABC-4E21-8D80-2370A31B0A04" ClassName="Webradio.Player.WebRadioPlayerBuilder"/>
   </Register>
