@@ -26,9 +26,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net;
+using MediaPortal.Common;
 using MediaPortal.Common.General;
+using MediaPortal.Common.Logging;
 using MediaPortal.UI.Presentation.Models;
+using MediaPortal.UI.Presentation.Screens;
 using MediaPortal.UI.Presentation.Workflow;
+using Webradio.Helper_Classes;
+using Webradio.Models;
 
 namespace Webradio.Dialogues
 {
@@ -45,11 +50,11 @@ namespace Webradio.Dialogues
 
     #region Propertys
 
-    private AbstractProperty _updateProgressProperty = new WProperty(typeof(int),0);
+    private AbstractProperty _updateProgressProperty = new WProperty(typeof(int), 0);
     public AbstractProperty UpdateProgressProperty { get { return _updateProgressProperty; } }
     public int UpdateProgress
     {
-      get { return (int)_updateProgressProperty.GetValue(); }
+      get { return (int) _updateProgressProperty.GetValue(); }
       set { _updateProgressProperty.SetValue(value); }
     }
 
@@ -57,15 +62,41 @@ namespace Webradio.Dialogues
     public AbstractProperty InfoProperty { get { return _infoProperty; } }
     public static string Info
     {
-      get { return (string)_infoProperty.GetValue(); }
+      get { return (string) _infoProperty.GetValue(); }
       set { _infoProperty.SetValue(value); }
     }
 
     #endregion
 
+    public void LoadSenderListe()
+    {
+      try
+      {
+        WebClient webclient1 = new WebClient();
+        webclient1.DownloadFileCompleted += DownloadCompleted;
+        webclient1.DownloadProgressChanged += DownloadStatusChanged;
+        webclient1.DownloadFileAsync(new Uri(StreamlistUpdate.StreamlistServerPath), StreamlistUpdate.StreamListFile);
+      }
+      catch (Exception ex)
+      {
+        ServiceRegistration.Get<ILogger>().Error("Webradio: Error read Online Stationslist '{0}'", ex);
+      }
+    }
+
+    public void Finish()
+    {
+      WebradioHome homeModel = ServiceRegistration.Get<IWorkflowManager>().GetModel(WebradioHome.MODEL_ID) as WebradioHome;
+      if (homeModel == null)
+        return;
+
+      homeModel.Init();
+      ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
+    }
+
     private void DownloadCompleted(object sender, AsyncCompletedEventArgs e)
     {
       Info = e.Error == null ? DOWNLOAD_COMPLETE : DOWNLOAD_ERROR;
+      Finish();
     }
 
     private void DownloadStatusChanged(object sender, DownloadProgressChangedEventArgs e)

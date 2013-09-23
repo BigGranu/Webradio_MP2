@@ -26,6 +26,7 @@ using System;
 using System.IO;
 using System.Net;
 using MediaPortal.Common;
+using MediaPortal.Common.PathManager;
 using MediaPortal.UI.Presentation.Workflow;
 using Webradio.Models;
 
@@ -33,7 +34,16 @@ namespace Webradio.Helper_Classes
 {
   public class StreamlistUpdate
   {
+    public static string WebradioDataFolder = ServiceRegistration.Get<IPathManager>().GetPath("<DATA>") + "\\Webradio";
+    public static string StreamListFile = Path.Combine(WebradioDataFolder, "StreamList.xml");
     public static string StreamlistServerPath = "http://www.biggranu.de/StreamList.xml";
+
+    public static bool StreamListExists()
+    {
+      if (!Directory.Exists(WebradioDataFolder))
+        Directory.CreateDirectory(WebradioDataFolder);
+      return File.Exists(StreamListFile);
+    }
 
     public static int OnlineVersion()
     {
@@ -50,8 +60,8 @@ namespace Webradio.Helper_Classes
         reader.Read(buffer, 0, 200);
 
         string s = new string(buffer);
-        int a = s.IndexOf("<Version>", System.StringComparison.Ordinal) + 9;
-        int b = s.IndexOf("</Version>", System.StringComparison.Ordinal);
+        int a = s.IndexOf("<Version>", StringComparison.Ordinal) + 9;
+        int b = s.IndexOf("</Version>", StringComparison.Ordinal);
         return Convert.ToInt32(s.Substring(a, b - a));
       }
       catch (Exception ex)
@@ -67,22 +77,20 @@ namespace Webradio.Helper_Classes
 
     public static int OfflineVersion()
     {
-      if (!File.Exists(WebradioHome.StreamListFile))
+      if (!StreamListExists())
       {
         return -1;
       }
-      else
-      {
-        MyStreams ms = MyStreams.Read(WebradioHome.StreamListFile);
-        return Convert.ToInt32(ms.Version);
-      }
+
+      MyStreams ms = MyStreams.Read(StreamListFile);
+      return Convert.ToInt32(ms.Version);
     }
 
     public static void CheckUpdate()
     {
       if (OfflineVersion() < OnlineVersion())
       {
-        ServiceRegistration.Get<IWorkflowManager>().NavigatePushAsync(new Guid("7EB62BD5-3401-45B8-A622-C3A073D5BFDF"));
+        MakeUpdate();
       }
     }
 

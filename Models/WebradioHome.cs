@@ -27,8 +27,6 @@ using System.IO;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Linq;
-using MediaPortal.Common;
-using MediaPortal.Common.PathManager;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
@@ -42,12 +40,12 @@ namespace Webradio.Models
     #region Consts
 
     public const string MODEL_ID_STR = "EA3CC191-0BE5-4C8D-889F-E9C4616AB554";
+    public static Guid MODEL_ID = new Guid(MODEL_ID_STR);
     public const string STREAM_ID = "StreamID";
 
     #endregion
 
     public static string CurrentStreamLogo = string.Empty;
-    public static string StreamListFile = ServiceRegistration.Get<IPathManager>().GetPath("<DATA>") + "\\Webradio\\StreamList.xml";
     public static MyStream SelectedStream = new MyStream();
     public static ItemsList AllRadioStreams = new ItemsList();
     public static List<MyStream> StreamList = new List<MyStream>();
@@ -55,17 +53,15 @@ namespace Webradio.Models
     public void Init()
     {
       // if no Streamlist found, load a new List from Web
-      if (!File.Exists(StreamListFile))
+      if (!StreamlistUpdate.StreamListExists())
       {
         StreamlistUpdate.MakeUpdate();
-      }
-      else
-      {
-        StreamlistUpdate.CheckUpdate();
+        return; // Update runs async
       }
 
-      MyStreams ms = MyStreams.Read(StreamListFile);
-      StreamList = ms.StreamList;     
+      StreamlistUpdate.CheckUpdate();
+      MyStreams ms = MyStreams.Read(StreamlistUpdate.StreamListFile);
+      StreamList = ms.StreamList;
       FillItemList(StreamList);
     }
 
@@ -129,7 +125,7 @@ namespace Webradio.Models
     /// </summary>
     public void SelectStream(ListItem item)
     {
-      SelectedStream = GetStreamById((int)item.AdditionalProperties[STREAM_ID]);
+      SelectedStream = GetStreamById((int) item.AdditionalProperties[STREAM_ID]);
       Play(SelectedStream);
     }
 
@@ -142,7 +138,7 @@ namespace Webradio.Models
       {
         f.PlayCount += 1;
       }
-      MyStreams.Write(StreamListFile, new MyStreams(StreamList));
+      MyStreams.Write(StreamlistUpdate.StreamListFile, new MyStreams(StreamList));
     }
 
     /// <summary>
@@ -224,7 +220,7 @@ namespace Webradio.Models
     public static MyStreams Read(string xmlFile)
     {
       _stream = new FileStream(xmlFile, FileMode.Open);
-      MyStreams s = (MyStreams)Serializer.Deserialize(_stream);
+      MyStreams s = (MyStreams) Serializer.Deserialize(_stream);
       _stream.Close();
       return s;
     }
