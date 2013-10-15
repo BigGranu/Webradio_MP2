@@ -54,16 +54,28 @@
               <ColumnDefinition Width="300"/>
               <ColumnDefinition Width="Auto"/>
               <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>           
-            
-            <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="4">
-              <Rectangle Width="150" Height="150" RadiusX="20" RadiusY="20">
-                <Rectangle.Fill>
-                  <ImageBrush DataContext="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamLogo}" ImageSource="{Binding}"/>
-                </Rectangle.Fill>
-              </Rectangle>
-            </StackPanel>
-            
+            </Grid.ColumnDefinitions>
+
+            <StackPanel  Grid.Column="0" Grid.Row="0" Grid.RowSpan="4">
+              <Canvas Height="150" Width="150" Background="#00000000">
+                <Rectangle Height="150" Width="150" RadiusY="20" RadiusX="20" Stroke="Black">
+                  <Rectangle.Fill>
+                    <ImageBrush DataContext="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamLogo}" ImageSource="{Binding}"/>
+                  </Rectangle.Fill>
+                </Rectangle>
+                <Rectangle Height="150" Width="150" RadiusY="20" RadiusX="20" Stroke="Black" Opacity="0.5">
+                  <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                      <GradientStop Color="Black" Offset="0"/>
+                      <GradientStop Offset="0.073"/>
+                      <GradientStop Color="Transparent" Offset="1"/>
+                      <GradientStop Color="Transparent" Offset="0.103"/>
+                    </LinearGradientBrush>
+                  </Rectangle.Fill>
+                </Rectangle>
+              </Canvas>
+            </StackPanel >
+
             <Label x:Name="ArtistsLabel" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom"
                Content="[Media.AudioArtistsLabel]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
             <Label x:Name="Artists" Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom"

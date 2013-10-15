@@ -183,6 +183,7 @@ namespace Webradio.Models
 
     public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
     {
+     // Todo: select any or the Last ListItem
     }
 
     public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
