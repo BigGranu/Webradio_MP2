@@ -40,9 +40,15 @@
             <Label x:Name="Album" Grid.Row="2" Grid.Column="1"
                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Album}" Color="{ThemeResource TextColor}"/>
 
-            <Image x:Name="ItemTypeImage" Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Stretch="Uniform" 
-                Source="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamLogo}" FallbackSource="AudioLarge.png"
-                Width="{StaticResource MEDIA_THUMB_WIDTH_CP}" Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}"/>
+            <!--Logo-->
+            <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="4">
+              <Rectangle Width="{StaticResource MEDIA_THUMB_WIDTH_CP}" Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}" RadiusX="20" RadiusY="20">
+                <Rectangle.Fill>
+                  <ImageBrush DataContext="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamLogo}" ImageSource="{Binding}"/>
+                </Rectangle.Fill>
+              </Rectangle>
+            </StackPanel>
+
           </Grid>
         </mp_special_controls:PlayerControl.TemplateControl>
       </mp_special_controls:PlayerControl>

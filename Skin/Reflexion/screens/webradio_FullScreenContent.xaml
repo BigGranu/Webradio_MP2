@@ -6,8 +6,7 @@
     xmlns:mp_audio_viz="clr-namespace:MediaPortal.UiComponents.Media.Controls;assembly=Media"
     mp_special_workflow:WorkflowContext.StateSlot="Root"
     xmlns:mp_special_controls="clr-namespace:MediaPortal.UI.SkinEngine.SpecialElements.Controls"
-    x:Name="FullscreenContentAudioScreen"
-    >
+    x:Name="FullscreenContentAudioScreen">
   <Grid>
     <Grid.Resources>
       <Model x:Key="Model" Id="D8998340-DA2D-42be-A29B-6D7A72AEA2DC" /> <!-- AudioPlayerModel -->
@@ -74,7 +73,14 @@
                 <ResourceWrapper x:Key="ControlWidth" Resource="250"/>
                 <ResourceWrapper x:Key="ControlHeight" Resource="250"/>
                 <ControlTemplate x:Key="MakeReflexion">
-                   <Image x:Name="ItemTypeImage" Stretch="Uniform" Source="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamLogo}" FallbackSource="AudioLarge.png" Width="250" Height="250"/>
+                  <!--Logo-->
+                  <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="4">
+                    <Rectangle Width="250" Height="250" RadiusX="20" RadiusY="20">
+                      <Rectangle.Fill>
+                        <ImageBrush DataContext="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamLogo}" ImageSource="{Binding}"/>
+                      </Rectangle.Fill>
+                    </Rectangle>
+                  </StackPanel>
                 </ControlTemplate>
               </Control.Resources>
             </Control>          

@@ -71,8 +71,10 @@ namespace Webradio.Models
     public static void FillItemList(List<MyStream> list)
     {
       AllRadioStreams.Clear();
+      int indx = 0;
       foreach (MyStream ms in list)
       {
+        indx += 1;
         var item = new ListItem();
         item.AdditionalProperties[STREAM_ID] = ms.ID;
         item.SetLabel("Name", ms.Titel);
@@ -83,6 +85,7 @@ namespace Webradio.Models
         item.SetLabel("Logo", SetStreamLogo(ms));
         item.SetLabel("ImageSrc", SetStreamLogo(ms));
         item.SetLabel("Description", ms.Description);
+        item.SetLabel("Indx", indx + "/" + list.Count );
 
         AllRadioStreams.Add(item);
       }

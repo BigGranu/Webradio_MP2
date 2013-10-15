@@ -163,11 +163,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Skin\default\screens\webradio_FullScreenContent.xaml">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Skin\Titanium\screens\webradio_FullScreenContent.xaml">
       <SubType>Designer</SubType>
     </Content>
@@ -179,6 +174,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\default\screens\webradio_dialogLoadUpdate.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Skin\default\screens\webradio_FullScreenContent.xaml">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
