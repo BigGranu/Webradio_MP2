@@ -121,19 +121,19 @@
     <Content Include="Todo.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="D:\MediaPortal-2-FEAT_BassStreamInfos\MediaPortal\Source\Core\MediaPortal.Common\MediaPortal.Common.csproj">
+    <ProjectReference Include="C:\Users\dierk_000\Downloads\MediaPortal-2-WiP_Alpha3\MediaPortal\Source\Core\MediaPortal.Common\MediaPortal.Common.csproj">
       <Project>{ECF060E7-CAA1-4466-851F-F80B857641EA}</Project>
       <Name>MediaPortal.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="D:\MediaPortal-2-FEAT_BassStreamInfos\MediaPortal\Source\Core\MediaPortal.UI\MediaPortal.UI.csproj">
+    <ProjectReference Include="C:\Users\dierk_000\Downloads\MediaPortal-2-WiP_Alpha3\MediaPortal\Source\Core\MediaPortal.UI\MediaPortal.UI.csproj">
       <Project>{52E587D0-A274-44DA-8846-8EEAF5414923}</Project>
       <Name>MediaPortal.UI</Name>
     </ProjectReference>
-    <ProjectReference Include="D:\MediaPortal-2-FEAT_BassStreamInfos\MediaPortal\Source\UI\Players\BassPlayer\BassPlayer.csproj">
+    <ProjectReference Include="C:\Users\dierk_000\Downloads\MediaPortal-2-WiP_Alpha3\MediaPortal\Source\UI\Players\BassPlayer\BassPlayer.csproj">
       <Project>{1A980621-B711-4235-B98C-C4276D6FA9FD}</Project>
       <Name>BassPlayer</Name>
     </ProjectReference>
-    <ProjectReference Include="D:\MediaPortal-2-FEAT_BassStreamInfos\MediaPortal\Source\UI\UiComponents\Media\Media.csproj">
+    <ProjectReference Include="C:\Users\dierk_000\Downloads\MediaPortal-2-WiP_Alpha3\MediaPortal\Source\UI\UiComponents\Media\Media.csproj">
       <Project>{CD37E2FF-4CF7-4F96-8C73-C6764988D408}</Project>
       <Name>Media</Name>
     </ProjectReference>

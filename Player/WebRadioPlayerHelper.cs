@@ -29,13 +29,13 @@ using MediaPortal.Common.MediaManagement;
 using MediaPortal.Common.MediaManagement.DefaultItemAspects;
 using MediaPortal.Common.Services.ResourceAccess.RawUrlResourceProvider;
 using MediaPortal.Common.SystemResolver;
+using MediaPortal.UI.Presentation.Players;
 using MediaPortal.UiComponents.Media.Models;
 using Webradio.Helper_Classes;
-using Webradio.Models;
 
 namespace Webradio.Player
 {
-  class WebRadioPlayerHelper
+  internal class WebRadioPlayerHelper
   {
     public const string WEBRADIO_MIMETYPE = "webradio/stream";
 
@@ -46,7 +46,14 @@ namespace Webradio.Player
     public static void PlayStream(MyStream stream)
     {
       var mediaItem = CreateStreamMediaItem(stream);
-      PlayItemsModel.PlayItem(mediaItem);
+      if (ServiceRegistration.Get<IPlayerContextManager>().IsVideoContextActive)
+      {
+        PlayItemsModel.CheckQueryPlayAction(mediaItem);
+      }
+      else
+      {
+        PlayItemsModel.PlayItem(mediaItem);
+      }
     }
 
     /// <summary>
