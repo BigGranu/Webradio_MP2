@@ -23,10 +23,10 @@
 #endregion
 
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Xml.Serialization;
+using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
@@ -46,9 +46,12 @@ namespace Webradio.Models
     #endregion
 
     public static string CurrentStreamLogo = string.Empty;
+    public static string CurrentListeners = string.Empty;
     public static MyStream SelectedStream = new MyStream();
     public static ItemsList AllRadioStreams = new ItemsList();
     public static List<MyStream> StreamList = new List<MyStream>();
+
+    public int C = 0;
 
     public void Init()
     {
@@ -85,7 +88,7 @@ namespace Webradio.Models
         item.SetLabel("Logo", SetStreamLogo(ms));
         item.SetLabel("ImageSrc", SetStreamLogo(ms));
         item.SetLabel("Description", ms.Description);
-        item.SetLabel("Indx", indx + "/" + list.Count );
+        item.SetLabel("Indx", indx + "/" + list.Count);
 
         AllRadioStreams.Add(item);
       }
@@ -121,6 +124,7 @@ namespace Webradio.Models
       CurrentStreamLogo = SetStreamLogo(ms);
       WebRadioPlayerHelper.PlayStream(ms);
       SetPlayCount(ms.ID);
+      ShoutcastListeners.Listeners();
     }
 
     /// <summary>
@@ -128,14 +132,14 @@ namespace Webradio.Models
     /// </summary>
     public void SelectStream(ListItem item)
     {
-      SelectedStream = GetStreamById((int) item.AdditionalProperties[STREAM_ID]);
+      SelectedStream = GetStreamById((int)item.AdditionalProperties[STREAM_ID]);
       Play(SelectedStream);
     }
 
     /// <summary>
     /// Set the Playcount of playing Stream +1
     /// </summary>
-    private void SetPlayCount(int id)
+    private static void SetPlayCount(int id)
     {
       foreach (var f in StreamList.Where(f => f.ID == id))
       {
@@ -153,6 +157,7 @@ namespace Webradio.Models
     }
 
     #region IWorkflowModel implementation
+
     public Guid ModelId
     {
       get { return new Guid(MODEL_ID_STR); }
@@ -183,7 +188,7 @@ namespace Webradio.Models
 
     public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
     {
-     // Todo: select any or the Last ListItem
+      // Todo: select any or the Last ListItem
     }
 
     public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
@@ -194,17 +199,19 @@ namespace Webradio.Models
     {
       return ScreenUpdateMode.AutoWorkflowManager;
     }
+
     #endregion
   }
 
   #region Read/Write
+
   public class MyStreams
   {
     public string Version = "1";
     public List<MyStream> StreamList = new List<MyStream>();
 
-    static readonly XmlSerializer Serializer = new XmlSerializer(typeof(MyStreams));
-    static FileStream _stream;
+    private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(MyStreams));
+    private static FileStream _stream;
 
     public MyStreams()
     {
@@ -224,7 +231,7 @@ namespace Webradio.Models
     public static MyStreams Read(string xmlFile)
     {
       _stream = new FileStream(xmlFile, FileMode.Open);
-      MyStreams s = (MyStreams) Serializer.Deserialize(_stream);
+      var s = (MyStreams)Serializer.Deserialize(_stream);
       _stream.Close();
       return s;
     }
@@ -236,6 +243,6 @@ namespace Webradio.Models
       _stream.Close();
     }
   }
-  #endregion
 
+  #endregion
 }

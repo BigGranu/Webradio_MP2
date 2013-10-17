@@ -36,7 +36,7 @@ namespace Webradio.Helper_Classes
   {
     public static string WebradioDataFolder = ServiceRegistration.Get<IPathManager>().GetPath("<DATA>") + "\\Webradio";
     public static string StreamListFile = Path.Combine(WebradioDataFolder, "StreamList.xml");
-    public static string StreamlistServerPath = "http://www.biggranu.de/StreamList.xml";
+    public static string StreamlistServerPath = "http://www.biggranu.de/_StreamList.xml";
 
     public static bool StreamListExists()
     {

@@ -48,7 +48,8 @@ namespace Webradio.Player
     protected AbstractProperty _artistProperty;
     protected AbstractProperty _titleProperty;
     protected AbstractProperty _albumProperty;
-    protected AbstractProperty _CurrentStreamLogoProperty;
+    protected AbstractProperty _currentStreamLogoProperty;
+    protected static AbstractProperty _listenersProperty;
 
     #region Constructor & maintainance
 
@@ -58,7 +59,8 @@ namespace Webradio.Player
       _artistProperty = new WProperty(typeof(string), string.Empty);
       _titleProperty = new WProperty(typeof(string), string.Empty);
       _albumProperty = new WProperty(typeof(string), string.Empty);
-      _CurrentStreamLogoProperty = new WProperty(typeof(string), string.Empty);
+      _currentStreamLogoProperty = new WProperty(typeof(string), string.Empty);
+      _listenersProperty = new WProperty(typeof(string), string.Empty);
       StartTimer();
     }
 
@@ -121,13 +123,24 @@ namespace Webradio.Player
 
     public AbstractProperty CurrentStreamLogoProperty
     {
-      get { return _CurrentStreamLogoProperty; }
+      get { return _currentStreamLogoProperty; }
     }
 
     public string CurrentStreamLogo
     {
-      get { return (string)_CurrentStreamLogoProperty.GetValue(); }
-      set { _CurrentStreamLogoProperty.SetValue(value); }
+      get { return (string)_currentStreamLogoProperty.GetValue(); }
+      set { _currentStreamLogoProperty.SetValue(value); }
+    }
+
+    public AbstractProperty ListenersProperty
+    {
+      get { return _listenersProperty; }
+    }
+
+    public string Listeners
+    {
+      get { return (string)_listenersProperty.GetValue(); }
+      set { _listenersProperty.SetValue(value); }
     }
 
     public virtual void Initialize(MediaWorkflowStateType stateType, IPlayer player)
@@ -157,12 +170,14 @@ namespace Webradio.Player
           Title = tags.title;
           Album = tags.album;
           CurrentStreamLogo = WebradioHome.CurrentStreamLogo;
+          Listeners = WebradioHome.CurrentListeners;
           return;
         }
         Artist = string.Empty;
         Title = string.Empty;
         Album = string.Empty;
         CurrentStreamLogo = string.Empty;
+        Listeners = string.Empty;
       }
       finally
       {

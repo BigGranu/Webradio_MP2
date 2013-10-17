@@ -52,6 +52,7 @@
     <Reference Include="Bass.Net, Version=2.4.10.1, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -65,7 +66,10 @@
     <Compile Include="Dialogues\WebradioDlgSearchInStreams.cs" />
     <Compile Include="Dialogues\WebradioDlgShowFavorites.cs" />
     <Compile Include="Dialogues\WebradioDlgShowFilter.cs" />
-    <Compile Include="Helper Classes\StreamlistUpdate.cs" />
+    <Compile Include="Helper Classes\ShoutcastListeners.cs" />
+    <Compile Include="Helper Classes\StreamlistUpdate.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\WebradioFavorites.cs" />
     <Compile Include="Models\WebradioFilter.cs" />
     <Compile Include="Models\WebradioHome.cs" />
