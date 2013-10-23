@@ -19,6 +19,16 @@
 	<string name="Webradio.Settings.Menu.Filter">Filter</string>
 	<string name="Webradio.Settings.Menu.Favorites">Favorites</string>
 
+  <string name="Webradio.Settings.Streamlistupdate">Update the Streamlist</string>
+  <string name="Webradio.Settings.Languageupdate">Update the Languages</string>
+  <string name="Webradio.Settings.Automatically">Automatically</string>
+  <string name="Webradio.Settings.Manually">Manually</string>
+  <string name="Webradio.Settings.Disabled">Disabled</string>
+  <string name="Webradio.Settings.Report">Report broken Station</string>
+  <string name="Webradio.Settings.Online">Version Online</string>
+  <string name="Webradio.Settings.Offline">Version Offline</string>
+  <string name="Webradio.Settings.Version">Version</string>
+  
 	<string name="Webradio.Favorites.ScreenTitle">Favorites</string>
 	<string name="Webradio.Favorites.Add">Add</string>   
 	<string name="Webradio.Favorites.Delete">Delete</string>
