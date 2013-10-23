@@ -78,6 +78,7 @@ namespace Webradio.Models
       foreach (MyStream ms in list)
       {
         indx += 1;
+        SetFallbackValues(ms);
         var item = new ListItem();
         item.AdditionalProperties[STREAM_ID] = ms.ID;
         item.SetLabel("Name", ms.Titel);
@@ -106,6 +107,29 @@ namespace Webradio.Models
         s = ms.Logo;
       }
       return s;
+    }
+
+    /// <summary>
+    /// Set the FallbackValues of the current Stream
+    /// </summary>
+    public static void SetFallbackValues(MyStream ms)
+    {
+      if (ms.Country == "")
+      {
+        ms.Country = "unknown";
+      }
+      if (ms.City == "")
+      {
+        ms.City = "unknown";
+      }
+      if (ms.Bitrate == "")
+      {
+        ms.Bitrate = "unknown";
+      }
+      if (ms.Genres == "")
+      {
+        ms.Genres = "unknown";
+      }
     }
 
     /// <summary>

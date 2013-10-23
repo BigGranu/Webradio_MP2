@@ -34,7 +34,7 @@ namespace Webradio.Helper_Classes
 {
   public class StreamlistUpdate
   {
-    public static string WebradioDataFolder = ServiceRegistration.Get<IPathManager>().GetPath("<DATA>") + "\\Webradio";
+    public static string WebradioDataFolder = ServiceRegistration.Get<IPathManager>().GetPath(@"<DATA>\Webradio");
     public static string StreamListFile = Path.Combine(WebradioDataFolder, "StreamList.xml");
     public static string StreamlistServerPath = "http://www.biggranu.de/_StreamList.xml";
 
@@ -98,6 +98,5 @@ namespace Webradio.Helper_Classes
     {
       ServiceRegistration.Get<IWorkflowManager>().NavigatePushAsync(new Guid("7EB62BD5-3401-45B8-A622-C3A073D5BFDF"));
     }
-
   }
 }

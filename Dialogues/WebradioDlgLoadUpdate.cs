@@ -37,7 +37,7 @@ using Webradio.Models;
 
 namespace Webradio.Dialogues
 {
-  class WebradioDlgLoadUpdate : IWorkflowModel
+  internal class WebradioDlgLoadUpdate : IWorkflowModel
   {
     #region Consts
 
@@ -51,18 +51,28 @@ namespace Webradio.Dialogues
     #region Propertys
 
     private AbstractProperty _updateProgressProperty = new WProperty(typeof(int), 0);
-    public AbstractProperty UpdateProgressProperty { get { return _updateProgressProperty; } }
+
+    public AbstractProperty UpdateProgressProperty
+    {
+      get { return _updateProgressProperty; }
+    }
+
     public int UpdateProgress
     {
-      get { return (int) _updateProgressProperty.GetValue(); }
+      get { return (int)_updateProgressProperty.GetValue(); }
       set { _updateProgressProperty.SetValue(value); }
     }
 
     private static AbstractProperty _infoProperty = new WProperty(typeof(string), string.Empty);
-    public AbstractProperty InfoProperty { get { return _infoProperty; } }
+
+    public AbstractProperty InfoProperty
+    {
+      get { return _infoProperty; }
+    }
+
     public static string Info
     {
-      get { return (string) _infoProperty.GetValue(); }
+      get { return (string)_infoProperty.GetValue(); }
       set { _infoProperty.SetValue(value); }
     }
 

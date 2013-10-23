@@ -55,15 +55,15 @@ namespace Webradio.Helper_Classes
       City = string.Empty;
       Genres = string.Empty;
       Bitrate = string.Empty;
-      Home  = string.Empty;
-      Logo  = string.Empty;
-      Facebook  = string.Empty;
-      Twitter  = string.Empty;
+      Home = string.Empty;
+      Logo = string.Empty;
+      Facebook = string.Empty;
+      Twitter = string.Empty;
       Love = false;
       Block = false;
       PlayCount = 0;
-      tag1  = string.Empty;
-      tag2  = string.Empty;
+      tag1 = string.Empty;
+      tag2 = string.Empty;
       tag3 = string.Empty;
       tag4 = string.Empty;
     }

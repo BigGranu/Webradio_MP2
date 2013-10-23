@@ -26,41 +26,51 @@ using System;
 using System.IO;
 using System.Net;
 using System.Timers;
+using Webradio.Models;
 
 namespace Webradio.Helper_Classes
 {
   public class ShoutcastListeners
-  {       
-
+  {
     public static Timer ATimer = new Timer();
 
     public static void Listeners()
     {
       try
       {
+        var request = (HttpWebRequest)WebRequest.Create(WebradioHome.SelectedStream.URL);
+        request.UserAgent = "Mozilla";
+        request.Credentials = CredentialCache.DefaultCredentials;
+        WebResponse response = null;
+        StreamReader reader = null;
+        response = request.GetResponse();
+        if (response.ContentType != "text/html")
+        {
+          WebradioHome.CurrentListeners = "unknown";
+          return;
+        }
+
+        reader = new StreamReader(response.GetResponseStream());
+        string s = reader.ReadToEnd();
+
+        if (!s.Contains(">SHOUTcast Administrator<"))
+        {
+          ATimer.Stop();
+          WebradioHome.CurrentListeners = "unknown";
+          return;
+        }
+
+        var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
+        WebradioHome.CurrentListeners = s.Substring(i, s.IndexOf(" ", i, StringComparison.Ordinal) - i);
+
         ATimer.Elapsed += OnTimedEvent;
         ATimer.Interval = 60000;
         ATimer.Start();
-
-        var request = (HttpWebRequest)WebRequest.Create(Models.WebradioHome.SelectedStream.URL);
-        request.UserAgent = "Mozilla";
-        string s = new StreamReader(request.GetResponse().GetResponseStream()).ReadToEnd();
-
-        if (s.Contains(">SHOUTcast Administrator<"))
-        {
-          var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
-          Models.WebradioHome.CurrentListeners = s.Substring(i, s.IndexOf(" ", i, StringComparison.Ordinal) - i);
-        }
-        else
-        {
-          ATimer.Stop();
-          Models.WebradioHome.CurrentListeners = "";
-        }
       }
       catch (Exception)
       {
         ATimer.Stop();
-        Models.WebradioHome.CurrentListeners = "";
+        WebradioHome.CurrentListeners = "unknown";
       }
     }
 
@@ -68,6 +78,5 @@ namespace Webradio.Helper_Classes
     {
       Listeners();
     }
-
   }
 }

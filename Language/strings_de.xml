@@ -45,4 +45,5 @@
   <string name="Webradio.Dialog.ShowFavorites.SetFav">Sender zu Favoriten Hinzufügen/Entfernen</string>
   <string name="Webradio.Dialog.ImportFavorites.Header">Favoriten Öffnen</string>
   <string name="Webradio.Dialog.Search.Header">Suche</string>
+  <string name="Webradio.UIContributor.Listeners">Zuhörer:</string>
 </resources>

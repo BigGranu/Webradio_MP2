@@ -32,12 +32,14 @@ using MediaPortal.Common.ResourceAccess;
 using MediaPortal.UI.Players.BassPlayer;
 using MediaPortal.UI.Players.BassPlayer.PlayerComponents;
 using MediaPortal.UI.Presentation.Players;
+using Un4seen.Bass;
 
 namespace Webradio.Player
 {
   public class WebRadioPlayerBuilder : IPlayerBuilder
   {
     private readonly string _pluginDirectory;
+
     public WebRadioPlayerBuilder()
     {
       var bassDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "..\\BassPlayer");
@@ -64,6 +66,9 @@ namespace Webradio.Player
       if (InputSourceFactory.CanPlay(locator, mimeType))
       {
         BassPlayer player = new WebRadioBassPlayer(_pluginDirectory);
+
+        // Config the BASSPlayer to play also .pls and .m3u
+        Bass.BASS_SetConfig(BASSConfig.BASS_CONFIG_NET_PLAYLIST, 1);
         try
         {
           player.SetMediaItemLocator(locator, mimeType, title);
@@ -80,6 +85,5 @@ namespace Webradio.Player
     }
 
     #endregion
-
   }
 }

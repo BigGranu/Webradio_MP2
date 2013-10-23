@@ -55,7 +55,7 @@
               FontSize="{ThemeResource SmallFontSize}" Color="{ThemeResource EmphasisTextColor}"/>
             
             <Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
-              Content="{Binding [City]}" FontSize="{ThemeResource SmallerFontSize}" Color="{ThemeResource TextColor}"/>
+              Content="{Binding [City]}" FontSize="{ThemeResource SmallerFontSize}" Color="{ThemeResource TextColor}"/> 
           </StackPanel>
 
           <!--Logo-->

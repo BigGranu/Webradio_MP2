@@ -61,6 +61,7 @@
               <RowDefinition Height="Auto"/>
               <RowDefinition Height="Auto"/>
               <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="450"/>
@@ -95,7 +96,7 @@
                   </StackPanel>
                 </ControlTemplate>
               </Control.Resources>
-            </Control>
+            </Control>          
 
             <Label x:Name="ArtistsLabel" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom"
                 Content="[Media.AudioArtistsLabel]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
@@ -105,10 +106,15 @@
                 Content="[Media.AudioTitleLabel]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
             <Label x:Name="Title" Grid.Row="2" Grid.Column="2" Scroll="Auto"
                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Title}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
+            <Label x:Name="ListenersLabel" Grid.Row="3" Grid.Column="1"
+                Content="[Webradio.UIContributor.Listeners]" Color="{ThemeResource TextColor}"/>
+            <Label x:Name="Listeners" Grid.Row="3" Grid.Column="2" Scroll="Auto"
+                Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Listeners}" Color="{ThemeResource TextColor}"/>
+
           </Grid>
         </mp_special_controls:PlayerControl.TemplateControl>
       </mp_special_controls:PlayerControl>
-      
+
     </Grid>
   </Grid>
 </Screen>

@@ -26,10 +26,11 @@ using System;
 using System.Collections.Generic;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
+using Webradio.Helper_Classes;
 
 namespace Webradio.Models
 {
-  class WebradioSettings :IWorkflowModel
+  internal class WebradioSettings : IWorkflowModel
   {
     #region Consts
 
@@ -37,7 +38,29 @@ namespace Webradio.Models
 
     #endregion
 
+    public string OfflineStreamlistVersion = string.Empty;
+    public string OnlineStreamlistVersion = string.Empty;
+
+    public void Init()
+    {
+      OfflineStreamlistVersion = Convert.ToString(StreamlistUpdate.OfflineVersion());
+      OnlineStreamlistVersion = Convert.ToString(StreamlistUpdate.OnlineVersion());
+    }
+
+    public void StreamlistInfos()
+    {
+    }
+
+    public void StartTest()
+    {
+    }
+
+    public void ClearStreamList()
+    {
+    }
+
     #region IWorkflowModel implementation
+
     public Guid ModelId
     {
       get { return new Guid(MODEL_ID_STR); }
@@ -48,8 +71,9 @@ namespace Webradio.Models
       return true;
     }
 
-    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)   
+    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
+      Init();
     }
 
     public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
@@ -77,7 +101,7 @@ namespace Webradio.Models
     {
       return ScreenUpdateMode.AutoWorkflowManager;
     }
-    #endregion
 
+    #endregion
   }
 }

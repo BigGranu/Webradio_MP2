@@ -29,8 +29,8 @@ using MediaPortal.UI.Players.BassPlayer.Interfaces;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Players;
 using MediaPortal.UiComponents.Media.Models;
-using Webradio.Models;
 using Un4seen.Bass.AddOn.Tags;
+using Webradio.Models;
 
 namespace Webradio.Player
 {
@@ -95,7 +95,7 @@ namespace Webradio.Player
 
     public string Artist
     {
-      get { return (string) _artistProperty.GetValue(); }
+      get { return (string)_artistProperty.GetValue(); }
       set { _artistProperty.SetValue(value); }
     }
 
@@ -106,7 +106,7 @@ namespace Webradio.Player
 
     public string Title
     {
-      get { return (string) _titleProperty.GetValue(); }
+      get { return (string)_titleProperty.GetValue(); }
       set { _titleProperty.SetValue(value); }
     }
 
@@ -117,7 +117,7 @@ namespace Webradio.Player
 
     public string Album
     {
-      get { return (string) _albumProperty.GetValue(); }
+      get { return (string)_albumProperty.GetValue(); }
       set { _albumProperty.SetValue(value); }
     }
 
@@ -184,6 +184,5 @@ namespace Webradio.Player
         _updating = false;
       }
     }
-
   }
 }

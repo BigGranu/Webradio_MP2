@@ -48,7 +48,7 @@ namespace Webradio.Dialogues
     public string SelectedStream = string.Empty;
     public bool Changed = false;
     public List<FavoriteSetupInfo> FavoritList = new List<FavoriteSetupInfo>();
-    public ItemsList FavoritItems = new ItemsList();   
+    public ItemsList FavoritItems = new ItemsList();
 
     public void Init()
     {
@@ -89,7 +89,10 @@ namespace Webradio.Dialogues
 
     private static bool _contains(List<string> l, string s)
     {
-      if (l.Count == 0) { return true; }
+      if (l.Count == 0)
+      {
+        return true;
+      }
       string[] sp = s.Split(new Char[] { ',' });
       return sp.Any(l.Contains);
     }

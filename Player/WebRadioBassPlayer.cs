@@ -35,7 +35,8 @@ namespace Webradio.Player
   {
     public WebRadioBassPlayer(string playerMainDirectory)
       : base(playerMainDirectory)
-    { }
+    {
+    }
 
     public Type UIContributorType
     {

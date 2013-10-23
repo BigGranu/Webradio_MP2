@@ -48,20 +48,21 @@ namespace Webradio.Dialogues
     public static ItemsList FilterItems = new ItemsList();
     public static List<FilterSetupInfo> FilterList = new List<FilterSetupInfo>();
     private bool _quick = false;
+
     protected delegate Func<MyStream, bool> CreateFilterDelegate(string filter);
 
     public void Init()
-    {    
+    {
       ShowFilter();
     }
 
     public void ShowFilter()
-    { 
+    {
       _quick = false;
       FilterList = ServiceRegistration.Get<ISettingsManager>().Load<FilterSettings>().FilterSetupList;
       if (FilterList == null)
       {
-        FilterList = new List<FilterSetupInfo> { new FilterSetupInfo("New Filter","0",new List<string>(),new List<string>(), new List<string>(),new List<string>()) };
+        FilterList = new List<FilterSetupInfo> { new FilterSetupInfo("New Filter", "0", new List<string>(), new List<string>(), new List<string>(), new List<string>()) };
       }
 
       List<string> list = new List<string>();
@@ -89,14 +90,14 @@ namespace Webradio.Dialogues
     {
       List<MyStream> list = new List<MyStream>();
       foreach (IEnumerable<MyStream> query in from f in FilterList
-                                              where f.Titel == (string)item.AdditionalProperties[KEY_FILTER]
-                                              select (from r in WebradioHome.StreamList
-                                                      where
-                                                        Contains(f.Countrys, r.Country)
-                                                        && Contains(f.Citys, r.City)
-                                                        && Contains2(f.Genres, r.Genres)
-                                                        && Contains(f.Bitrate, r.Bitrate)
-                                                      select r))
+        where f.Titel == (string)item.AdditionalProperties[KEY_FILTER]
+        select (from r in WebradioHome.StreamList
+          where
+            Contains(f.Countrys, r.Country)
+            && Contains(f.Citys, r.City)
+            && Contains2(f.Genres, r.Genres)
+            && Contains(f.Bitrate, r.Bitrate)
+          select r))
       {
         foreach (MyStream ms in query.Where(ms => !list.Contains(ms)))
         {
@@ -187,7 +188,10 @@ namespace Webradio.Dialogues
     private static bool Contains2(ICollection<string> l, string s)
     {
       if (s == null) throw new ArgumentNullException("s");
-      if (l.Count == 0) { return true; }
+      if (l.Count == 0)
+      {
+        return true;
+      }
 
       string[] split = s.Split(',');
       return split.Any(part => l.Contains(part.Trim()));

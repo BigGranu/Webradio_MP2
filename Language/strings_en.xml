@@ -60,4 +60,6 @@
   <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">Download Complete</string>
   <string name="Webradio.Dialog.LoadUpdate.DownloadError">Download Error</string>
   <string name="Webradio.Dialog.LoadUpdate.Button">Start Update</string>
+
+  <string name="Webradio.UIContributor.Listeners">Listeners:</string>
 </resources>

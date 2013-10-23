@@ -43,7 +43,12 @@ namespace Webradio.Dialogues
     #region Propertys
 
     private static AbstractProperty _searchTextProperty = new WProperty(typeof(string), string.Empty);
-    public AbstractProperty SearchTextProperty { get { return _searchTextProperty; } }
+
+    public AbstractProperty SearchTextProperty
+    {
+      get { return _searchTextProperty; }
+    }
+
     public static string SearchText
     {
       get { return (string)_searchTextProperty.GetValue(); }
@@ -54,19 +59,19 @@ namespace Webradio.Dialogues
 
     public void SearchTitel()
     {
-      var list = WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), System.StringComparison.Ordinal) >= 0).ToList();
+      var list = WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList();
       WebradioHome.FillItemList(list);
     }
 
     public void SearchDescription()
     {
-      var list = WebradioHome.StreamList.Where(ms => ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), System.StringComparison.Ordinal) >= 0).ToList();
+      var list = WebradioHome.StreamList.Where(ms => ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList();
       WebradioHome.FillItemList(list);
     }
 
     public void SearchAll()
     {
-      var list = WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), System.StringComparison.Ordinal) >= 0 | ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), System.StringComparison.Ordinal) >= 0).ToList();
+      var list = WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0 | ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList();
       WebradioHome.FillItemList(list);
     }
 

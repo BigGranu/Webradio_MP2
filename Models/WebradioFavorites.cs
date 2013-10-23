@@ -39,7 +39,7 @@ namespace Webradio.Models
   {
     #region Consts
 
-    public const string MODEL_ID_STR = "EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94";  
+    public const string MODEL_ID_STR = "EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94";
     public const string NAME = "name";
     public const string ID = "id";
 
@@ -52,7 +52,12 @@ namespace Webradio.Models
     #region Propertys
 
     private static AbstractProperty _titelProperty = new WProperty(typeof(string), string.Empty);
-    public AbstractProperty TitelProperty { get { return _titelProperty; } }
+
+    public AbstractProperty TitelProperty
+    {
+      get { return _titelProperty; }
+    }
+
     public string SelectedTitel
     {
       get { return (string)_titelProperty.GetValue(); }
@@ -60,7 +65,12 @@ namespace Webradio.Models
     }
 
     private static AbstractProperty _saveImage = new WProperty(typeof(string), string.Empty);
-    public AbstractProperty SaveImageProperty { get { return _saveImage; } }
+
+    public AbstractProperty SaveImageProperty
+    {
+      get { return _saveImage; }
+    }
+
     public string SaveImage
     {
       get { return (string)_saveImage.GetValue(); }
@@ -149,14 +159,15 @@ namespace Webradio.Models
     }
 
     #region IWorkflowModel implementation
+
     public Guid ModelId
     {
-        get { return new Guid(MODEL_ID_STR); }
+      get { return new Guid(MODEL_ID_STR); }
     }
 
     public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
     {
-        return true;
+      return true;
     }
 
     public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
@@ -171,7 +182,7 @@ namespace Webradio.Models
 
     public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
     {
-        // We could initialize some data here when changing the media navigation state
+      // We could initialize some data here when changing the media navigation state
     }
 
     public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
@@ -188,9 +199,9 @@ namespace Webradio.Models
 
     public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
     {
-        return ScreenUpdateMode.AutoWorkflowManager;
+      return ScreenUpdateMode.AutoWorkflowManager;
     }
-    #endregion
 
+    #endregion
   }
 }

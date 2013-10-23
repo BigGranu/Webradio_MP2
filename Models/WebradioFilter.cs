@@ -36,7 +36,7 @@ using Webradio.Settings;
 
 namespace Webradio.Models
 {
-  class WebradioFilter : IWorkflowModel
+  internal class WebradioFilter : IWorkflowModel
   {
     #region Consts
 
@@ -46,7 +46,7 @@ namespace Webradio.Models
     #endregion
 
     public static List<FilterSetupInfo> FilterList = new List<FilterSetupInfo>();
-    
+
     #region Lists
 
     // Lists with all Items from Streamlist
@@ -66,11 +66,18 @@ namespace Webradio.Models
     private static List<string> CityList = new List<string>();
     private static List<string> BitrList = new List<string>();
     private static List<string> GenrList = new List<string>();
+
     #endregion
 
     #region Propertys
+
     private static AbstractProperty _filterTitelProperty = new WProperty(typeof(string), string.Empty);
-    public AbstractProperty FilterTitelProperty { get { return _filterTitelProperty; } }
+
+    public AbstractProperty FilterTitelProperty
+    {
+      get { return _filterTitelProperty; }
+    }
+
     public static string FilterTitel
     {
       get { return (string)_filterTitelProperty.GetValue(); }
@@ -78,7 +85,12 @@ namespace Webradio.Models
     }
 
     private static AbstractProperty _selectedStreamsCountProperty = new WProperty(typeof(string), string.Empty);
-    public AbstractProperty SelectedStreamsCountProperty { get { return _selectedStreamsCountProperty; } }
+
+    public AbstractProperty SelectedStreamsCountProperty
+    {
+      get { return _selectedStreamsCountProperty; }
+    }
+
     public static string SelectedStreamsCount
     {
       get { return (string)_selectedStreamsCountProperty.GetValue(); }
@@ -86,7 +98,12 @@ namespace Webradio.Models
     }
 
     private static AbstractProperty _countryStateProperty = new WProperty(typeof(string), string.Empty);
-    public AbstractProperty CountryStateProperty { get { return _countryStateProperty; } }
+
+    public AbstractProperty CountryStateProperty
+    {
+      get { return _countryStateProperty; }
+    }
+
     public static string CountryState
     {
       get { return (string)_countryStateProperty.GetValue(); }
@@ -94,7 +111,12 @@ namespace Webradio.Models
     }
 
     private static AbstractProperty _cityStateProperty = new WProperty(typeof(string), string.Empty);
-    public AbstractProperty CityStateProperty { get { return _cityStateProperty; } }
+
+    public AbstractProperty CityStateProperty
+    {
+      get { return _cityStateProperty; }
+    }
+
     public static string CityState
     {
       get { return (string)_cityStateProperty.GetValue(); }
@@ -102,7 +124,12 @@ namespace Webradio.Models
     }
 
     private static AbstractProperty _bitrateStateProperty = new WProperty(typeof(string), string.Empty);
-    public AbstractProperty BitrateStateProperty { get { return _bitrateStateProperty; } }
+
+    public AbstractProperty BitrateStateProperty
+    {
+      get { return _bitrateStateProperty; }
+    }
+
     public static string BitrateState
     {
       get { return (string)_bitrateStateProperty.GetValue(); }
@@ -110,7 +137,12 @@ namespace Webradio.Models
     }
 
     private static AbstractProperty _genreStateProperty = new WProperty(typeof(string), string.Empty);
-    public AbstractProperty GenreStateProperty { get { return _genreStateProperty; } }
+
+    public AbstractProperty GenreStateProperty
+    {
+      get { return _genreStateProperty; }
+    }
+
     public static string GenreState
     {
       get { return (string)_genreStateProperty.GetValue(); }
@@ -118,7 +150,12 @@ namespace Webradio.Models
     }
 
     private static AbstractProperty _saveImage = new WProperty(typeof(string), string.Empty);
-    public AbstractProperty SaveImageProperty { get { return _saveImage; } }
+
+    public AbstractProperty SaveImageProperty
+    {
+      get { return _saveImage; }
+    }
+
     public static string SaveImage
     {
       get { return (string)_saveImage.GetValue(); }
@@ -174,7 +211,7 @@ namespace Webradio.Models
     /// <summary>
     /// Rename a Entry
     /// </summary>
-    public void Clear( )
+    public void Clear()
     {
       ClearSelected();
       FillAllItemsList();
@@ -215,9 +252,11 @@ namespace Webradio.Models
       ServiceRegistration.Get<ISettingsManager>().Save(new FilterSettings(FilterList));
       SaveImage = "Saved.png";
     }
+
     #endregion
 
     #region Change SelectedItem
+
     public void ChangeCountry(ListItem item)
     {
       var s = (string)item.AdditionalProperties[NAME];
@@ -231,7 +270,7 @@ namespace Webradio.Models
         SelectedCountrys.Add(s);
         item.Selected = true;
       }
-      
+
       // Autofill Citys in selected Country
       if (SelectedCountrys.Count > 0)
       {
@@ -251,7 +290,7 @@ namespace Webradio.Models
       Refresh(Countrys, item);
     }
 
-    public void ChangeCity(ListItem item)   
+    public void ChangeCity(ListItem item)
     {
       string s = (string)item.AdditionalProperties[NAME];
       if (SelectedCitys.Contains(s))
@@ -317,6 +356,7 @@ namespace Webradio.Models
       SaveImage = "Unsaved.png";
       Refresh(Genres, item);
     }
+
     #endregion
 
     /// <summary>
@@ -334,7 +374,7 @@ namespace Webradio.Models
 
         // Add Citys
         if (ms.City != "" & !CityList.Contains(ms.City))
-        {      
+        {
           CityList.Add(ms.City);
         }
 
@@ -343,13 +383,13 @@ namespace Webradio.Models
         {
           string br = ms.Bitrate.Replace(" kbps", "").PadLeft(3, '0');
           if (!BitrList.Contains(br))
-          { 
+          {
             BitrList.Add(br);
-          }           
+          }
         }
 
         // Add Genres
-        string[] split = ms.Genres.Split(new[] {','});
+        string[] split = ms.Genres.Split(new[] { ',' });
         foreach (string s in split.Where(s => s.Trim() != "" & !GenrList.Contains(s.Trim())))
         {
           GenrList.Add(s.Trim());
@@ -372,7 +412,7 @@ namespace Webradio.Models
         ListItem item = new ListItem();
         item.AdditionalProperties[NAME] = s;
         item.SetLabel("Name", s);
-        if (SelectedCountrys.Contains(s)) 
+        if (SelectedCountrys.Contains(s))
         {
           item.Selected = true;
         }
@@ -428,7 +468,7 @@ namespace Webradio.Models
       Genres.Clear();
     }
 
-    private static void ClearSelected() 
+    private static void ClearSelected()
     {
       SelectedCountrys.Clear();
       SelectedCitys.Clear();
@@ -450,10 +490,22 @@ namespace Webradio.Models
 
     private static void RefreshState(ItemsList list)
     {
-      if (list == Countrys) { CountryState = Convert.ToString(SelectedCountrys.Count) + "/" + Convert.ToString(Countrys.Count);}
-      if (list == Citys) { CityState = Convert.ToString(SelectedCitys.Count) + "/" + Convert.ToString(Citys.Count); }
-      if (list == Bitrate) { BitrateState = Convert.ToString(SelectedBitrate.Count) + "/" + Convert.ToString(Bitrate.Count); }
-      if (list == Genres) { GenreState = Convert.ToString(SelectedGenres.Count) + "/" + Convert.ToString(Genres.Count); }
+      if (list == Countrys)
+      {
+        CountryState = Convert.ToString(SelectedCountrys.Count) + "/" + Convert.ToString(Countrys.Count);
+      }
+      if (list == Citys)
+      {
+        CityState = Convert.ToString(SelectedCitys.Count) + "/" + Convert.ToString(Citys.Count);
+      }
+      if (list == Bitrate)
+      {
+        BitrateState = Convert.ToString(SelectedBitrate.Count) + "/" + Convert.ToString(Bitrate.Count);
+      }
+      if (list == Genres)
+      {
+        GenreState = Convert.ToString(SelectedGenres.Count) + "/" + Convert.ToString(Genres.Count);
+      }
       RefreshState();
     }
 
@@ -463,12 +515,12 @@ namespace Webradio.Models
       if (SelectedCountrys.Count + SelectedCitys.Count + SelectedBitrate.Count + SelectedGenres.Count > 0)
       {
         IEnumerable<MyStream> query = from r in WebradioHome.StreamList
-                                      where
-                                        _contains(SelectedCountrys, r.Country)
-                                        && _contains(SelectedCitys, r.City)
-                                        && _contains2(SelectedGenres, r.Genres)
-                                        && _contains(SelectedBitrate, r.Bitrate)
-                                      select r;
+          where
+            _contains(SelectedCountrys, r.Country)
+            && _contains(SelectedCitys, r.City)
+            && _contains2(SelectedGenres, r.Genres)
+            && _contains(SelectedBitrate, r.Bitrate)
+          select r;
         x = query.Count<MyStream>();
       }
       SelectedStreamsCount = Convert.ToString(x) + "/" + Convert.ToString(WebradioHome.StreamList.Count);
@@ -481,24 +533,28 @@ namespace Webradio.Models
 
     private static bool _contains2(List<string> l, string S)
     {
-      if (l.Count == 0) { return true;}
+      if (l.Count == 0)
+      {
+        return true;
+      }
 
       string[] split = S.Split(new Char[] { ',' });
       return split.Any(l.Contains);
     }
 
     #region IWorkflowModel implementation
+
     public Guid ModelId
     {
-        get { return new Guid(MODEL_ID_STR); }
+      get { return new Guid(MODEL_ID_STR); }
     }
 
     public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
     {
-        return true;
+      return true;
     }
 
-    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)    
+    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
       Init();
     }
@@ -509,7 +565,7 @@ namespace Webradio.Models
 
     public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
     {
-        // We could initialize some data here when changing the media navigation state
+      // We could initialize some data here when changing the media navigation state
     }
 
     public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
@@ -526,10 +582,9 @@ namespace Webradio.Models
 
     public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
     {
-        return ScreenUpdateMode.AutoWorkflowManager;
+      return ScreenUpdateMode.AutoWorkflowManager;
     }
+
     #endregion
-
   }
-
 }

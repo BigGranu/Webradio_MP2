@@ -86,7 +86,7 @@
             <Label x:Name="Title" Grid.Row="2" Grid.Column="2" Scroll="Auto"
                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Title}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
             <Label x:Name="ListenersLabel" Grid.Row="3" Grid.Column="1"
-                Content="[Media.AudioListener]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
+                Content="[Webradio.UIContributor.Listeners]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
             <Label x:Name="Listeners" Grid.Row="3" Grid.Column="2" Scroll="Auto"
                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Listeners}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
             

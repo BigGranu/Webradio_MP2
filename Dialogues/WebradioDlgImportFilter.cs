@@ -42,7 +42,7 @@ namespace Webradio.Dialogues
 
     #endregion
 
-    public ItemsList FilterItems = new ItemsList();   
+    public ItemsList FilterItems = new ItemsList();
 
     public void ImportFilter()
     {
@@ -111,6 +111,5 @@ namespace Webradio.Dialogues
     }
 
     #endregion
-
   }
 }

@@ -39,6 +39,10 @@
                 Content="[Media.AudioAlbumLabel]" Color="{ThemeResource TextColor}"/>
             <Label x:Name="Album" Grid.Row="2" Grid.Column="1"
                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Album}" Color="{ThemeResource TextColor}"/>
+            <Label x:Name="ListenersLabel" Grid.Row="3" Grid.Column="0"
+                Content="[Webradio.UIContributor.Listeners]" Color="{ThemeResource TextColor}"/>
+            <Label x:Name="Listeners" Grid.Row="3" Grid.Column="1" Scroll="Auto"
+                Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Listeners}" Color="{ThemeResource TextColor}"/>
 
             <!--Logo-->
             <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="4">

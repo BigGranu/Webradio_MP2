@@ -24,9 +24,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Net;
 using MediaPortal.Common;
 using MediaPortal.Common.MediaManagement;
 using MediaPortal.Common.MediaManagement.DefaultItemAspects;
+using MediaPortal.Common.PathManager;
 using MediaPortal.Common.Services.ResourceAccess.RawUrlResourceProvider;
 using MediaPortal.Common.SystemResolver;
 using MediaPortal.UI.Presentation.Players;
@@ -76,8 +81,38 @@ namespace Webradio.Player
       mediaAspect.SetAttribute(MediaAspect.ATTR_MIME_TYPE, WEBRADIO_MIMETYPE);
       mediaAspect.SetAttribute(MediaAspect.ATTR_TITLE, stream.Titel);
 
-      MediaItem mediaItem = new MediaItem(Guid.Empty, aspects);
+      MediaItemAspect.SetAttribute(aspects, ThumbnailLargeAspect.ATTR_THUMBNAIL, ImageFromLogo(stream.Logo));
+
+      var mediaItem = new MediaItem(Guid.Empty, aspects);
       return mediaItem;
+    }
+
+    /// <summary>
+    /// Convert the Webstreamlogo (Online or Default) to byte[]
+    /// </summary>
+    public static byte[] ImageFromLogo(string path)
+    {
+      var ms = new MemoryStream();
+
+      if (path == "")
+      {
+        var s = ServiceRegistration.Get<IPathManager>().GetPath(@"<PLUGINS>\Webradio\Skin\default\images\DefaultLogo.png");
+        Image.FromFile(s).Save(ms, ImageFormat.Png);
+      }
+      else
+      {
+        var imageRequest = (HttpWebRequest)WebRequest.Create(path);
+        imageRequest.Credentials = CredentialCache.DefaultCredentials;
+
+        using (var imageReponse = (HttpWebResponse)imageRequest.GetResponse())
+        {
+          using (var imageStream = imageReponse.GetResponseStream())
+          {
+            if (imageStream != null) Image.FromStream(imageStream).Save(ms, ImageFormat.Png);
+          }
+        }
+      }
+      return ms.ToArray();
     }
   }
 }
