@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+﻿<?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="Webradio.Home.Menu.ShowFilter">Filter</string>
   <string name="Webradio.Home.Menu.ShowFavorites">Priljubljene</string>
@@ -18,4 +18,6 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">Žanr</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">Izbriši</string>
   <string name="Webradio.Dialog.Search.Header">Iskanje</string>
+	<string name="Country.Holy See">Sveti sedež</string>
+	<string name="Country.Scotland">Škotska</string>
 </resources>
