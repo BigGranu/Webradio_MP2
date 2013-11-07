@@ -15,6 +15,8 @@
     <PluginReference PluginId="{5D239050-02B8-4f58-8301-7630A1C4CF85}"/> <!-- SkinBase -->
     <PluginReference PluginId="{15FB35F7-8C85-4404-BC67-BFF28446158A}"/> <!-- Media -->
     <PluginReference PluginId="{9886EB43-B3EB-4cf1-A979-8D4D8874C555}"/> <!-- BassPlayer -->
+    <PluginReference PluginId="{1AFF4467-64B0-4ca1-AF28-9AEDF3525BCE}"/> <!-- ConfigurationManager -->
+    <PluginReference PluginId="{B765A4B6-F455-4941-BDAE-2CE45208BFEB}"/> <!-- Configuration plugin -->
   </DependsOn>
 
   <Register Location="/Models">
@@ -96,7 +98,26 @@
   <Register Location="/Resources/Skin">
     <Resource Id="WebradioSkin" Directory="Skin" Type="Skin"/>
   </Register>
+  
   <Register Location="/Resources/Language">
     <Resource Id="WebradioLanguge" Directory="Language" Type="Language"/>
   </Register>
+
+  <!-- Content of Settings/Plugins section -->
+  <Register Location="/Configuration/Settings/Plugins">
+    <ConfigSection
+        Id="Webradio"
+        Redundant="true"
+        Text="Webradio"/>
+  </Register>
+
+  <Register Location="/Configuration/Settings/Plugins/Webradio">
+    <CustomConfigSetting
+        Id="Webradio"
+        Text="Webradio Settings"
+        HelpText="All settings for webradio"
+        ClassName="Webradio.Settings.WebradioConfig"
+				AdditionalData="WorkflowState=5F49F6FC-32C4-48F6-85C8-2EF05598310A,ConfAppPanel=..."/>
+  </Register>
+
 </Plugin>

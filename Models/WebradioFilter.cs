@@ -46,6 +46,7 @@ namespace Webradio.Models
     #endregion
 
     public static List<FilterSetupInfo> FilterList = new List<FilterSetupInfo>();
+    public static List<MyStream> StreamList = new List<MyStream>();
 
     #region Lists
 
@@ -274,7 +275,7 @@ namespace Webradio.Models
       // Autofill Citys in selected Country
       if (SelectedCountrys.Count > 0)
       {
-        IEnumerable<MyStream> query = from r in WebradioHome.StreamList where _contains(SelectedCountrys, r.Country) select r;
+        IEnumerable<MyStream> query = from r in StreamList where _contains(SelectedCountrys, r.Country) select r;
         foreach (MyStream ms in query.Where(ms => !SelectedCitys.Contains(ms.City)))
         {
           SelectedCitys.Add(ms.City);
@@ -307,7 +308,7 @@ namespace Webradio.Models
       // Autofill Country by selected City
       if (SelectedCitys.Count > 0)
       {
-        IEnumerable<MyStream> query = from r in WebradioHome.StreamList where _contains(SelectedCitys, r.City) select r;
+        IEnumerable<MyStream> query = from r in StreamList where _contains(SelectedCitys, r.City) select r;
         foreach (MyStream ms in query.Where(ms => !SelectedCountrys.Contains(ms.Country)))
         {
           SelectedCountrys.Add(ms.Country);
@@ -364,7 +365,14 @@ namespace Webradio.Models
     /// </summary>
     private static void FillAllLists()
     {
-      foreach (MyStream ms in WebradioHome.StreamList)
+      StreamList = WebradioHome.StreamList;
+
+      if (StreamList.Count == 0)
+      {
+        StreamList = MyStreams.Read(StreamlistUpdate.StreamListFile).StreamList;
+      }
+
+      foreach (MyStream ms in StreamList)
       {
         // Add Countrys
         if (ms.Country != "" & !CounList.Contains(ms.Country))
@@ -514,7 +522,7 @@ namespace Webradio.Models
       int x = 0;
       if (SelectedCountrys.Count + SelectedCitys.Count + SelectedBitrate.Count + SelectedGenres.Count > 0)
       {
-        IEnumerable<MyStream> query = from r in WebradioHome.StreamList
+        IEnumerable<MyStream> query = from r in StreamList
           where
             _contains(SelectedCountrys, r.Country)
             && _contains(SelectedCitys, r.City)
@@ -523,7 +531,7 @@ namespace Webradio.Models
           select r;
         x = query.Count<MyStream>();
       }
-      SelectedStreamsCount = Convert.ToString(x) + "/" + Convert.ToString(WebradioHome.StreamList.Count);
+      SelectedStreamsCount = Convert.ToString(x) + "/" + Convert.ToString(StreamList.Count);
     }
 
     private static bool _contains(List<string> l, string s)

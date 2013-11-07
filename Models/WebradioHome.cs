@@ -24,9 +24,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Xml.Serialization;
+using MediaPortal.Common;
+using MediaPortal.Common.General;
+using MediaPortal.Common.PathManager;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
@@ -51,6 +57,19 @@ namespace Webradio.Models
     public static ItemsList AllRadioStreams = new ItemsList();
     public static List<MyStream> StreamList = new List<MyStream>();
 
+    private static readonly AbstractProperty _defaultImage = new WProperty(typeof(string), string.Empty);
+
+    public AbstractProperty DefaultImageProperty
+    {
+      get { return _defaultImage; }
+    }
+
+    public string DefaultImage
+    {
+      get { return (string)_defaultImage.GetValue(); }
+      set { _defaultImage.SetValue(value); }
+    }
+
     public int C = 0;
 
     public void Init()
@@ -62,6 +81,7 @@ namespace Webradio.Models
         return; // Update runs async
       }
 
+      DefaultImage = "DefaultLogo.png";
       StreamlistUpdate.CheckUpdate();
       MyStreams ms = MyStreams.Read(StreamlistUpdate.StreamListFile);
       StreamList = ms.StreamList;
@@ -101,7 +121,7 @@ namespace Webradio.Models
     /// </summary>
     public static string SetStreamLogo(MyStream ms)
     {
-      string s = "DefaultLogo.png";
+      var s = "DefaultLogo.png";
       if (ms.Logo != "")
       {
         s = ms.Logo;

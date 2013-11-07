@@ -61,7 +61,7 @@
               <Canvas Height="150" Width="150" Background="#00000000">
                 <Rectangle Height="150" Width="150" RadiusY="20" RadiusX="20" Stroke="Black">
                   <Rectangle.Fill>
-                    <ImageBrush DataContext="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamLogo}" ImageSource="{Binding}"/>
+                    <ImageBrush DataContext="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamLogo}" ImageSource="{Binding}" />
                   </Rectangle.Fill>
                 </Rectangle>
                 <Rectangle Height="150" Width="150" RadiusY="20" RadiusX="20" Stroke="Black" Opacity="0.5">
@@ -78,7 +78,7 @@
             </StackPanel >
 
             <Label x:Name="ArtistsLabel" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom"
-               Content="[Media.AudioArtistsLabel]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
+                Content="[Media.AudioArtistsLabel]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
             <Label x:Name="Artists" Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom"
                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Artist}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
             <Label x:Name="TitleLabel" Grid.Row="2" Grid.Column="1"

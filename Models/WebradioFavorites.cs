@@ -45,13 +45,14 @@ namespace Webradio.Models
 
     #endregion
 
-    public List<FavoriteSetupInfo> FavoritList = new List<FavoriteSetupInfo>();
     public static ItemsList FavoritItems = new ItemsList();
+    public List<FavoriteSetupInfo> FavoritList = new List<FavoriteSetupInfo>();
     public string SelectedId = "";
 
     #region Propertys
 
-    private static AbstractProperty _titelProperty = new WProperty(typeof(string), string.Empty);
+    private static readonly AbstractProperty _titelProperty = new WProperty(typeof(string), string.Empty);
+    private static readonly AbstractProperty _saveImage = new WProperty(typeof(string), string.Empty);
 
     public AbstractProperty TitelProperty
     {
@@ -63,8 +64,6 @@ namespace Webradio.Models
       get { return (string)_titelProperty.GetValue(); }
       set { _titelProperty.SetValue(value); }
     }
-
-    private static AbstractProperty _saveImage = new WProperty(typeof(string), string.Empty);
 
     public AbstractProperty SaveImageProperty
     {
@@ -86,9 +85,10 @@ namespace Webradio.Models
     {
       if (SelectedId == "") return;
       FavoritList.RemoveRange(Convert.ToInt32(SelectedId), 1);
-      ImportFavorits();
+      ImportFavorits(true);
       SelectedTitel = "";
       SelectedId = "";
+      SaveImage = "Unsaved.png";
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ namespace Webradio.Models
         }
         id += 1;
       }
-      ImportFavorits();
+      ImportFavorits(false);
       SaveImage = "Unsaved.png";
     }
 
@@ -117,8 +117,9 @@ namespace Webradio.Models
     public void Add()
     {
       FavoritList.Add(new FavoriteSetupInfo("New Favorite", true, new List<string>()));
-      ImportFavorits();
+      ImportFavorits(false);
       SelectedTitel = "New Favorite";
+      SaveImage = "Unsaved.png";
     }
 
     /// <summary>
@@ -136,9 +137,13 @@ namespace Webradio.Models
       SelectedId = (string)item.AdditionalProperties[ID];
     }
 
-    private void ImportFavorits()
+    private void ImportFavorits(bool read)
     {
-      FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList;
+      if (read == true)
+      {
+        FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList;
+      }
+
       if (FavoritList == null)
       {
         FavoritList = new List<FavoriteSetupInfo> { new FavoriteSetupInfo("New Favorite", true, new List<string>()) };
@@ -148,7 +153,7 @@ namespace Webradio.Models
       int id = 0;
       foreach (FavoriteSetupInfo f in FavoritList)
       {
-        ListItem item = new ListItem();
+        var item = new ListItem();
         item.AdditionalProperties[NAME] = f.Titel;
         item.AdditionalProperties[ID] = Convert.ToString(id);
         item.SetLabel("Name", f.Titel);
@@ -172,7 +177,7 @@ namespace Webradio.Models
 
     public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
-      ImportFavorits();
+      ImportFavorits(true);
       SaveImage = "Saved.png";
     }
 

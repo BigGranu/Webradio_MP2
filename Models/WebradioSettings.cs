@@ -24,13 +24,19 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using MediaPortal.Common;
+using MediaPortal.Common.General;
+using MediaPortal.Common.Localization;
+using MediaPortal.Common.Settings;
+using MediaPortal.UI.Players.BassPlayer;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
 using Webradio.Helper_Classes;
 
 namespace Webradio.Models
 {
-  internal class WebradioSettings : IWorkflowModel
+  public class WebradioSettings : IWorkflowModel
   {
     #region Consts
 
@@ -38,8 +44,22 @@ namespace Webradio.Models
 
     #endregion
 
+    private static AbstractProperty _titelProperty = new WProperty(typeof(string), string.Empty);
+
+    public AbstractProperty TitelProperty
+    {
+      get { return _titelProperty; }
+    }
+
+    public string SelectedTitel
+    {
+      get { return (string)_titelProperty.GetValue(); }
+      set { _titelProperty.SetValue(value); }
+    }
+
     public string OfflineStreamlistVersion = string.Empty;
     public string OnlineStreamlistVersion = string.Empty;
+
 
     public void Init()
     {
@@ -53,10 +73,19 @@ namespace Webradio.Models
 
     public void StartTest()
     {
+      RegionSettings settings = ServiceRegistration.Get<ISettingsManager>().Load<RegionSettings>();
+      string reg = settings.Culture;
+      var ci = new CultureInfo(reg).EnglishName;
     }
 
     public void ClearStreamList()
     {
+      var t = "City";
+
+      SelectedTitel = "[Webradio.Home." + t + "]";
+
+
+
     }
 
     #region IWorkflowModel implementation

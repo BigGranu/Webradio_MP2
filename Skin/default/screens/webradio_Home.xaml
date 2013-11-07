@@ -55,7 +55,7 @@
               FontSize="{ThemeResource SmallFontSize}" Color="{ThemeResource EmphasisTextColor}"/>
             
             <Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
-              Content="{Binding [City]}" FontSize="{ThemeResource SmallerFontSize}" Color="{ThemeResource TextColor}"/> 
+              Content="{Binding [City]}" FontSize="{ThemeResource SmallerFontSize}" Color="{ThemeResource TextColor}"/>
           </StackPanel>
 
           <!--Logo-->
@@ -63,7 +63,12 @@
             <Canvas Height="100" Width="100" Background="#00000000">
               <Rectangle Height="100" Width="100" RadiusY="20" RadiusX="20" Stroke="Black">
                 <Rectangle.Fill>
-                  <ImageBrush DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" ImageSource="{Binding [Logo]}"/>
+                  <ImageBrush ImageSource="{Binding Path=DefaultImage}" />
+                </Rectangle.Fill>
+              </Rectangle>
+              <Rectangle Height="100" Width="100" RadiusY="20" RadiusX="20" Stroke="Black">
+                <Rectangle.Fill>
+                  <ImageBrush DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" ImageSource="{Binding [Logo]}" />
                 </Rectangle.Fill>
               </Rectangle>
               <Rectangle Height="100" Width="100" RadiusY="20" RadiusX="20" Stroke="Black" Opacity="0.5">

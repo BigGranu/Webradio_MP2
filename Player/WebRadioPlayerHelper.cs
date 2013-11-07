@@ -94,16 +94,10 @@ namespace Webradio.Player
     {
       var ms = new MemoryStream();
 
-      if (path == "")
-      {
-        var s = ServiceRegistration.Get<IPathManager>().GetPath(@"<PLUGINS>\Webradio\Skin\default\images\DefaultLogo.png");
-        Image.FromFile(s).Save(ms, ImageFormat.Png);
-      }
-      else
+      try
       {
         var imageRequest = (HttpWebRequest)WebRequest.Create(path);
         imageRequest.Credentials = CredentialCache.DefaultCredentials;
-
         using (var imageReponse = (HttpWebResponse)imageRequest.GetResponse())
         {
           using (var imageStream = imageReponse.GetResponseStream())
@@ -111,6 +105,13 @@ namespace Webradio.Player
             if (imageStream != null) Image.FromStream(imageStream).Save(ms, ImageFormat.Png);
           }
         }
+      }
+      catch (Exception)
+      {
+        var s = ServiceRegistration.Get<IPathManager>().GetPath(@"<PLUGINS>\Webradio\Skin\default\images\DefaultLogo.png");
+        Image.FromFile(s).Save(ms, ImageFormat.Png);
+        return ms.ToArray();
+        throw;
       }
       return ms.ToArray();
     }
