@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="Webradio.Home.Menu.ShowFilter">फ़िल्टर</string>
   <string name="Webradio.Home.Menu.ShowFavorites">पसंदीदा</string>
@@ -18,39 +18,4 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">घराना</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">मिटाएँ</string>
   <string name="Webradio.Dialog.Search.Header">खोजें</string>
-	<string name="Country.Afghanistan">अफ़गानिस्तान</string>
-	<string name="Country.Albania">अल्बानिया</string>
-	<string name="Country.Algeria">अल्जीरिया</string>
-	<string name="Country.Andorra">अन्डोरा</string>
-	<string name="Country.Antigua and Barbuda">एन्टिगुवा और बर्बुडा</string>
-	<string name="Country.Argentina">आर्जन्टिना</string>
-	<string name="Country.Armenia">आर्मिनिया</string>
-	<string name="Country.Australia">ओस्ट्रेलिया</string>
-	<string name="Country.Austria">ओस्ट्रिया</string>
-	<string name="Country.Azerbaijan">अज़रबेयजान</string>
-	<string name="Country.Bahrain">बहरैन</string>
-	<string name="Country.Bangladesh">बांग्लादेश</string>
-	<string name="Country.Belgium">बेल्जियम</string>
-	<string name="Country.Belize">बेलीज़</string>
-	<string name="Country.Bhutan">भूटान</string>
-	<string name="Country.Bolivia">बोलिविया</string>
-	<string name="Country.Botswana">बोत्स्वाना</string>
-	<string name="Country.Brazil">ब्राज़ील</string>
-	<string name="Country.Bulgaria">बल्गेरीया</string>
-	<string name="Country.Cambodia">कम्बोडिया</string>
-	<string name="Country.Canada">केनेडा</string>
-	<string name="Country.Chad">चाड</string>
-	<string name="Country.Chile">चिली</string>
-	<string name="Country.China">चीन</string>
-	<string name="Country.Egypt">मिस्र</string>
-	<string name="Country.Greece">यूनान</string>
-	<string name="Country.India">भारत</string>
-	<string name="Country.Indonesia">Hindeshiya</string>
-	<string name="Country.Iran">ईरान</string>
-	<string name="Country.Korea">कोरिया</string>
-	<string name="Country.Netherlands">नीदरलैंड्स</string>
-	<string name="Country.Portugal">पुर्तगाल</string>
-	<string name="Country.Russia">रूस</string>
-	<string name="Country.South Africa">दक्षिण अफ्रीका</string>
-	<string name="Country.United States of America">संयुक्त राज्य अमरीका</string>
 </resources>

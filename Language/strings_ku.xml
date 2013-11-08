@@ -1,11 +1,6 @@
-﻿<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="Webradio.Home.Menu.Search">گەڕان</string>
   <string name="Webradio.Dialog.ShowFilter.Genre">جۆر</string>
   <string name="Webradio.Dialog.Search.Header">گەڕان</string>
-	<string name="Country.Albania">Albanya</string>
-	<string name="Country.Germany">Almanya</string>
-	<string name="Country.Iran">Îran</string>
-	<string name="Country.Philippines">Fîlîpîn</string>
-	<string name="Country.Vanuatu">Vanûatû</string>
 </resources>
