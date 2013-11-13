@@ -24,9 +24,9 @@
 
 using MediaPortal.Common.Configuration.ConfigurationClasses;
 
-namespace Webradio.Settings
+namespace Webradio.Settings.Configuration
 {
-  class WebradioConfig : CustomConfigSetting
+  class WebradioConfigFilters : CustomConfigSetting
   {
   }
 }

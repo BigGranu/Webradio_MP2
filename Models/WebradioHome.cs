@@ -24,15 +24,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Xml.Serialization;
-using MediaPortal.Common;
 using MediaPortal.Common.General;
-using MediaPortal.Common.PathManager;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
@@ -168,7 +163,7 @@ namespace Webradio.Models
       CurrentStreamLogo = SetStreamLogo(ms);
       WebRadioPlayerHelper.PlayStream(ms);
       SetPlayCount(ms.ID);
-      ShoutcastListeners.Listeners();
+      StreamListeners.Listeners();
     }
 
     /// <summary>

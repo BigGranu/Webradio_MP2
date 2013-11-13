@@ -18,13 +18,13 @@
 			SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
 			TargetState="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"
 			DisplayTitle="[Webradio.Home.Menu.View]"/>-->
-		<PushNavigationTransition Id="2ABFF249-2F05-4E25-8F3E-3F2B136A40FB"
+		<!--<PushNavigationTransition Id="2ABFF249-2F05-4E25-8F3E-3F2B136A40FB"
 			Name="WebradioHome->Settings"
 			DisplayCategory="a-Webradio"
 			SortOrder="a"
 			SourceStates="263FADFE-87BE-4563-83F0-E62707891E1B"
 			TargetState="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
-			DisplayTitle="[Webradio.Home.Menu.Settings]"/>
+			DisplayTitle="[Webradio.Home.Menu.Settings]"/>-->
 		<PushNavigationTransition Id="76A060DF-0379-431D-A497-AB49B7C37F4E"
 			Name="dialogShowFilter"
 			DisplayCategory="a-Webradio"
@@ -106,7 +106,7 @@
 			TargetState="AAA7C211-93D4-40A8-96B3-2CCE6C7CB0A8"/>
 			
 		<!--                Entrys in Favorites                   -->
-		<MethodCallAction Id="F9334D42-D0C3-48B9-89A3-293BD1AADEB4"
+		<!--<MethodCallAction Id="F9334D42-D0C3-48B9-89A3-293BD1AADEB4"
 			Name="AddFavorit"
 			DisplayCategory="a-Webradio"
 			SortOrder="a"
@@ -129,6 +129,6 @@
 			DisplayTitle="[Webradio.Favorites.Save]"
 			SourceStates="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
 			ModelId="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"
-			MethodName="Save"/>
+			MethodName="Save"/>-->
   </MenuActions>
 </Workflow>

@@ -21,10 +21,10 @@
 
   <Register Location="/Models">
     <Model Id="EA3CC191-0BE5-4C8D-889F-E9C4616AB554" ClassName="Webradio.Models.WebradioHome"/>
-    <Model Id="6378BD83-BF06-4AC3-ADD7-9A4B72DA878E" ClassName="Webradio.Models.WebradioSettings"/>
+    <!--<Model Id="6378BD83-BF06-4AC3-ADD7-9A4B72DA878E" ClassName="Webradio.Models.WebradioSettings"/>-->
     <Model Id="FF29E03E-F4A9-4E21-A299-349E79010430" ClassName="Webradio.Models.WebradioFilter"/>
-    <Model Id="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94" ClassName="Webradio.Models.WebradioFavorites"/>
     
+    <Model Id="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94" ClassName="Webradio.Dialogues.WebradioDlgFavorites"/>    
     <Model Id="63F1DA3E-E87F-4478-83E7-C13966447869" ClassName="Webradio.Dialogues.WebradioDlgShowFilter"/>
     <Model Id="9723DCC8-969D-470E-B156-F4E6E639DD18" ClassName="Webradio.Dialogues.WebradioDlgShowFavorites"/>
     <Model Id="59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89" ClassName="Webradio.Dialogues.WebradioDlgDeleteFilter"/>
@@ -43,18 +43,19 @@
       DisplayLabel="[Webradio.Home.ScreenTitle]"
       WorkflowModel="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"/>
     
-    <WorkflowState Id="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
+    <!--<WorkflowState Id="5F49F6FC-32C4-48F6-85C8-2EF05598310A"
       Name="WebradioSettings" MainScreen="webradio_Settings"
       DisplayLabel="[Webradio.Settings.ScreenTitle]"
-      WorkflowModel="6378BD83-BF06-4AC3-ADD7-9A4B72DA878E"/>
+      WorkflowModel="6378BD83-BF06-4AC3-ADD7-9A4B72DA878E"/>-->
     
     <WorkflowState Id="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
       Name="WebradioFilter" MainScreen="webradio_Filter"
       DisplayLabel="[Webradio.Filter.ScreenTitle]"
       WorkflowModel="FF29E03E-F4A9-4E21-A299-349E79010430"/>
-    
-    <WorkflowState Id="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
-      Name="WebradioFavorites" MainScreen="webradio_Favorites"
+
+    <DialogState Id="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
+      Name="WebradioFavorites"
+      DialogScreen="webradio_dialogFavorites"
       DisplayLabel="[Webradio.Favorites.ScreenTitle]"
       WorkflowModel="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"/>
 
@@ -111,13 +112,20 @@
         Text="Webradio"/>
   </Register>
 
+  <!-- Content of Settings/Plugins/Webradio section -->
   <Register Location="/Configuration/Settings/Plugins/Webradio">
     <CustomConfigSetting
-        Id="Webradio"
-        Text="Webradio Settings"
-        HelpText="All settings for webradio"
-        ClassName="Webradio.Settings.WebradioConfig"
-				AdditionalData="WorkflowState=5F49F6FC-32C4-48F6-85C8-2EF05598310A,ConfAppPanel=..."/>
+      Id="Webradio_Filters"
+      Text="[Webradio.Filter.ScreenTitle]"
+      HelpText="[Webradio.Filter.Helptext]"
+      ClassName="Webradio.Settings.Configuration.WebradioConfigFilters"
+			AdditionalData="WorkflowState=F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E,ConfAppPanel=..."/>
+    <CustomConfigSetting
+      Id="Webradio_Favorites"
+      Text="[Webradio.Favorites.ScreenTitle]"
+      HelpText="[Webradio.Favorites.Helptext]"
+      ClassName="Webradio.Settings.Configuration.WebradioConfigFavorites"
+      AdditionalData="WorkflowState=3E56BA52-F982-40C3-ACD9-E88425DC7C43,ConfAppPanel=..."/>
   </Register>
 
 </Plugin>

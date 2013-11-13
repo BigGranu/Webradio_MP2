@@ -30,12 +30,14 @@
   <string name="Webradio.Settings.Version">Version</string>
   
 	<string name="Webradio.Favorites.ScreenTitle">Favorites</string>
+  <string name="Webradio.Favorites.Helptext">Manage your Favorites</string>
 	<string name="Webradio.Favorites.Add">Add</string>   
 	<string name="Webradio.Favorites.Delete">Delete</string>
 	<string name="Webradio.Favorites.Rename">Rename</string> 
 	<string name="Webradio.Favorites.Save">Save</string>
   
 	<string name="Webradio.Filter.ScreenTitle">Filter</string>
+  <string name="Webradio.Filter.Helptext">Manage your Filters</string>
   <string name="Webradio.Filter.Delete">Delete</string>
 	<string name="Webradio.Filter.Add">Add</string>
 	<string name="Webradio.Filter.Import">Import</string>

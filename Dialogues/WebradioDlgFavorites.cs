@@ -33,9 +33,9 @@ using MediaPortal.UI.Presentation.Workflow;
 using Webradio.Helper_Classes;
 using Webradio.Settings;
 
-namespace Webradio.Models
+namespace Webradio.Dialogues
 {
-  public class WebradioFavorites : IWorkflowModel
+  public class WebradioDlgFavorites : IWorkflowModel
   {
     #region Consts
 

@@ -65,17 +65,17 @@
     <Compile Include="Dialogues\WebradioDlgLoadUpdate.cs" />
     <Compile Include="Helper Classes\FavoriteSetupInfo.cs" />
     <Compile Include="Helper Classes\FilterSetupInfo.cs" />
+    <Compile Include="Helper Classes\StreamListeners.cs" />
     <Compile Include="Helper Classes\MyStream.cs" />
     <Compile Include="Dialogues\WebradioDlgDeleteFilter.cs" />
     <Compile Include="Dialogues\WebradioDlgImportFilter.cs" />
     <Compile Include="Dialogues\WebradioDlgSearchInStreams.cs" />
     <Compile Include="Dialogues\WebradioDlgShowFavorites.cs" />
     <Compile Include="Dialogues\WebradioDlgShowFilter.cs" />
-    <Compile Include="Helper Classes\ShoutcastListeners.cs" />
     <Compile Include="Helper Classes\StreamlistUpdate.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\WebradioFavorites.cs" />
+    <Compile Include="Dialogues\WebradioDlgFavorites.cs" />
     <Compile Include="Models\WebradioFilter.cs" />
     <Compile Include="Models\WebradioHome.cs" />
     <Compile Include="Models\WebradioSettings.cs" />
@@ -86,7 +86,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\FavoritesSettings.cs" />
     <Compile Include="Settings\FilterSettings.cs" />
-    <Compile Include="Settings\WebradioConfig.cs" />
+    <Compile Include="Settings\Configuration\WebradioConfigFilters.cs" />
+    <Compile Include="Settings\Configuration\WebradioConfigFavorites.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\StreamList.xml">
@@ -118,7 +119,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\default\screens\webradio_dialogImportFilter.xaml" />
-    <Content Include="Skin\default\screens\webradio_Favorites.xaml">
+    <Content Include="Skin\default\screens\webradio_dialogFavorites.xaml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Skin\default\screens\webradio_Filter.xaml" />
