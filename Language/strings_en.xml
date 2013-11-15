@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-	<string name="Webradio.MenuEntry">Webradio</string> 
-	<string name="Webradio.StateDisplayLabel">Webradio</string>
-
-	<string name="Webradio.Home.ScreenTitle">Webradio</string>
-	<string name="Webradio.Home.Menu.View">View</string>
-	<string name="Webradio.Home.Menu.ShowFilter">Filter</string>
-	<string name="Webradio.Home.Menu.ShowFavorites">Favorites</string>
-	<string name="Webradio.Home.Menu.ShowAll">Show All Streams</string>
-	<string name="Webradio.Home.Menu.Settings">Settings</string>
-	<string name="Webradio.Home.Menu.Search">Search</string>
-	<string name="Webradio.Home.Genres">Genres</string>
-	<string name="Webradio.Home.Bitrate">Bitrate</string>
-	<string name="Webradio.Home.Country">Country</string>
-	<string name="Webradio.Home.City">City</string>
-	
-	<string name="Webradio.Settings.ScreenTitle">Settings</string>
-	<string name="Webradio.Settings.Menu.Filter">Filter</string>
-	<string name="Webradio.Settings.Menu.Favorites">Favorites</string>
-
+  <string name="Webradio.MenuEntry">Webradio</string>
+  <string name="Webradio.StateDisplayLabel">Webradio</string>
+  <string name="Webradio.Home.ScreenTitle">Webradio</string>
+  <string name="Webradio.Home.Menu.View">View</string>
+  <string name="Webradio.Home.Menu.ShowFilter">Filter</string>
+  <string name="Webradio.Home.Menu.ShowFavorites">Favorites</string>
+  <string name="Webradio.Home.Menu.ShowAll">Show All Streams</string>
+  <string name="Webradio.Home.Menu.Settings">Settings</string>
+  <string name="Webradio.Home.Menu.Search">Search</string>
+  <string name="Webradio.Home.Genres">Genres</string>
+  <string name="Webradio.Home.Bitrate">Bitrate</string>
+  <string name="Webradio.Home.Country">Country</string>
+  <string name="Webradio.Home.City">City</string>
+  <string name="Webradio.Settings.ScreenTitle">Settings</string>
+  <string name="Webradio.Settings.Menu.Filter">Filter</string>
+  <string name="Webradio.Settings.Menu.Favorites">Favorites</string>
   <string name="Webradio.Settings.Streamlistupdate">Update the Streamlist</string>
   <string name="Webradio.Settings.Languageupdate">Update the Languages</string>
   <string name="Webradio.Settings.Automatically">Automatically</string>
@@ -28,50 +26,45 @@
   <string name="Webradio.Settings.Online">Version Online</string>
   <string name="Webradio.Settings.Offline">Version Offline</string>
   <string name="Webradio.Settings.Version">Version</string>
-  
-	<string name="Webradio.Favorites.ScreenTitle">Favorites</string>
+  <string name="Webradio.Favorites.ScreenTitle">Favorites</string>
   <string name="Webradio.Favorites.Helptext">Manage your Favorites</string>
-	<string name="Webradio.Favorites.Add">Add</string>   
-	<string name="Webradio.Favorites.Delete">Delete</string>
-	<string name="Webradio.Favorites.Rename">Rename</string> 
-	<string name="Webradio.Favorites.Save">Save</string>
-  
-	<string name="Webradio.Filter.ScreenTitle">Filter</string>
+  <string name="Webradio.Favorites.Add">Add</string>
+  <string name="Webradio.Favorites.Delete">Delete</string>
+  <string name="Webradio.Favorites.Rename">Rename</string>
+  <string name="Webradio.Favorites.Save">Save</string>
+  <string name="Webradio.Filter.ScreenTitle">Filter</string>
   <string name="Webradio.Filter.Helptext">Manage your Filters</string>
   <string name="Webradio.Filter.Delete">Delete</string>
-	<string name="Webradio.Filter.Add">Add</string>
-	<string name="Webradio.Filter.Import">Import</string>
-	<string name="Webradio.Filter.Clear">Clear</string>
-	<string name="Webradio.Filter.Save">Save</string>
-	<string name="Webradio.Filter.Genres">Genres</string>
-	<string name="Webradio.Filter.Bitrate">Bitrate</string>
-	<string name="Webradio.Filter.Country">Country</string>
-	<string name="Webradio.Filter.City">City</string>
-	
-	<string name="Webradio.Dialog.ShowFilter.Header">Show Filter</string>
+  <string name="Webradio.Filter.Add">Add</string>
+  <string name="Webradio.Filter.Import">Import</string>
+  <string name="Webradio.Filter.Clear">Clear</string>
+  <string name="Webradio.Filter.Save">Save</string>
+  <string name="Webradio.Filter.Genres">Genres</string>
+  <string name="Webradio.Filter.Bitrate">Bitrate</string>
+  <string name="Webradio.Filter.Country">Country</string>
+  <string name="Webradio.Filter.City">City</string>
+  <string name="Webradio.Dialog.ShowFilter.Header">Show Filter</string>
   <string name="Webradio.Dialog.ShowFilter.ShowFilter">Show My Filter</string>
   <string name="Webradio.Dialog.ShowFilter.Country">Country</string>
   <string name="Webradio.Dialog.ShowFilter.City">City</string>
   <string name="Webradio.Dialog.ShowFilter.Genre">Genre</string>
   <string name="Webradio.Dialog.ShowFilter.Bitrate">Bitrate</string>
   <string name="Webradio.Dialog.ShowFilter.Quickfilter">Temporary Quick Filter</string>
-	
-	<string name="Webradio.Dialog.ImportFilter.Header">Import Filter</string>
-
+  <string name="Webradio.Dialog.ImportFilter.Header">Import Filter</string>
   <string name="Webradio.Dialog.DeleteFilter.Header">Delete Filter</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">Delete</string>
-  
   <string name="Webradio.Dialog.ShowFavorites.Header">Show Favorites</string>
   <string name="Webradio.Dialog.ShowFavorites.SetFav">Added or Remove selected Stream from Favorites</string>
-  
-	<string name="Webradio.Dialog.ImportFavorites.Header">Import Filter</string>
-	
-	<string name="Webradio.Dialog.Search.Header">Search</string>
-
+  <string name="Webradio.Dialog.ImportFavorites.Header">Import Filter</string>
+  <string name="Webradio.Dialog.Search.Header">Search</string>
+  <string name="Webradio.Dialog.Search.Title">in Title</string>
+  <string name="Webradio.Dialog.Search.Description">in Descrption</string>
+  <string name="Webradio.Dialog.Search.All">in All</string>
+  <string name="Webradio.Dialog.Search.NoStreams">No Streams found</string>
+  <string name="Webradio.Dialog.Search.NoSearchText">Please enter a search text</string>
   <string name="Webradio.Dialog.LoadUpdate.Header">Update the Streamlist</string>
   <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">Download Complete</string>
   <string name="Webradio.Dialog.LoadUpdate.DownloadError">Download Error</string>
   <string name="Webradio.Dialog.LoadUpdate.Button">Start Update</string>
-
   <string name="Webradio.UIContributor.Listeners">Listeners:</string>
 </resources>

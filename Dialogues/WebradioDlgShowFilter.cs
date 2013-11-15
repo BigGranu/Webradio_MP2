@@ -29,6 +29,7 @@ using MediaPortal.Common;
 using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
+using MediaPortal.UI.Presentation.Screens;
 using MediaPortal.UI.Presentation.Workflow;
 using Webradio.Helper_Classes;
 using Webradio.Models;
@@ -84,6 +85,7 @@ namespace Webradio.Dialogues
       {
         SelectedFilter(item);
       }
+      ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
     }
 
     public void SelectedFilter(ListItem item)

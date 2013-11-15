@@ -29,6 +29,7 @@ using MediaPortal.Common;
 using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
+using MediaPortal.UI.Presentation.Screens;
 using MediaPortal.UI.Presentation.Workflow;
 using Webradio.Helper_Classes;
 using Webradio.Models;
@@ -45,16 +46,31 @@ namespace Webradio.Dialogues
 
     #endregion
 
-    public string SelectedStream = string.Empty;
     public bool Changed = false;
-    public List<FavoriteSetupInfo> FavoritList = new List<FavoriteSetupInfo>();
+    public ItemsList AllFavoritItems = new ItemsList();
     public ItemsList FavoritItems = new ItemsList();
+    public List<FavoriteSetupInfo> FavoritList = new List<FavoriteSetupInfo>();
+    public string SelectedStream = string.Empty;
 
     public void Init()
     {
       FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList ?? new List<FavoriteSetupInfo> { new FavoriteSetupInfo("New Favorite", true, new List<string>()) };
+      ImportAllFavorits(Convert.ToString(WebradioHome.SelectedStream.ID));
       ImportFavorits(Convert.ToString(WebradioHome.SelectedStream.ID));
       SelectedStream = WebradioHome.SelectedStream.Titel;
+    }
+
+    public void ImportAllFavorits(string id)
+    {
+      AllFavoritItems.Clear();
+      foreach (FavoriteSetupInfo f in FavoritList)
+      {
+        var item = new ListItem();
+        item.AdditionalProperties[NAME] = f.Titel;
+        item.SetLabel("Name", f.Titel);
+        item.Selected = f.Ids.Contains(id);
+        AllFavoritItems.Add(item);
+      }
     }
 
     public void ImportFavorits(string id)
@@ -62,11 +78,15 @@ namespace Webradio.Dialogues
       FavoritItems.Clear();
       foreach (FavoriteSetupInfo f in FavoritList)
       {
-        ListItem item = new ListItem();
+        if (f.Ids.Count > 0)
+        {
+        var item = new ListItem();
         item.AdditionalProperties[NAME] = f.Titel;
         item.SetLabel("Name", f.Titel);
+        item.SetLabel("Count", Convert.ToString(f.Ids.Count));
         item.Selected = f.Ids.Contains(id);
         FavoritItems.Add(item);
+        }
       }
     }
 
@@ -75,8 +95,8 @@ namespace Webradio.Dialogues
     /// </summary>
     public void SelectFavorite(ListItem item)
     {
-      List<MyStream> list = new List<MyStream>();
-      foreach (IEnumerable<MyStream> query in from f in FavoritList where f.Titel == (string)item.AdditionalProperties[NAME] select (from r in WebradioHome.StreamList where _contains(f.Ids, Convert.ToString(r.ID)) select r))
+      var list = new List<MyStream>();
+      foreach (var query in from f in FavoritList where f.Titel == (string)item.AdditionalProperties[NAME] select (from r in WebradioHome.StreamList where _contains(f.Ids, Convert.ToString(r.ID)) select r))
       {
         foreach (MyStream ms in query.Where(ms => !list.Contains(ms)))
         {
@@ -85,6 +105,7 @@ namespace Webradio.Dialogues
         break;
       }
       WebradioHome.FillItemList(list);
+      ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
     }
 
     private static bool _contains(List<string> l, string s)
@@ -93,18 +114,18 @@ namespace Webradio.Dialogues
       {
         return true;
       }
-      string[] sp = s.Split(new Char[] { ',' });
+      string[] sp = s.Split(new[] { ',' });
       return sp.Any(l.Contains);
     }
 
     public void SetFavorite(ListItem item)
     {
-      string s = (string)item.AdditionalProperties[NAME];
+      var s = (string)item.AdditionalProperties[NAME];
       string id = Convert.ToString(WebradioHome.SelectedStream.ID);
 
       foreach (FavoriteSetupInfo f in FavoritList.Where(f => f.Titel == s))
       {
-        if (item.Selected == true)
+        if (item.Selected)
         {
           item.Selected = false;
           f.Ids.Remove(id);
@@ -115,6 +136,7 @@ namespace Webradio.Dialogues
           f.Ids.Add(id);
         }
         Changed = true;
+        ImportFavorits(SelectedStream);
       }
     }
 
@@ -137,7 +159,7 @@ namespace Webradio.Dialogues
 
     public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
-      if (Changed == true)
+      if (Changed)
       {
         ServiceRegistration.Get<ISettingsManager>().Save(new FavoritesSettings(FavoritList));
       }

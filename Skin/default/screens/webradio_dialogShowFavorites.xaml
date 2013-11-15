@@ -24,7 +24,7 @@
             <RowDefinition Height="80*" />
           </Grid.RowDefinitions>
 
-          <ListView x:Name="lvFav" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{ThemeResource ContentsMenuListViewStyle}"
+          <ListView x:Name="lvFav" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{ThemeResource WebradioDlgFavoritesListViewStyle}"
             ItemsSource="{Binding Path=FavoritItems}" Grid.Column="0" Grid.Row="2">
             <ListView.Resources>
               <CommandList x:Key="Menu_Command">
@@ -46,7 +46,7 @@
               Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}" />
 
           <ListView x:Name="lvFavSelected" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{ThemeResource WebradioFilterListViewStyle}"
-            ItemsSource="{Binding Path=FavoritItems, Mode=TwoWay}" Grid.Column="2" Grid.Row="2">
+            ItemsSource="{Binding Path=AllFavoritItems, Mode=TwoWay}" Grid.Column="2" Grid.Row="2">
             <ListView.Resources>
               <CommandList x:Key="Menu_Command">
                 <Command Source="{StaticResource Model}" Path="SetFavorite">

@@ -25,9 +25,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MediaPortal.Common;
 using MediaPortal.Common.General;
 using MediaPortal.UI.Presentation.Models;
+using MediaPortal.UI.Presentation.Screens;
 using MediaPortal.UI.Presentation.Workflow;
+using Webradio.Helper_Classes;
 using Webradio.Models;
 
 namespace Webradio.Dialogues
@@ -37,6 +40,8 @@ namespace Webradio.Dialogues
     #region Consts
 
     public const string MODEL_ID_STR = "7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA";
+    public const string NO_STREAMS = "[Webradio.Dialog.Search.NoStreams]";
+    public const string ENTER_TEXT = "[Webradio.Dialog.Search.NoSearchText]";
 
     #endregion
 
@@ -55,24 +60,68 @@ namespace Webradio.Dialogues
       set { _searchTextProperty.SetValue(value); }
     }
 
+    private static AbstractProperty _infoLabelProperty = new WProperty(typeof(string), string.Empty);
+
+    public AbstractProperty InfoLabelProperty
+    {
+      get { return _infoLabelProperty; }
+    }
+
+    public static string InfoLabel
+    {
+      get { return (string)_infoLabelProperty.GetValue(); }
+      set { _infoLabelProperty.SetValue(value); }
+    }
+
     #endregion
 
     public void SearchTitel()
     {
-      var list = WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList();
-      WebradioHome.FillItemList(list);
+      if (SearchText != "")
+      {
+        FillList(WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
+      }
+      else
+      {
+        InfoLabel = ENTER_TEXT;
+      }
     }
 
     public void SearchDescription()
     {
-      var list = WebradioHome.StreamList.Where(ms => ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList();
-      WebradioHome.FillItemList(list);
+      if (SearchText != "")
+      {
+        FillList(WebradioHome.StreamList.Where(ms => ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
+      }
+      else
+      {
+        InfoLabel = ENTER_TEXT;
+      }
     }
 
     public void SearchAll()
     {
-      var list = WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0 | ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList();
-      WebradioHome.FillItemList(list);
+      if (SearchText != "")
+      {
+        FillList(WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0 | ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
+      }
+      else
+      {
+        InfoLabel = ENTER_TEXT;
+      }
+    }
+
+    public void FillList(List<MyStream> list)
+    {
+      if (list.Count > 0)
+      {
+        WebradioHome.FillItemList(list);
+        ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
+      }
+      else
+      {
+        InfoLabel = NO_STREAMS;
+      }
     }
 
     #region IWorkflowModel implementation
@@ -89,6 +138,7 @@ namespace Webradio.Dialogues
 
     public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
+      InfoLabel = "";
     }
 
     public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)

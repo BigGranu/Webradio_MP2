@@ -16,9 +16,33 @@
     </DockPanel>
   </DataTemplate>
 
+  <DataTemplate x:Key="WebradioDlgFavoritesDataTemplate" DataType="{x:Type collections:ListItem}">
+    <DockPanel x:Name="ItemControl" LastChildFill="False">
+      <Label x:Name="ItemLabelLeft" DockPanel.Dock="Center" Content="{Binding [Name]}"
+        HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="{ThemeResource SmallFontSize}"
+        Color="{ThemeResource TextColor}"/>
+      <Label x:Name="ItemLabelRight" DockPanel.Dock="Center" Content="{Binding [Count]}"
+        HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="{ThemeResource SmallFontSize}"
+        Color="{ThemeResource TextColor}"/>
+    </DockPanel>
+  </DataTemplate>
+
   <!-- ListView style to be used in the content area of the screens -->
   <Style x:Key="WebradioFilterListViewStyle" BasedOn="{ThemeResource DefaultListViewStyle}">
     <Setter Property="ItemTemplate" Value="{ThemeResource WebradioFilterItemDataTemplate}"/>
+    <Setter Property="DataStringProvider" Value="{ThemeResource ContentsMenuItemDataStringProvider}"/>
+    <Setter Property="ItemContainerStyle" Value="{ThemeResource DefaultMenuItemContainerStyle}"/>
+    <Setter Property="ItemsPanel">
+      <Setter.Value>
+        <ItemsPanelTemplate>
+          <VirtualizingStackPanel x:Name="ListItemsHost" IsItemsHost="True"/>
+        </ItemsPanelTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style x:Key="WebradioDlgFavoritesListViewStyle" BasedOn="{ThemeResource DefaultListViewStyle}">
+    <Setter Property="ItemTemplate" Value="{ThemeResource WebradioDlgFavoritesDataTemplate}"/>
     <Setter Property="DataStringProvider" Value="{ThemeResource ContentsMenuItemDataStringProvider}"/>
     <Setter Property="ItemContainerStyle" Value="{ThemeResource DefaultMenuItemContainerStyle}"/>
     <Setter Property="ItemsPanel">
