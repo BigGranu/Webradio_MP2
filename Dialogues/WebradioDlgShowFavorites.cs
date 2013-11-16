@@ -56,7 +56,7 @@ namespace Webradio.Dialogues
     {
       FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList ?? new List<FavoriteSetupInfo> { new FavoriteSetupInfo("New Favorite", true, new List<string>()) };
       ImportAllFavorits(Convert.ToString(WebradioHome.SelectedStream.ID));
-      ImportFavorits(Convert.ToString(WebradioHome.SelectedStream.ID));
+      ImportFavorits();
       SelectedStream = WebradioHome.SelectedStream.Titel;
     }
 
@@ -71,9 +71,10 @@ namespace Webradio.Dialogues
         item.Selected = f.Ids.Contains(id);
         AllFavoritItems.Add(item);
       }
+      AllFavoritItems.FireChange();
     }
 
-    public void ImportFavorits(string id)
+    public void ImportFavorits()
     {
       FavoritItems.Clear();
       foreach (FavoriteSetupInfo f in FavoritList)
@@ -84,10 +85,10 @@ namespace Webradio.Dialogues
         item.AdditionalProperties[NAME] = f.Titel;
         item.SetLabel("Name", f.Titel);
         item.SetLabel("Count", Convert.ToString(f.Ids.Count));
-        item.Selected = f.Ids.Contains(id);
         FavoritItems.Add(item);
         }
       }
+      FavoritItems.FireChange();
     }
 
     /// <summary>
@@ -136,7 +137,7 @@ namespace Webradio.Dialogues
           f.Ids.Add(id);
         }
         Changed = true;
-        ImportFavorits(SelectedStream);
+        ImportFavorits();
       }
     }
 

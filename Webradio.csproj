@@ -54,6 +54,14 @@
       <HintPath>C:\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\BassLibraries\Bass.Net.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="MediaPortal.Common, Version=2.0.0.1309, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Team MediaPortal\MP2-Client\MediaPortal.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="MediaPortal.UI, Version=2.0.0.1309, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Team MediaPortal\MP2-Client\MediaPortal.UI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -131,14 +139,6 @@
     <Content Include="Todo.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\dierk_000\Downloads\MediaPortal-2-WiP_Alpha3\MediaPortal\Source\Core\MediaPortal.Common\MediaPortal.Common.csproj">
-      <Project>{ECF060E7-CAA1-4466-851F-F80B857641EA}</Project>
-      <Name>MediaPortal.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\dierk_000\Downloads\MediaPortal-2-WiP_Alpha3\MediaPortal\Source\Core\MediaPortal.UI\MediaPortal.UI.csproj">
-      <Project>{52E587D0-A274-44DA-8846-8EEAF5414923}</Project>
-      <Name>MediaPortal.UI</Name>
-    </ProjectReference>
     <ProjectReference Include="C:\Users\dierk_000\Downloads\MediaPortal-2-WiP_Alpha3\MediaPortal\Source\UI\Players\BassPlayer\BassPlayer.csproj">
       <Project>{1A980621-B711-4235-B98C-C4276D6FA9FD}</Project>
       <Name>BassPlayer</Name>

@@ -21,14 +21,14 @@
             <ColumnDefinition Width="20*" />
           </Grid.ColumnDefinitions>
           <Grid.RowDefinitions>
-            <RowDefinition Height="6*" />
-            <RowDefinition Height="88*" />
-            <RowDefinition Height="6*" />
+            <RowDefinition Height="7*" />
+            <RowDefinition Height="86*" />
+            <RowDefinition Height="7*" />
           </Grid.RowDefinitions>
 
-          <TextBox Grid.ColumnSpan="2" Grid.Row="0" Margin="10,4,10,4" Text="{Binding Path=Titel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+          <TextBox Grid.ColumnSpan="2" Grid.Row="0" Margin="10,2,10,2" Text="{Binding Path=Titel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-          <Button Grid.Column="2" Grid.Row="0" Margin="10,2,10,2" Content="[Webradio.Favorites.Rename]" Command="{Command Rename}" Style="{ThemeResource DefaultButtonStyle}"
+          <Button Grid.Column="2" Grid.Row="0" Margin="10,0,10,0" Content="[Webradio.Favorites.Rename]" Command="{Command Rename}" Style="{ThemeResource DefaultButtonStyle}"
 					HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
           <Image Grid.Column="3" Grid.Row="0" Stretch="Uniform" Source="{Binding Path=SaveImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"/>
@@ -48,11 +48,11 @@
             </ListView.Resources>
           </ListView>
 
-          <Button Grid.Column="1" Grid.Row="2" Margin="10,2,10,2" Content="[Webradio.Favorites.Add]" Command="{Command Add}" Style="{ThemeResource DefaultButtonStyle}"
+          <Button Grid.Column="1" Grid.Row="2" Margin="10,0,10,0" Content="[Webradio.Favorites.Add]" Command="{Command Add}" Style="{ThemeResource DefaultButtonStyle}"
 					HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-          <Button Grid.Column="2" Grid.Row="2" Margin="10,2,10,2" Content="[Webradio.Favorites.Delete]" Command="{Command Delete}" Style="{ThemeResource DefaultButtonStyle}"
+          <Button Grid.Column="2" Grid.Row="2" Margin="10,0,10,0" Content="[Webradio.Favorites.Delete]" Command="{Command Delete}" Style="{ThemeResource DefaultButtonStyle}"
 					HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-          <Button Grid.Column="3" Grid.Row="2" Margin="10,2,10,2" Content="[Webradio.Favorites.Save]" Command="{Command Save}" Style="{ThemeResource DefaultButtonStyle}"
+          <Button Grid.Column="3" Grid.Row="2" Margin="10,0,10,0" Content="[Webradio.Favorites.Save]" Command="{Command Save}" Style="{ThemeResource DefaultButtonStyle}"
 					HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </Grid>
       </DockPanel>
