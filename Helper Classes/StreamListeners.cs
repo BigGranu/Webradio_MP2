@@ -28,6 +28,7 @@ using System.Net;
 using System.Timers;
 using MediaPortal.Common;
 using MediaPortal.Common.Logging;
+using MediaPortal.UI.Presentation.Players;
 using Webradio.Models;
 
 namespace Webradio.Helper_Classes
@@ -40,66 +41,95 @@ namespace Webradio.Helper_Classes
     {
       string listeners = "unknown";
 
-      var request = (HttpWebRequest)WebRequest.Create(WebradioHome.SelectedStream.URL);
-      request.UserAgent = "Mozilla";
-      request.Credentials = CredentialCache.DefaultCredentials;
-
-      try
+      if (!ServiceRegistration.Get<IPlayerContextManager>().IsAudioContextActive & ATimer.Enabled)
       {
-        using (WebResponse response = request.GetResponse())
+        ATimer.Enabled = false;
+        return;
+      }
+
+      if (WebradioHome.SelectedStream.tag1 != "")
+      {
+        var link = WebradioHome.SelectedStream.URL;
+
+        if (WebradioHome.SelectedStream.tag1 == "Ru")
         {
-          if (response.ContentType != "text/html") return;
+          link = WebradioHome.SelectedStream.URL.Substring(0, WebradioHome.SelectedStream.URL.LastIndexOf("/", StringComparison.Ordinal));
+        }
 
-          using (Stream stream = response.GetResponseStream())
+        var request = (HttpWebRequest)WebRequest.Create(link);
+        request.UserAgent = "Mozilla";
+        request.Credentials = CredentialCache.DefaultCredentials;
+
+        try
+        {
+          using (WebResponse response = request.GetResponse())
           {
-            if (stream == null) return;
-
-            using (var reader = new StreamReader(stream))
+            if (response.ContentType == "text/html" | response.ContentType == "text/xml")
             {
-              string s = reader.ReadToEnd();
-
-              if (s.Contains("<title>SHOUTcast") & s.Contains("Server is currently up"))
+              using (Stream stream = response.GetResponseStream())
               {
-                var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
-                listeners = s.Substring(i, s.IndexOf(" ", i, StringComparison.Ordinal) - i);
+                if (stream == null) return;
+
+                using (var reader = new StreamReader(stream))
+                {
+                  string s = reader.ReadToEnd();
+
+                  //SHOUTcast
+                  if (WebradioHome.SelectedStream.tag1 == "ShC" & s.Contains("Server is currently up"))
+                  {
+                    var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
+                    listeners = s.Substring(i, s.IndexOf(" ", i, StringComparison.Ordinal) - i);
+                  }
+
+                  //Icecast
+                  if (WebradioHome.SelectedStream.tag1 == "ScC")
+                  {
+                  }
+
+                  //Ru
+                  if (WebradioHome.SelectedStream.tag1 == "Ru")
+                  {
+                    var search = WebradioHome.SelectedStream.URL.Substring(WebradioHome.SelectedStream.URL.LastIndexOf("/", StringComparison.Ordinal)) + ",";
+                    var i = s.IndexOf(",,,", s.LastIndexOf(search, StringComparison.Ordinal), StringComparison.Ordinal) + 3;
+                    listeners = s.Substring(i, s.IndexOf(",", i, StringComparison.Ordinal) - i);
+                  }
+
+                  //Streamerspanel
+                  if (WebradioHome.SelectedStream.tag1 == "StP" & s.Contains("Server is currently up"))
+                  {
+                    var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
+                    listeners = s.Substring(i, s.IndexOf(" ", i, StringComparison.Ordinal) - i);
+                  }
+
+                  //Steamcast
+                  if (WebradioHome.SelectedStream.tag1 == "StC")
+                  {
+                    var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
+                    listeners = s.Substring(i, s.IndexOf(" ", i, StringComparison.Ordinal) - i);
+                  }
+
+                  if (listeners == "unknown")
+                  {
+                    ATimer.Stop();
+                    WebradioHome.CurrentListeners = "unknown";
+                    return;
+                  }
+
+                  WebradioHome.CurrentListeners = listeners;
+                  ATimer.Elapsed += OnTimedEvent;
+                  ATimer.Interval = 10000;
+                  ATimer.Start();
+                }
               }
-
-              if (s.Contains("<title>Icecast"))
-              {
-
-              }
-
-              if (s.Contains("<TITLE>Steamcast"))
-              {
-
-              }
-
-              if (s.Contains("<title>Streamerspanel") & s.Contains("Server is currently up"))
-              {
-                var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
-                listeners = s.Substring(i, s.IndexOf(" ", i, StringComparison.Ordinal) - i);
-              }
-
-              if (listeners == "unknown")
-              {
-                ATimer.Stop();
-                WebradioHome.CurrentListeners = "unknown";
-                return;
-              }
-
-              WebradioHome.CurrentListeners = listeners;
-              ATimer.Elapsed += OnTimedEvent;
-              ATimer.Interval = 60000;
-              ATimer.Start();
             }
           }
         }
-      }
-      catch (WebException ex)
-      {
-        ATimer.Stop();
-        WebradioHome.CurrentListeners = "unknown";
-        ServiceRegistration.Get<ILogger>().Warn("WebradioStreamListeners: Error reading Streamdata '{0}'", ex);
+        catch (WebException ex)
+        {
+          ATimer.Stop();
+          WebradioHome.CurrentListeners = "unknown";
+          ServiceRegistration.Get<ILogger>().Warn("WebradioStreamListeners: Error reading Streamdata '{0}'", ex);
+        }
       }
     }
 
@@ -107,6 +137,5 @@ namespace Webradio.Helper_Classes
     {
       Listeners();
     }
-
   }
 }

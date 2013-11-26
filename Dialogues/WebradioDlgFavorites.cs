@@ -85,7 +85,7 @@ namespace Webradio.Dialogues
     {
       if (SelectedId == "") return;
       FavoritList.RemoveRange(Convert.ToInt32(SelectedId), 1);
-      ImportFavorits(true);
+      FillFavoritItems();
       SelectedTitel = "";
       SelectedId = "";
       SaveImage = "Unsaved.png";
@@ -139,7 +139,7 @@ namespace Webradio.Dialogues
 
     private void ImportFavorits(bool read)
     {
-      if (read == true)
+      if (read)
       {
         FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList;
       }
@@ -148,7 +148,11 @@ namespace Webradio.Dialogues
       {
         FavoritList = new List<FavoriteSetupInfo> { new FavoriteSetupInfo("New Favorite", true, new List<string>()) };
       }
+      FillFavoritItems();
+    }
 
+    private void FillFavoritItems()
+    {
       FavoritItems.Clear();
       int id = 0;
       foreach (FavoriteSetupInfo f in FavoritList)

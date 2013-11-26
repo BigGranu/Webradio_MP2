@@ -31,6 +31,7 @@ using MediaPortal.Common.General;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
+using Webradio.Dialogues;
 using Webradio.Helper_Classes;
 using Webradio.Player;
 
@@ -72,7 +73,7 @@ namespace Webradio.Models
       // if no Streamlist found, load a new List from Web
       if (!StreamlistUpdate.StreamListExists())
       {
-        StreamlistUpdate.MakeUpdate();
+        WebradioDlgLoadUpdate.LoadSenderListe();
         return; // Update runs async
       }
 

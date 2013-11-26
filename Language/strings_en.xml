@@ -17,6 +17,7 @@
   <string name="Webradio.Settings.ScreenTitle">Settings</string>
   <string name="Webradio.Settings.Menu.Filter">Filter</string>
   <string name="Webradio.Settings.Menu.Favorites">Favorites</string>
+  <string name="Webradio.Settings.Updates">Updates</string>
   <string name="Webradio.Settings.Streamlistupdate">Update the Streamlist</string>
   <string name="Webradio.Settings.Languageupdate">Update the Languages</string>
   <string name="Webradio.Settings.Automatically">Automatically</string>

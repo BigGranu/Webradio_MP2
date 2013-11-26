@@ -81,11 +81,11 @@ namespace Webradio.Dialogues
       {
         if (f.Ids.Count > 0)
         {
-        var item = new ListItem();
-        item.AdditionalProperties[NAME] = f.Titel;
-        item.SetLabel("Name", f.Titel);
-        item.SetLabel("Count", Convert.ToString(f.Ids.Count));
-        FavoritItems.Add(item);
+          var item = new ListItem();
+          item.AdditionalProperties[NAME] = f.Titel;
+          item.SetLabel("Name", f.Titel);
+          item.SetLabel("Count", Convert.ToString(f.Ids.Count));
+          FavoritItems.Add(item);
         }
       }
       FavoritItems.FireChange();

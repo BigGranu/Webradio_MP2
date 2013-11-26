@@ -31,7 +31,7 @@ namespace Webradio.Settings
   /// <summary>
   /// Favorites settings class.
   /// </summary>
-  class FavoritesSettings
+  internal class FavoritesSettings
   {
     /// <summary>
     /// Constructor

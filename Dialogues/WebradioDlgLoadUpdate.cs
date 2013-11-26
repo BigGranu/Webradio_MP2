@@ -37,7 +37,7 @@ using Webradio.Models;
 
 namespace Webradio.Dialogues
 {
-  internal class WebradioDlgLoadUpdate : IWorkflowModel
+  public class WebradioDlgLoadUpdate : IWorkflowModel
   {
     #region Consts
 
@@ -50,14 +50,14 @@ namespace Webradio.Dialogues
 
     #region Propertys
 
-    private AbstractProperty _updateProgressProperty = new WProperty(typeof(int), 0);
+    private static AbstractProperty _updateProgressProperty = new WProperty(typeof(int), 0);
 
     public AbstractProperty UpdateProgressProperty
     {
       get { return _updateProgressProperty; }
     }
 
-    public int UpdateProgress
+    public static int UpdateProgress
     {
       get { return (int)_updateProgressProperty.GetValue(); }
       set { _updateProgressProperty.SetValue(value); }
@@ -78,7 +78,7 @@ namespace Webradio.Dialogues
 
     #endregion
 
-    public void LoadSenderListe()
+    public static void LoadSenderListe()
     {
       try
       {
@@ -93,7 +93,7 @@ namespace Webradio.Dialogues
       }
     }
 
-    public void Finish()
+    public static void Finish()
     {
       WebradioHome homeModel = ServiceRegistration.Get<IWorkflowManager>().GetModel(WebradioHome.MODEL_ID) as WebradioHome;
       if (homeModel == null)
@@ -103,13 +103,13 @@ namespace Webradio.Dialogues
       ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
     }
 
-    private void DownloadCompleted(object sender, AsyncCompletedEventArgs e)
+    private static void DownloadCompleted(object sender, AsyncCompletedEventArgs e)
     {
       Info = e.Error == null ? DOWNLOAD_COMPLETE : DOWNLOAD_ERROR;
       Finish();
     }
 
-    private void DownloadStatusChanged(object sender, DownloadProgressChangedEventArgs e)
+    private static void DownloadStatusChanged(object sender, DownloadProgressChangedEventArgs e)
     {
       UpdateProgress = e.ProgressPercentage;
     }

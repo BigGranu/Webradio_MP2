@@ -27,8 +27,11 @@ using System.IO;
 using System.Net;
 using MediaPortal.Common;
 using MediaPortal.Common.PathManager;
+using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.Workflow;
+using Webradio.Dialogues;
 using Webradio.Models;
+using Webradio.Settings;
 
 namespace Webradio.Helper_Classes
 {
@@ -36,7 +39,7 @@ namespace Webradio.Helper_Classes
   {
     public static string WebradioDataFolder = ServiceRegistration.Get<IPathManager>().GetPath(@"<DATA>\Webradio");
     public static string StreamListFile = Path.Combine(WebradioDataFolder, "StreamList.xml");
-    public static string StreamlistServerPath = "http://www.biggranu.de/_StreamList.xml";
+    public static string StreamlistServerPath = "http://www.biggranu.de/StreamList.xml";
 
     public static bool StreamListExists()
     {
@@ -88,9 +91,16 @@ namespace Webradio.Helper_Classes
 
     public static void CheckUpdate()
     {
-      if (OfflineVersion() < OnlineVersion())
+      if (OfflineVersion() >= OnlineVersion()) return;
+      var mode = ServiceRegistration.Get<ISettingsManager>().Load<WebradioSettings>().StreamlistUpdateMode;
+      if (mode == "Manually")
       {
         MakeUpdate();
+      }
+
+      if (mode == "Automatically")
+      {
+        WebradioDlgLoadUpdate.LoadSenderListe();
       }
     }
 
