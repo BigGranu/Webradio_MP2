@@ -31,7 +31,7 @@ using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Screens;
 using MediaPortal.UI.Presentation.Workflow;
-using Webradio.Helper_Classes;
+using Webradio.Helper;
 using Webradio.Models;
 using Webradio.Settings;
 
@@ -55,20 +55,24 @@ namespace Webradio.Dialogues
     public void Init()
     {
       FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList ?? new List<FavoriteSetupInfo> { new FavoriteSetupInfo("New Favorite", true, new List<string>()) };
-      ImportAllFavorits(Convert.ToString(WebradioHome.SelectedStream.ID));
-      ImportFavorits();
-      SelectedStream = WebradioHome.SelectedStream.Titel;
+      if (WebradioHome.SelectedStream.Title != "")
+      {
+        ImportAllFavorits(WebradioHome.SelectedStream);
+        SelectedStream = WebradioHome.SelectedStream.Title;
+      }     
+      ImportFavorits();      
     }
 
-    public void ImportAllFavorits(string id)
+    public void ImportAllFavorits(MyStream stream)
     {
       AllFavoritItems.Clear();
+
       foreach (FavoriteSetupInfo f in FavoritList)
       {
         var item = new ListItem();
         item.AdditionalProperties[NAME] = f.Titel;
         item.SetLabel("Name", f.Titel);
-        item.Selected = f.Ids.Contains(id);
+        item.Selected = f.StreamUrls.Contains(stream.StreamUrls[0].StreamUrl);
         AllFavoritItems.Add(item);
       }
       AllFavoritItems.FireChange();
@@ -79,12 +83,12 @@ namespace Webradio.Dialogues
       FavoritItems.Clear();
       foreach (FavoriteSetupInfo f in FavoritList)
       {
-        if (f.Ids.Count > 0)
+        if (f.StreamUrls.Count > 0)
         {
           var item = new ListItem();
           item.AdditionalProperties[NAME] = f.Titel;
           item.SetLabel("Name", f.Titel);
-          item.SetLabel("Count", Convert.ToString(f.Ids.Count));
+          item.SetLabel("Count", Convert.ToString(f.StreamUrls.Count));
           FavoritItems.Add(item);
         }
       }
@@ -97,7 +101,7 @@ namespace Webradio.Dialogues
     public void SelectFavorite(ListItem item)
     {
       var list = new List<MyStream>();
-      foreach (var query in from f in FavoritList where f.Titel == (string)item.AdditionalProperties[NAME] select (from r in WebradioHome.StreamList where _contains(f.Ids, Convert.ToString(r.ID)) select r))
+      foreach (var query in from f in FavoritList where f.Titel == (string)item.AdditionalProperties[NAME] select (from r in WebradioHome.StreamList where _contains(f.StreamUrls, r.StreamUrls[0].StreamUrl) select r))
       {
         foreach (MyStream ms in query.Where(ms => !list.Contains(ms)))
         {
@@ -122,19 +126,20 @@ namespace Webradio.Dialogues
     public void SetFavorite(ListItem item)
     {
       var s = (string)item.AdditionalProperties[NAME];
-      string id = Convert.ToString(WebradioHome.SelectedStream.ID);
+
+      string url = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl;
 
       foreach (FavoriteSetupInfo f in FavoritList.Where(f => f.Titel == s))
       {
         if (item.Selected)
         {
           item.Selected = false;
-          f.Ids.Remove(id);
+          f.StreamUrls.Remove(url);
         }
         else
         {
           item.Selected = true;
-          f.Ids.Add(id);
+          f.StreamUrls.Add(url);
         }
         Changed = true;
         ImportFavorits();

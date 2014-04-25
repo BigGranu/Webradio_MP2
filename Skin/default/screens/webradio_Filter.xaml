@@ -92,7 +92,7 @@
             HorizontalAlignment="Stretch" VerticalAlignment="Top" Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}"/>
 
           <!-- Bitrate -->
-          <Label Grid.Column="3" Grid.Row="1" Content="[Webradio.Filter.Bitrate]" HorizontalContentAlignment="Center" 
+          <Label Grid.Column="3" Grid.Row="1" Content="[Webradio.Filter.StreamUrls[0].Bitrate]" HorizontalContentAlignment="Center" 
             HorizontalAlignment="Stretch" Margin="5,0,5,0" VerticalAlignment="Center" Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallerFontSize}"/>
           <ListView x:Name="lvBitrate" Grid.Column="3" Grid.Row="2" Margin="10" 
             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 

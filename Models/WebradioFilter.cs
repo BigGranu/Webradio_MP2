@@ -31,7 +31,7 @@ using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
-using Webradio.Helper_Classes;
+using Webradio.Helper;
 using Webradio.Settings;
 
 namespace Webradio.Models
@@ -369,7 +369,7 @@ namespace Webradio.Models
 
       if (StreamList.Count == 0)
       {
-        StreamList = MyStreams.Read(StreamlistUpdate.StreamListFile).StreamList;
+        StreamList = MyStreams.Read(StreamlistUpdate.StreamListFile).Streams;
       }
 
       foreach (MyStream ms in StreamList)
@@ -387,9 +387,9 @@ namespace Webradio.Models
         }
 
         // Add Bitrate
-        if (ms.Bitrate != "")
+        if (ms.StreamUrls[0].Bitrate != "")
         {
-          string br = ms.Bitrate.Replace(" kbps", "").PadLeft(3, '0');
+          string br = ms.StreamUrls[0].Bitrate.Replace(" kbps", "").PadLeft(3, '0');
           if (!BitrList.Contains(br))
           {
             BitrList.Add(br);
@@ -527,7 +527,7 @@ namespace Webradio.Models
             _contains(SelectedCountrys, r.Country)
             && _contains(SelectedCitys, r.City)
             && _contains2(SelectedGenres, r.Genres)
-            && _contains(SelectedBitrate, r.Bitrate)
+            && _contains(SelectedBitrate, r.StreamUrls[0].Bitrate)
           select r;
         x = query.Count<MyStream>();
       }

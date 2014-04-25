@@ -31,7 +31,7 @@ using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Screens;
 using MediaPortal.UI.Presentation.Workflow;
-using Webradio.Helper_Classes;
+using Webradio.Helper;
 using Webradio.Models;
 using Webradio.Settings;
 
@@ -98,7 +98,7 @@ namespace Webradio.Dialogues
             Contains(f.Countrys, r.Country)
             && Contains(f.Citys, r.City)
             && Contains2(f.Genres, r.Genres)
-            && Contains(f.Bitrate, r.Bitrate)
+            && Contains(f.Bitrate, r.StreamUrls[0].Bitrate)
           select r))
       {
         foreach (MyStream ms in query.Where(ms => !list.Contains(ms)))
@@ -144,7 +144,7 @@ namespace Webradio.Dialogues
     public void QuickBitrate()
     {
       _quick = true;
-      CreateFilters(s => !string.IsNullOrWhiteSpace(s.Bitrate), s => s.Bitrate, filterValue => s => s.Bitrate == filterValue);
+      CreateFilters(s => !string.IsNullOrWhiteSpace(s.StreamUrls[0].Bitrate), s => s.StreamUrls[0].Bitrate, filterValue => s => s.StreamUrls[0].Bitrate == filterValue);
     }
 
     public void QuickGenre()

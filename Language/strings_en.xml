@@ -11,7 +11,7 @@
   <string name="Webradio.Home.Menu.Settings">Settings</string>
   <string name="Webradio.Home.Menu.Search">Search</string>
   <string name="Webradio.Home.Genres">Genres</string>
-  <string name="Webradio.Home.Bitrate">Bitrate</string>
+  <string name="Webradio.Home.StreamUrls[0].Bitrate">Bitrate</string>
   <string name="Webradio.Home.Country">Country</string>
   <string name="Webradio.Home.City">City</string>
   <string name="Webradio.Settings.ScreenTitle">Settings</string>
@@ -41,7 +41,7 @@
   <string name="Webradio.Filter.Clear">Clear</string>
   <string name="Webradio.Filter.Save">Save</string>
   <string name="Webradio.Filter.Genres">Genres</string>
-  <string name="Webradio.Filter.Bitrate">Bitrate</string>
+  <string name="Webradio.Filter.StreamUrls[0].Bitrate">Bitrate</string>
   <string name="Webradio.Filter.Country">Country</string>
   <string name="Webradio.Filter.City">City</string>
   <string name="Webradio.Dialog.ShowFilter.Header">Show Filter</string>
@@ -49,7 +49,7 @@
   <string name="Webradio.Dialog.ShowFilter.Country">Country</string>
   <string name="Webradio.Dialog.ShowFilter.City">City</string>
   <string name="Webradio.Dialog.ShowFilter.Genre">Genre</string>
-  <string name="Webradio.Dialog.ShowFilter.Bitrate">Bitrate</string>
+  <string name="Webradio.Dialog.ShowFilter.StreamUrls[0].Bitrate">Bitrate</string>
   <string name="Webradio.Dialog.ShowFilter.Quickfilter">Temporary Quick Filter</string>
   <string name="Webradio.Dialog.ImportFilter.Header">Import Filter</string>
   <string name="Webradio.Dialog.DeleteFilter.Header">Delete Filter</string>

@@ -30,7 +30,7 @@ using MediaPortal.Common.General;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Screens;
 using MediaPortal.UI.Presentation.Workflow;
-using Webradio.Helper_Classes;
+using Webradio.Helper;
 using Webradio.Models;
 
 namespace Webradio.Dialogues
@@ -79,7 +79,7 @@ namespace Webradio.Dialogues
     {
       if (SearchText != "")
       {
-        FillList(WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
+        FillList(WebradioHome.StreamList.Where(ms => ms.Title.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
       }
       else
       {
@@ -91,7 +91,7 @@ namespace Webradio.Dialogues
     {
       if (SearchText != "")
       {
-        FillList(WebradioHome.StreamList.Where(ms => ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
+        FillList(WebradioHome.StreamList.Where(ms => ms.Descriptions[0].Txt.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
       }
       else
       {
@@ -103,7 +103,7 @@ namespace Webradio.Dialogues
     {
       if (SearchText != "")
       {
-        FillList(WebradioHome.StreamList.Where(ms => ms.Titel.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0 | ms.Description.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
+        FillList(WebradioHome.StreamList.Where(ms => ms.Title.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0 | ms.Descriptions[0].Txt.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
       }
       else
       {

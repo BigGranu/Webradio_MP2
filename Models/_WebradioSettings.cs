@@ -32,7 +32,7 @@ using MediaPortal.Common.Settings;
 using MediaPortal.UI.Players.BassPlayer;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
-using Webradio.Helper_Classes;
+using Webradio.Helper;
 
 namespace Webradio.Models
 {

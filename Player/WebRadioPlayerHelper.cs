@@ -36,7 +36,7 @@ using MediaPortal.Common.Services.ResourceAccess.RawUrlResourceProvider;
 using MediaPortal.Common.SystemResolver;
 using MediaPortal.UI.Presentation.Players;
 using MediaPortal.UiComponents.Media.Models;
-using Webradio.Helper_Classes;
+using Webradio.Helper;
 
 namespace Webradio.Player
 {
@@ -75,11 +75,11 @@ namespace Webradio.Player
       aspects[MediaAspect.ASPECT_ID] = mediaAspect = new MediaItemAspect(MediaAspect.Metadata);
       aspects[AudioAspect.ASPECT_ID] = new MediaItemAspect(AudioAspect.Metadata); // AudioAspect needs to be contained for player mapping
 
-      providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_RESOURCE_ACCESSOR_PATH, RawUrlResourceProvider.ToProviderResourcePath(stream.URL).Serialize());
+      providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_RESOURCE_ACCESSOR_PATH, RawUrlResourceProvider.ToProviderResourcePath(stream.StreamUrls[0].StreamUrl).Serialize());
       providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_SYSTEM_ID, ServiceRegistration.Get<ISystemResolver>().LocalSystemId);
 
       mediaAspect.SetAttribute(MediaAspect.ATTR_MIME_TYPE, WEBRADIO_MIMETYPE);
-      mediaAspect.SetAttribute(MediaAspect.ATTR_TITLE, stream.Titel);
+      mediaAspect.SetAttribute(MediaAspect.ATTR_TITLE, stream.Title);
 
       MediaItemAspect.SetAttribute(aspects, ThumbnailLargeAspect.ATTR_THUMBNAIL, ImageFromLogo(stream.Logo));
 
