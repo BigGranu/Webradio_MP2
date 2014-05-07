@@ -419,7 +419,7 @@ namespace Webradio.Models
       {
         ListItem item = new ListItem();
         item.AdditionalProperties[NAME] = s;
-        item.SetLabel("Name", s);
+        item.SetLabel("Name", "[Country." + s + "]");
         if (SelectedCountrys.Contains(s))
         {
           item.Selected = true;
