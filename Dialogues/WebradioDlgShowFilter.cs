@@ -49,6 +49,7 @@ namespace Webradio.Dialogues
     public static ItemsList FilterItems = new ItemsList();
     public static List<FilterSetupInfo> FilterList = new List<FilterSetupInfo>();
     private bool _quick = false;
+    private string _typ = string.Empty;
 
     protected delegate Func<MyStream, bool> CreateFilterDelegate(string filter);
 
@@ -59,6 +60,7 @@ namespace Webradio.Dialogues
 
     public void ShowFilter()
     {
+      _typ = string.Empty;
       _quick = false;
       FilterList = ServiceRegistration.Get<ISettingsManager>().Load<FilterSettings>().FilterSetupList;
       if (FilterList == null)
@@ -132,23 +134,27 @@ namespace Webradio.Dialogues
     public void QuickCountry()
     {
       _quick = true;
+      _typ = "country";
       CreateFilters(s => !string.IsNullOrWhiteSpace(s.Country), s => s.Country, filterValue => s => s.Country == filterValue);
     }
 
     public void QuickCity()
     {
+      _typ = string.Empty;
       _quick = true;
       CreateFilters(s => !string.IsNullOrWhiteSpace(s.City), s => s.City, filterValue => s => s.City == filterValue);
     }
 
     public void QuickBitrate()
     {
+      _typ = string.Empty;
       _quick = true;
       CreateFilters(s => !string.IsNullOrWhiteSpace(s.StreamUrls[0].Bitrate), s => s.StreamUrls[0].Bitrate, filterValue => s => s.StreamUrls[0].Bitrate == filterValue);
     }
 
     public void QuickGenre()
     {
+      _typ = string.Empty;
       _quick = true;
       CreateFiltersMulti(s => !string.IsNullOrWhiteSpace(s.Genres), s => s.Genres.Split(','), filterValue => s => Contains2(s.Genres.Split(','), filterValue));
     }
@@ -162,7 +168,14 @@ namespace Webradio.Dialogues
       {
         ListItem item = new ListItem();
         item.AdditionalProperties[KEY_FILTER] = createFilterDelegate(s); // Creates a dynamic filter like s => s.Titel="Radio 100"
-        item.SetLabel("Name", s);
+        if (_typ == "country")
+        {
+          item.SetLabel("Name", "[Country." + s + "]");
+        }
+        else
+        {
+          item.SetLabel("Name", s);
+        }        
         FilterItems.Add(item);
       }
       FilterItems.FireChange();
@@ -176,7 +189,14 @@ namespace Webradio.Dialogues
       {
         ListItem item = new ListItem();
         item.AdditionalProperties[KEY_FILTER] = s;
-        item.SetLabel("Name", s);
+        if (_typ == "country")
+        {
+          item.SetLabel("Name", "[Country." + s + "]");
+        }
+        else
+        {
+          item.SetLabel("Name", s);
+        }        
         FilterItems.Add(item);
       }
       FilterItems.FireChange();

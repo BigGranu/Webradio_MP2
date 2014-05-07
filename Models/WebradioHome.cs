@@ -99,9 +99,7 @@ namespace Webradio.Models
         var item = new ListItem();
         item.AdditionalProperties[STREAM_URL] = ms.StreamUrls[0].StreamUrl;
         item.SetLabel("Name", ms.Title);
-       // _test = "[Country." + ms.Country + "]";
         item.SetLabel("Country", "[Country." + ms.Country + "]");
-       // item.SetLabel("Country", ms.Country);
         item.SetLabel("City", ms.City);
         item.SetLabel("Genres", ms.Genres);
         item.SetLabel("Bitrate", ms.StreamUrls[0].Bitrate);
