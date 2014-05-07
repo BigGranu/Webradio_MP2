@@ -18,4 +18,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">Жанр</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">Обриши</string>
   <string name="Webradio.Dialog.Search.Header">Потражи</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">Скидање је завршено</string>
 </resources>

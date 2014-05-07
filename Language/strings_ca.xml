@@ -18,4 +18,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">Gènere</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">Suprimeix</string>
   <string name="Webradio.Dialog.Search.Header">Cerca</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">La baixada s\'ha Completat</string>
 </resources>

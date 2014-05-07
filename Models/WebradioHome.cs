@@ -44,6 +44,7 @@ namespace Webradio.Models
     public const string MODEL_ID_STR = "EA3CC191-0BE5-4C8D-889F-E9C4616AB554";
     public static Guid MODEL_ID = new Guid(MODEL_ID_STR);
     public const string STREAM_URL = "StreamUrl";
+    private static string _test = "";
 
     #endregion
 
@@ -98,7 +99,9 @@ namespace Webradio.Models
         var item = new ListItem();
         item.AdditionalProperties[STREAM_URL] = ms.StreamUrls[0].StreamUrl;
         item.SetLabel("Name", ms.Title);
-        item.SetLabel("Country", ms.Country);
+       // _test = "[Country." + ms.Country + "]";
+        item.SetLabel("Country", "[Country." + ms.Country + "]");
+       // item.SetLabel("Country", ms.Country);
         item.SetLabel("City", ms.City);
         item.SetLabel("Genres", ms.Genres);
         item.SetLabel("Bitrate", ms.StreamUrls[0].Bitrate);

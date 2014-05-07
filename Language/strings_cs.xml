@@ -18,4 +18,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">Žánr</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">Odstranit</string>
   <string name="Webradio.Dialog.Search.Header">Hledat</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">Stahování dokončeno</string>
 </resources>

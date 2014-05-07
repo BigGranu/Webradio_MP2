@@ -18,4 +18,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">ז\'אנר</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">מחק</string>
   <string name="Webradio.Dialog.Search.Header">חיפוש</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">הורדה הושלמה</string>
 </resources>

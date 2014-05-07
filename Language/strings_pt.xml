@@ -18,4 +18,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">Género:</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">Eliminar</string>
   <string name="Webradio.Dialog.Search.Header">Procurar</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">Download completo</string>
 </resources>

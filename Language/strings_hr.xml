@@ -2,10 +2,13 @@
 <resources>
   <string name="Webradio.Home.Menu.Settings">Postavke</string>
   <string name="Webradio.Home.Menu.Search">Traži</string>
+  <string name="Webradio.Home.City">Grad</string>
   <string name="Webradio.Settings.ScreenTitle">Postavke</string>
   <string name="Webradio.Favorites.Add">Dodaj</string>
   <string name="Webradio.Filter.Add">Dodaj</string>
   <string name="Webradio.Filter.Clear">Vedro</string>
+  <string name="Webradio.Filter.City">Grad</string>
+  <string name="Webradio.Dialog.ShowFilter.City">Grad</string>
   <string name="Webradio.Dialog.ShowFilter.Genre">Žanr</string>
   <string name="Webradio.Dialog.Search.Header">Traži</string>
 </resources>

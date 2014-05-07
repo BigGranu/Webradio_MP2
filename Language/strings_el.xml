@@ -18,4 +18,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">Είδος</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">Διαγραφή</string>
   <string name="Webradio.Dialog.Search.Header">Αναζήτηση</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">Η μεταφόρτωση ολοκληρώθηκε</string>
 </resources>
