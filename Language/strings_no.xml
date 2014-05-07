@@ -19,4 +19,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">Sjanger</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">Slett</string>
   <string name="Webradio.Dialog.Search.Header">Søk</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">Nedlasting ferdig</string>
 </resources>

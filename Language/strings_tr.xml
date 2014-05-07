@@ -18,4 +18,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">Genre</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">Sil</string>
   <string name="Webradio.Dialog.Search.Header">Ara</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">İndirme Tamamlandı</string>
 </resources>

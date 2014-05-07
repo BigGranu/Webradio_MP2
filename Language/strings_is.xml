@@ -18,4 +18,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">Flokkun</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">Eyða</string>
   <string name="Webradio.Dialog.Search.Header">Leita</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">Niðurhali lokið</string>
 </resources>

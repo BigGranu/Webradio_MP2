@@ -32,7 +32,7 @@ using MediaPortal.Common.Logging;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Screens;
 using MediaPortal.UI.Presentation.Workflow;
-using Webradio.Helper_Classes;
+using Webradio.Helper;
 using Webradio.Models;
 
 namespace Webradio.Dialogues

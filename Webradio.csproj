@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
@@ -16,6 +16,7 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -32,6 +33,7 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -42,21 +44,22 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Webradio</RootNamespace>
     <AssemblyName>Webradio</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bass.Net">
-      <HintPath>..\MediaPortal-2-EXP_20131117\MediaPortal-2-EXP_20131117\MediaPortal\Packages\BASS.NET.2.4.10.3\lib\net40\Bass.Net.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\BassLibraries\Bass.Net.dll</HintPath>
     </Reference>
     <Reference Include="BassPlayer">
-      <HintPath>..\MediaPortal-2-EXP_20131117\MediaPortal-2-EXP_20131117\MediaPortal\Bin\MP2-Client\bin\x86\Debug\Plugins\BassPlayer\BassPlayer.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\BassPlayer\BassPlayer.dll</HintPath>
     </Reference>
     <Reference Include="Media">
-      <HintPath>..\MediaPortal-2-EXP_20131117\MediaPortal-2-EXP_20131117\MediaPortal\Bin\MP2-Client\bin\x86\Debug\Plugins\Media\Media.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Team MediaPortal\MP2-Client\Plugins\Media\Media.dll</HintPath>
     </Reference>
     <Reference Include="MediaPortal.Common, Version=2.0.0.1309, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -78,16 +81,15 @@
   <ItemGroup>
     <Compile Include="Dialogues\WebradioDlgLoadUpdate.cs" />
     <Compile Include="Dialogues\WebradioDlgSettingsStreamlistUpdate.cs" />
-    <Compile Include="Helper Classes\FavoriteSetupInfo.cs" />
-    <Compile Include="Helper Classes\FilterSetupInfo.cs" />
-    <Compile Include="Helper Classes\StreamListeners.cs" />
-    <Compile Include="Helper Classes\MyStream.cs" />
+    <Compile Include="Helper\FilterSetupInfo.cs" />
+    <Compile Include="Helper\StreamListeners.cs" />
+    <Compile Include="Helper\MyStreams.cs" />
     <Compile Include="Dialogues\WebradioDlgDeleteFilter.cs" />
     <Compile Include="Dialogues\WebradioDlgImportFilter.cs" />
     <Compile Include="Dialogues\WebradioDlgSearchInStreams.cs" />
     <Compile Include="Dialogues\WebradioDlgShowFavorites.cs" />
     <Compile Include="Dialogues\WebradioDlgShowFilter.cs" />
-    <Compile Include="Helper Classes\StreamlistUpdate.cs">
+    <Compile Include="Helper\StreamlistUpdate.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dialogues\WebradioDlgFavorites.cs" />
@@ -108,7 +110,6 @@
     <Content Include="Data\StreamList.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Language\strings_de.xml" />
     <Content Include="Language\strings_en.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

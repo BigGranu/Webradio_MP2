@@ -18,4 +18,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">Жанр</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">Удалить</string>
   <string name="Webradio.Dialog.Search.Header">Поиск</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">Загрузка Завершана</string>
 </resources>

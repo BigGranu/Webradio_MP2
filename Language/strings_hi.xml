@@ -18,4 +18,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">घराना</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">मिटाएँ</string>
   <string name="Webradio.Dialog.Search.Header">खोजें</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">डाउनलोड पूर्ण</string>
 </resources>

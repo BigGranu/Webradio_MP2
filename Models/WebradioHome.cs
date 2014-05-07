@@ -32,7 +32,7 @@ using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
 using Webradio.Dialogues;
-using Webradio.Helper_Classes;
+using Webradio.Helper;
 using Webradio.Player;
 
 namespace Webradio.Models
@@ -43,7 +43,8 @@ namespace Webradio.Models
 
     public const string MODEL_ID_STR = "EA3CC191-0BE5-4C8D-889F-E9C4616AB554";
     public static Guid MODEL_ID = new Guid(MODEL_ID_STR);
-    public const string STREAM_ID = "StreamID";
+    public const string STREAM_URL = "StreamUrl";
+    private static string _test = "";
 
     #endregion
 
@@ -80,7 +81,7 @@ namespace Webradio.Models
       DefaultImage = "DefaultLogo.png";
       StreamlistUpdate.CheckUpdate();
       MyStreams ms = MyStreams.Read(StreamlistUpdate.StreamListFile);
-      StreamList = ms.StreamList;
+      StreamList = ms.Streams;
       FillItemList(StreamList);
     }
 
@@ -96,15 +97,17 @@ namespace Webradio.Models
         indx += 1;
         SetFallbackValues(ms);
         var item = new ListItem();
-        item.AdditionalProperties[STREAM_ID] = ms.ID;
-        item.SetLabel("Name", ms.Titel);
-        item.SetLabel("Country", ms.Country);
+        item.AdditionalProperties[STREAM_URL] = ms.StreamUrls[0].StreamUrl;
+        item.SetLabel("Name", ms.Title);
+       // _test = "[Country." + ms.Country + "]";
+        item.SetLabel("Country", "[Country." + ms.Country + "]");
+       // item.SetLabel("Country", ms.Country);
         item.SetLabel("City", ms.City);
         item.SetLabel("Genres", ms.Genres);
-        item.SetLabel("Bitrate", ms.Bitrate);
+        item.SetLabel("Bitrate", ms.StreamUrls[0].Bitrate);
         item.SetLabel("Logo", SetStreamLogo(ms));
         item.SetLabel("ImageSrc", SetStreamLogo(ms));
-        item.SetLabel("Description", ms.Description);
+        item.SetLabel("Description", ms.Descriptions[0].Txt);
         item.SetLabel("Indx", indx + "/" + list.Count);
 
         AllRadioStreams.Add(item);
@@ -138,9 +141,9 @@ namespace Webradio.Models
       {
         ms.City = "unknown";
       }
-      if (ms.Bitrate == "")
+      if (ms.StreamUrls[0].Bitrate == "")
       {
-        ms.Bitrate = "unknown";
+        ms.StreamUrls[0].Bitrate = "unknown";
       }
       if (ms.Genres == "")
       {
@@ -163,7 +166,6 @@ namespace Webradio.Models
     {
       CurrentStreamLogo = SetStreamLogo(ms);
       WebRadioPlayerHelper.PlayStream(ms);
-      SetPlayCount(ms.ID);
       StreamListeners.Listeners();
     }
 
@@ -172,28 +174,16 @@ namespace Webradio.Models
     /// </summary>
     public void SelectStream(ListItem item)
     {
-      SelectedStream = GetStreamById((int)item.AdditionalProperties[STREAM_ID]);
+      SelectedStream = GetStream((string)item.AdditionalProperties[STREAM_URL]);
       Play(SelectedStream);
-    }
-
-    /// <summary>
-    /// Set the Playcount of playing Stream +1
-    /// </summary>
-    private static void SetPlayCount(int id)
-    {
-      foreach (var f in StreamList.Where(f => f.ID == id))
-      {
-        f.PlayCount += 1;
-      }
-      MyStreams.Write(StreamlistUpdate.StreamListFile, new MyStreams(StreamList));
     }
 
     /// <summary>
     /// Get the Stream of selected ID
     /// </summary>
-    public MyStream GetStreamById(int id)
+    public MyStream GetStream(string url)
     {
-      return StreamList.FirstOrDefault(f => f.ID == id);
+      return StreamList.FirstOrDefault(f => f.StreamUrls[0].StreamUrl == url);
     }
 
     #region IWorkflowModel implementation
@@ -245,44 +235,44 @@ namespace Webradio.Models
 
   #region Read/Write
 
-  public class MyStreams
-  {
-    public string Version = "1";
-    public List<MyStream> StreamList = new List<MyStream>();
+  //public class MyStreams
+  //{
+  //  public string Version = "1";
+  //  public List<MyStream> StreamList = new List<MyStream>();
 
-    private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(MyStreams));
-    private static FileStream _stream;
+  //  private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(MyStreams));
+  //  private static FileStream _stream;
 
-    public MyStreams()
-    {
-    }
+  //  public MyStreams()
+  //  {
+  //  }
 
-    public MyStreams(List<MyStream> streams)
-    {
-      StreamList = streams;
-    }
+  //  public MyStreams(List<MyStream> streams)
+  //  {
+  //    StreamList = streams;
+  //  }
 
-    public MyStreams(List<MyStream> streams, string version)
-    {
-      Version = version;
-      StreamList = streams;
-    }
+  //  public MyStreams(List<MyStream> streams, string version)
+  //  {
+  //    Version = version;
+  //    StreamList = streams;
+  //  }
 
-    public static MyStreams Read(string xmlFile)
-    {
-      _stream = new FileStream(xmlFile, FileMode.Open);
-      var s = (MyStreams)Serializer.Deserialize(_stream);
-      _stream.Close();
-      return s;
-    }
+  //  public static MyStreams Read(string xmlFile)
+  //  {
+  //    _stream = new FileStream(xmlFile, FileMode.Open);
+  //    var s = (MyStreams)Serializer.Deserialize(_stream);
+  //    _stream.Close();
+  //    return s;
+  //  }
 
-    public static void Write(string xmlFile, Object obj)
-    {
-      _stream = new FileStream(xmlFile, FileMode.Create);
-      Serializer.Serialize(_stream, obj);
-      _stream.Close();
-    }
-  }
+  //  public static void Write(string xmlFile, Object obj)
+  //  {
+  //    _stream = new FileStream(xmlFile, FileMode.Create);
+  //    Serializer.Serialize(_stream, obj);
+  //    _stream.Close();
+  //  }
+  //}
 
   #endregion
 }

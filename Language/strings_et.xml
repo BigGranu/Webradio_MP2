@@ -18,4 +18,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">Žanr</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">Kustuta</string>
   <string name="Webradio.Dialog.Search.Header">Otsi</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">Allalaadimine lõpetatud</string>
 </resources>

@@ -18,4 +18,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">Genre</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">Hapus</string>
   <string name="Webradio.Dialog.Search.Header">Cari</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">Pengunduhan Selesai</string>
 </resources>

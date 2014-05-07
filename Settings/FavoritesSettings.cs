@@ -24,7 +24,7 @@
 
 using System.Collections.Generic;
 using MediaPortal.Common.Settings;
-using Webradio.Helper_Classes;
+using Webradio.Helper;
 
 namespace Webradio.Settings
 {
@@ -54,5 +54,26 @@ namespace Webradio.Settings
     /// </summary>
     [Setting(SettingScope.User, null)]
     public List<FavoriteSetupInfo> FavoritesSetupList { get; set; }
+  }
+
+  public class FavoriteSetupInfo
+  {
+    public string Titel;
+    public bool Active;
+    public List<string> StreamUrls;
+
+    public FavoriteSetupInfo()
+    {
+      Titel = "";
+      Active = true;
+      StreamUrls = new List<string>();
+    }
+
+    public FavoriteSetupInfo(string titel, bool active, List<string> streamUrls)
+    {
+      Titel = titel;
+      Active = active;
+      StreamUrls = streamUrls;
+    }
   }
 }

@@ -13,4 +13,5 @@
   <string name="Webradio.Dialog.ShowFilter.Genre">流派</string>
   <string name="Webradio.Dialog.DeleteFilter.Delete">删除</string>
   <string name="Webradio.Dialog.Search.Header">搜索</string>
+  <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">下载完成</string>
 </resources>

@@ -39,7 +39,7 @@
             <Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
               Content="{Binding [Genres]}" FontSize="{ThemeResource SmallerFontSize}" Color="{ThemeResource TextColor}"/>
             
-            <Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Bitrate]" 
+            <Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.StreamUrls[0].Bitrate]" 
               FontSize="{ThemeResource SmallFontSize}" Color="{ThemeResource EmphasisTextColor}"/>
             
             <Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 

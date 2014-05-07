@@ -24,7 +24,7 @@
 
 using System.Collections.Generic;
 using MediaPortal.Common.Settings;
-using Webradio.Helper_Classes;
+using Webradio.Helper;
 
 namespace Webradio.Settings
 {
