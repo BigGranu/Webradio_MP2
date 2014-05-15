@@ -27,7 +27,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using MediaPortal.Common;
 using MediaPortal.Common.General;
+using MediaPortal.Common.Localization;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
@@ -105,12 +107,51 @@ namespace Webradio.Models
         item.SetLabel("Bitrate", ms.StreamUrls[0].Bitrate);
         item.SetLabel("Logo", SetStreamLogo(ms));
         item.SetLabel("ImageSrc", SetStreamLogo(ms));
-        item.SetLabel("Description", ms.Descriptions[0].Txt);
+        item.SetLabel("Description", SetStreamDescription(ms));
+        item.SetLabel("Language", "[Language." + ms.Language + "]");
         item.SetLabel("Indx", indx + "/" + list.Count);
 
         AllRadioStreams.Add(item);
       }
       AllRadioStreams.FireChange();
+    }
+
+    /// <summary>
+    /// Set the Description by Language
+    /// </summary>
+    public static string SetStreamDescription(MyStream ms)
+    {
+      var desc = "";
+      var localization = ServiceRegistration.Get<ILocalization>().CurrentCulture.Name.Substring(0, 2);
+
+      // is the original language available
+      foreach (Description d in ms.Descriptions)
+      {
+        if (d.Languagecode.Contains(localization))
+        {
+          return d.Txt;
+        }
+      }
+
+      // is English available
+      foreach (Description d in ms.Descriptions)
+      {
+        if (d.Languagecode.Contains("en") & d.Txt != "")
+        {
+          return d.Txt;
+        }
+      }
+
+      // is any language available
+      foreach (Description d in ms.Descriptions)
+      {
+        if (d.Txt != "")
+        {
+          return d.Txt;
+        }
+      }
+
+      return desc;
     }
 
     /// <summary>

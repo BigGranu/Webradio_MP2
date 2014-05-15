@@ -16,8 +16,8 @@
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="10*" />
-            <RowDefinition Height="50*" />
-            <RowDefinition Height="30*" />
+            <RowDefinition Height="60*" />
+            <RowDefinition Height="20*" />
             <RowDefinition Height="10*" />
           </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
@@ -56,6 +56,12 @@
             
             <Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
               Content="{Binding [City]}" FontSize="{ThemeResource SmallerFontSize}" Color="{ThemeResource TextColor}"/>
+
+            <Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Language]"
+              FontSize="{ThemeResource SmallFontSize}" Color="{ThemeResource EmphasisTextColor}"/>
+
+            <Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}"
+              Content="{Binding [Language]}" FontSize="{ThemeResource SmallerFontSize}" Color="{ThemeResource TextColor}"/>
           </StackPanel>
 
           <!--Logo-->

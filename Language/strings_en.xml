@@ -11,9 +11,10 @@
 	<string name="Webradio.Home.Menu.Settings">Settings</string>
 	<string name="Webradio.Home.Menu.Search">Search</string>
 	<string name="Webradio.Home.Genres">Genres</string>
-	<string name="Webradio.Home.StreamUrls[0].Bitrate">Bitrate</string>
+	<string name="Webradio.Home.Bitrate">Bitrate</string>
 	<string name="Webradio.Home.Country">Country</string>
 	<string name="Webradio.Home.City">City</string>
+	<string name="Webradio.Home.Language">Language</string>
 	<string name="Webradio.Settings.ScreenTitle">Settings</string>
 	<string name="Webradio.Settings.Menu.Filter">Filter</string>
 	<string name="Webradio.Settings.Menu.Favorites">Favorites</string>
