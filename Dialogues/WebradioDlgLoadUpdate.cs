@@ -99,8 +99,8 @@ namespace Webradio.Dialogues
       if (homeModel == null)
         return;
 
-      homeModel.Init();
       ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
+      homeModel.Init();     
     }
 
     private static void DownloadCompleted(object sender, AsyncCompletedEventArgs e)

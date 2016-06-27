@@ -24,294 +24,267 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Xml.Serialization;
 using MediaPortal.Common;
 using MediaPortal.Common.General;
 using MediaPortal.Common.Localization;
+using MediaPortal.Extensions.UserServices.FanArtService.Client.Models;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
+using MediaPortal.UI.SkinEngine.Controls.ImageSources;
 using Webradio.Dialogues;
 using Webradio.Helper;
 using Webradio.Player;
 
 namespace Webradio.Models
 {
-  public class WebradioHome : IWorkflowModel
-  {
-    #region Consts
-
-    public const string MODEL_ID_STR = "EA3CC191-0BE5-4C8D-889F-E9C4616AB554";
-    public static Guid MODEL_ID = new Guid(MODEL_ID_STR);
-    public const string STREAM_URL = "StreamUrl";
-    private static string _test = "";
-
-    #endregion
-
-    public static string CurrentStreamLogo = string.Empty;
-    public static string CurrentListeners = string.Empty;
-    public static MyStream SelectedStream = new MyStream();
-    public static ItemsList AllRadioStreams = new ItemsList();
-    public static List<MyStream> StreamList = new List<MyStream>();
-
-    private static readonly AbstractProperty _defaultImage = new WProperty(typeof(string), string.Empty);
-
-    public AbstractProperty DefaultImageProperty
+    public class WebradioHome : IWorkflowModel
     {
-      get { return _defaultImage; }
-    }
+        public const string RES_MUSICINFO = "[MusikInfo]";
 
-    public string DefaultImage
-    {
-      get { return (string)_defaultImage.GetValue(); }
-      set { _defaultImage.SetValue(value); }
-    }
+        public static Guid MODEL_ID = new Guid(MODEL_ID_STR);
+        public static Guid MODEL_ID_MUSICINFO = new Guid("6518F915-7F7D-4E60-B24C-8BCA0681DDFE");
+        public static Guid ACTION_ID_MUSICINFO = new Guid("269521C1-A9C1-4664-A923-055C30FF015F");
 
-    public int C = 0;
+        public static string CurrentStreamLogo = string.Empty;
+        public static string CurrentListeners = string.Empty;
+        public static MyStream SelectedStream = new MyStream();
+        public static ItemsList AllRadioStreams = new ItemsList();
+        public static List<MyStream> StreamList = new List<MyStream>();
 
-    public void Init()
-    {
-      // if no Streamlist found, load a new List from Web
-      if (!StreamlistUpdate.StreamListExists())
-      {
-        WebradioDlgLoadUpdate.LoadSenderListe();
-        return; // Update runs async
-      }
+        private static readonly AbstractProperty _defaultImage = new WProperty(typeof(string), string.Empty);
 
-      DefaultImage = "DefaultLogo.png";
-      StreamlistUpdate.CheckUpdate();
-      MyStreams ms = MyStreams.Read(StreamlistUpdate.StreamListFile);
-      StreamList = ms.Streams;
-      FillItemList(StreamList);
-    }
+        public int C = 0;
 
-    /// <summary>
-    /// Fill the List and set the Labels
-    /// </summary>
-    public static void FillItemList(List<MyStream> list)
-    {
-      AllRadioStreams.Clear();
-      int indx = 0;
-      foreach (MyStream ms in list)
-      {
-        indx += 1;
-        SetFallbackValues(ms);
-        var item = new ListItem();
-        item.AdditionalProperties[STREAM_URL] = ms.StreamUrls[0].StreamUrl;
-        item.SetLabel("Name", ms.Title);
-        item.SetLabel("Country", "[Country." + ms.Country + "]");
-        item.SetLabel("City", ms.City);
-        item.SetLabel("Genres", ms.Genres);
-        item.SetLabel("Bitrate", ms.StreamUrls[0].Bitrate);
-        item.SetLabel("Logo", SetStreamLogo(ms));
-        item.SetLabel("ImageSrc", SetStreamLogo(ms));
-        item.SetLabel("Description", SetStreamDescription(ms));
-        item.SetLabel("Language", "[Language." + ms.Language + "]");
-        item.SetLabel("Indx", indx + "/" + list.Count);
+        public AbstractProperty DefaultImageProperty => _defaultImage;
 
-        AllRadioStreams.Add(item);
-      }
-      AllRadioStreams.FireChange();
-    }
-
-    /// <summary>
-    /// Set the Description by Language
-    /// </summary>
-    public static string SetStreamDescription(MyStream ms)
-    {
-      var desc = "";
-      var localization = ServiceRegistration.Get<ILocalization>().CurrentCulture.Name.Substring(0, 2);
-
-      // is the original language available
-      foreach (Description d in ms.Descriptions)
-      {
-        if (d.Languagecode.Contains(localization))
+        public string DefaultImage
         {
-          return d.Txt;
+            get { return (string)_defaultImage.GetValue(); }
+            set { _defaultImage.SetValue(value); }
         }
-      }
 
-      // is English available
-      foreach (Description d in ms.Descriptions)
-      {
-        if (d.Languagecode.Contains("en") & d.Txt != "")
+        public void Init()
         {
-          return d.Txt;
-        }
-      }
+            ClearFanart();
 
-      // is any language available
-      foreach (Description d in ms.Descriptions)
-      {
-        if (d.Txt != "")
+            // if no Streamlist found, load a new List from Web
+            if (!StreamlistUpdate.StreamListExists())
+            {
+                WebradioDlgLoadUpdate.LoadSenderListe();
+                return; // Update runs async
+            }
+
+            DefaultImage = "DefaultLogo.png";
+            StreamlistUpdate.CheckUpdate();
+            var ms = MyStreams.Read(StreamlistUpdate.StreamListFile);
+            StreamList = ms.Streams;
+            FillItemList(StreamList);
+        }
+
+        /// <summary>
+        /// Fill the List and set the Labels
+        /// </summary>
+        public static void FillItemList(List<MyStream> list)
         {
-          return d.Txt;
+            AllRadioStreams.Clear();
+            var indx = 0;
+            foreach (var ms in list)
+            {
+                indx += 1;
+                SetFallbackValues(ms);
+                var item = new ListItem { AdditionalProperties = { [STREAM_URL] = ms.StreamUrls[0].StreamUrl } };
+                item.SetLabel("Name", ms.Title);
+                item.SetLabel("Country", "[Country." + ms.Country + "]");
+                item.SetLabel("CountryCode", ms.Country);
+                item.SetLabel("City", ms.City);
+                item.SetLabel("Genres", ms.Genres);
+                item.SetLabel("Bitrate", ms.StreamUrls[0].Bitrate);
+                item.SetLabel("StreamProvider", ms.StreamUrls[0].Provider);
+                item.SetLabel("StreamFrequenz", ms.StreamUrls[0].Frequenz);
+                item.SetLabel("StreamMode", ms.StreamUrls[0].Mode);
+                item.SetLabel("StreamName", ms.StreamUrls[0].Name);
+                item.SetLabel("StreamTyp", ms.StreamUrls[0].Typ);
+                item.SetLabel("Logo", SetStreamLogo(ms));
+                item.SetLabel("ImageSrc", SetStreamLogo(ms));
+                item.SetLabel("Description", SetStreamDescription(ms));
+                item.SetLabel("Language", "[Language." + ms.Language + "]");
+                item.SetLabel("LanguageCode", ms.Language);
+                item.SetLabel("Indx", indx + "/" + list.Count);
+
+                AllRadioStreams.Add(item);
+            }
+            AllRadioStreams.FireChange();
         }
-      }
 
-      return desc;
+        /// <summary>
+        /// Set the Description by Language
+        /// </summary>
+        public static string SetStreamDescription(MyStream ms)
+        {
+            var desc = "";
+            var localization = ServiceRegistration.Get<ILocalization>().CurrentCulture.Name.Substring(0, 2);
+
+            // is the original language available
+            foreach (var d in ms.Descriptions)
+            {
+                if (d.Languagecode.Contains(localization))
+                {
+                    return d.Txt;
+                }
+            }
+
+            // is English available
+            foreach (var d in ms.Descriptions)
+            {
+                if (d.Languagecode.Contains("en") & d.Txt != "")
+                {
+                    return d.Txt;
+                }
+            }
+
+            // is any language available
+            foreach (var d in ms.Descriptions)
+            {
+                if (d.Txt != "")
+                {
+                    return d.Txt;
+                }
+            }
+
+            return desc;
+        }
+
+        /// <summary>
+        /// Set the Logo of a Stream or use the DefaultLogo
+        /// </summary>
+        public static string SetStreamLogo(MyStream ms)
+        {
+            var s = "DefaultLogo.png";
+            if (ms.Logo != "")
+            {
+                s = ms.Logo;
+            }
+            return s;
+        }
+
+        /// <summary>
+        /// Set the FallbackValues of the current Stream
+        /// </summary>
+        public static void SetFallbackValues(MyStream ms)
+        {
+            if (ms.Country == "")
+            {
+                ms.Country = "unknown";
+            }
+            if (ms.City == "")
+            {
+                ms.City = "unknown";
+            }
+            if (ms.StreamUrls[0].Bitrate == "")
+            {
+                ms.StreamUrls[0].Bitrate = "unknown";
+            }
+            if (ms.Genres == "")
+            {
+                ms.Genres = "unknown";
+            }
+        }
+
+        /// <summary>
+        /// Reset the List and show all Streams
+        /// </summary>
+        public void ShowAllStreams()
+        {
+            FillItemList(StreamList);
+        }
+
+        /// <summary>
+        /// Play the Stream with the current StreamID and Set the Playcount +1
+        /// </summary>
+        private void Play(MyStream ms)
+        {
+            CurrentStreamLogo = SetStreamLogo(ms);
+            WebRadioPlayerHelper.PlayStream(ms);
+            StreamListeners.Listeners();
+        }
+
+        /// <summary>
+        /// Get the selected Stream
+        /// </summary>
+        public void SelectStream(ListItem item)
+        {
+            SelectedStream = GetStream((string)item.AdditionalProperties[STREAM_URL]);
+            Play(SelectedStream);
+        }
+
+        /// <summary>
+        /// Get the Stream of selected ID
+        /// </summary>
+        public MyStream GetStream(string url)
+        {
+            return StreamList.FirstOrDefault(f => f.StreamUrls[0].StreamUrl == url);
+        }
+
+        private void ClearFanart()
+        {
+            var fanArtBgModel = (FanArtBackgroundModel)ServiceRegistration.Get<IWorkflowManager>().GetModel(FanArtBackgroundModel.FANART_MODEL_ID);
+            if (fanArtBgModel != null)
+            {
+                fanArtBgModel.ImageSource = new MultiImageSource { UriSource = null };
+            }
+        }
+
+        #region Consts
+
+        public const string MODEL_ID_STR = "EA3CC191-0BE5-4C8D-889F-E9C4616AB554";
+
+        public const string STREAM_URL = "StreamUrl";
+
+        #endregion
+
+        #region IWorkflowModel implementation
+
+        public Guid ModelId => new Guid(MODEL_ID_STR);
+
+        public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
+        {
+            return true;
+        }
+
+        public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
+        {
+            Init();
+        }
+
+        public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
+        {
+        }
+
+        public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
+        {
+            // We could initialize some data here when changing the media navigation state
+        }
+
+        public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
+        {
+        }
+
+        public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
+        {
+            ClearFanart();
+        }
+
+        public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
+        {
+        }
+
+        public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
+        {
+            return ScreenUpdateMode.AutoWorkflowManager;
+        }
+
+        #endregion
     }
-
-    /// <summary>
-    /// Set the Logo of a Stream or use the DefaultLogo
-    /// </summary>
-    public static string SetStreamLogo(MyStream ms)
-    {
-      var s = "DefaultLogo.png";
-      if (ms.Logo != "")
-      {
-        s = ms.Logo;
-      }
-      return s;
-    }
-
-    /// <summary>
-    /// Set the FallbackValues of the current Stream
-    /// </summary>
-    public static void SetFallbackValues(MyStream ms)
-    {
-      if (ms.Country == "")
-      {
-        ms.Country = "unknown";
-      }
-      if (ms.City == "")
-      {
-        ms.City = "unknown";
-      }
-      if (ms.StreamUrls[0].Bitrate == "")
-      {
-        ms.StreamUrls[0].Bitrate = "unknown";
-      }
-      if (ms.Genres == "")
-      {
-        ms.Genres = "unknown";
-      }
-    }
-
-    /// <summary>
-    /// Reset the List and show all Streams
-    /// </summary>
-    public void ShowAllStreams()
-    {
-      FillItemList(StreamList);
-    }
-
-    /// <summary>
-    /// Play the Stream with the current StreamID and Set the Playcount +1
-    /// </summary>
-    private void Play(MyStream ms)
-    {
-      CurrentStreamLogo = SetStreamLogo(ms);
-      WebRadioPlayerHelper.PlayStream(ms);
-      StreamListeners.Listeners();
-    }
-
-    /// <summary>
-    /// Get the selected Stream
-    /// </summary>
-    public void SelectStream(ListItem item)
-    {
-      SelectedStream = GetStream((string)item.AdditionalProperties[STREAM_URL]);
-      Play(SelectedStream);
-    }
-
-    /// <summary>
-    /// Get the Stream of selected ID
-    /// </summary>
-    public MyStream GetStream(string url)
-    {
-      return StreamList.FirstOrDefault(f => f.StreamUrls[0].StreamUrl == url);
-    }
-
-    #region IWorkflowModel implementation
-
-    public Guid ModelId
-    {
-      get { return new Guid(MODEL_ID_STR); }
-    }
-
-    public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
-    {
-      return true;
-    }
-
-    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
-    {
-      Init();
-    }
-
-    public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
-    {
-    }
-
-    public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
-    {
-      // We could initialize some data here when changing the media navigation state
-    }
-
-    public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
-    {
-    }
-
-    public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
-    {
-      // Todo: select any or the Last ListItem
-    }
-
-    public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
-    {
-    }
-
-    public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
-    {
-      return ScreenUpdateMode.AutoWorkflowManager;
-    }
-
-    #endregion
-  }
-
-  #region Read/Write
-
-  //public class MyStreams
-  //{
-  //  public string Version = "1";
-  //  public List<MyStream> StreamList = new List<MyStream>();
-
-  //  private static readonly XmlSerializer Serializer = new XmlSerializer(typeof(MyStreams));
-  //  private static FileStream _stream;
-
-  //  public MyStreams()
-  //  {
-  //  }
-
-  //  public MyStreams(List<MyStream> streams)
-  //  {
-  //    StreamList = streams;
-  //  }
-
-  //  public MyStreams(List<MyStream> streams, string version)
-  //  {
-  //    Version = version;
-  //    StreamList = streams;
-  //  }
-
-  //  public static MyStreams Read(string xmlFile)
-  //  {
-  //    _stream = new FileStream(xmlFile, FileMode.Open);
-  //    var s = (MyStreams)Serializer.Deserialize(_stream);
-  //    _stream.Close();
-  //    return s;
-  //  }
-
-  //  public static void Write(string xmlFile, Object obj)
-  //  {
-  //    _stream = new FileStream(xmlFile, FileMode.Create);
-  //    Serializer.Serialize(_stream, obj);
-  //    _stream.Close();
-  //  }
-  //}
-
-  #endregion
 }

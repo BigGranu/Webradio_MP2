@@ -12,12 +12,12 @@
       <Model x:Key="Model" Id="D8998340-DA2D-42be-A29B-6D7A72AEA2DC" /> <!-- AudioPlayerModel -->
     </Grid.Resources>
     <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="700"/>
       <ColumnDefinition Width="*"/>
-      <ColumnDefinition Width="180"/>
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition Height="350"/>
-      <RowDefinition Height="500"/>
+      <RowDefinition Height="400"/>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
 
@@ -27,7 +27,7 @@
       </Control.TemplateControl>
     </Control>
 
-    <Control Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0,-50,0,-50">
+    <Control Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0,50,0,-50">
       <Control.Background>
         <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
           <GradientStop Offset="0" Color="#A0000000"/>
@@ -36,23 +36,23 @@
       </Control.Background>
     </Control>
 
-    <Control x:Name="GlassOverlay" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="850" Height="500"
-               Style="{ThemeResource GlassOverlayControl}" 
+    <Control x:Name="GlassOverlay" Grid.Row="2" Grid.Column="1" Width="850" Height="200"
+               Style="{ThemeResource GlassOverlayControl}"
                DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
       <Control.Resources>
         <ResourceWrapper x:Key="ControlWidth" Resource="800"/>
-        <ResourceWrapper x:Key="ControlHeight" Resource="450"/>
+        <ResourceWrapper x:Key="ControlHeight" Resource="150"/>
         <ControlTemplate x:Key="MakeGlass">
 
-          <mp_audio_viz:AudioSpectrumAnalyzer  Width="800" Height="450"
+          <mp_audio_viz:AudioSpectrumAnalyzer  Width="800" Height="150"
               HorizontalAlignment="Center" VerticalAlignment="Center"
               x:Name="SpectrumAnalyzer" Style="{ThemeResource SpectrumAnalyzerStyle}"
               BarSpacing="10" BarCount="41"/>
         </ControlTemplate>
       </Control.Resources>
     </Control>
+    
     <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
-
       <mp_special_controls:PlayerControl Margin="20" PlayerContext="CurrentPlayer"
           HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <mp_special_controls:PlayerControl.TemplateControl>
@@ -64,7 +64,7 @@
               <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="450"/>
+              <ColumnDefinition Width="150"/>
               <ColumnDefinition Width="Auto"/>
               <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -98,19 +98,19 @@
               </Control.Resources>
             </Control>          
 
-            <Label x:Name="ArtistsLabel" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom"
+            <Label x:Name="ArtistsLabel" Grid.Row="1" Grid.Column="0" VerticalAlignment="Bottom"
                 Content="[Media.AudioArtistsLabel]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="Artists" Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom"
+            <Label x:Name="Artists" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom"
                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Artist}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="TitleLabel" Grid.Row="2" Grid.Column="1"
+            <Label x:Name="TitleLabel" Grid.Row="2" Grid.Column="0"
                 Content="[Media.AudioTitleLabel]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="Title" Grid.Row="2" Grid.Column="2" Scroll="Auto"
+            <Label x:Name="Title" Grid.Row="2" Grid.Column="1" Scroll="Auto"
                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Title}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="ListenersLabel" Grid.Row="3" Grid.Column="1"
+            <Label x:Name="ListenersLabel" Grid.Row="3" Grid.Column="0"
                 Content="[Webradio.UIContributor.Listeners]" Color="{ThemeResource TextColor}"/>
-            <Label x:Name="Listeners" Grid.Row="3" Grid.Column="2" Scroll="Auto"
+            <Label x:Name="Listeners" Grid.Row="3" Grid.Column="1" Scroll="Auto"
                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Listeners}" Color="{ThemeResource TextColor}"/>
-
+         
           </Grid>
         </mp_special_controls:PlayerControl.TemplateControl>
       </mp_special_controls:PlayerControl>

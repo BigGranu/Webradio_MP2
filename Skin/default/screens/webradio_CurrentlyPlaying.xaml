@@ -2,9 +2,8 @@
 <Include
     xmlns="www.team-mediaportal.com/2008/mpf/directx"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Source="screens\master_menu.xaml"
-    xmlns:mp_special_controls="clr-namespace:MediaPortal.UI.SkinEngine.SpecialElements.Controls"
-    >
+    Source="screens\SimpleShowItems.xaml"
+    xmlns:mp_special_controls="clr-namespace:MediaPortal.UI.SkinEngine.SpecialElements.Controls">
   <Include.Resources>
 
     <ResourceWrapper x:Key="Header_Text" Resource="[Media.AudioCurrentlyPlayingHeader]"/>
@@ -17,15 +16,16 @@
         <mp_special_controls:PlayerControl.TemplateControl>
           <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
             <Grid.RowDefinitions>
-              <RowDefinition Height="Auto"/>
-              <RowDefinition Height="Auto"/>
-              <RowDefinition Height="Auto"/>
-              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="50"/>
+              <RowDefinition Height="50"/>
+              <RowDefinition Height="50"/>
+              <RowDefinition Height="50"/>
+              <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto"/>
-              <ColumnDefinition Width="Auto"/>
-              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="15*"/>
+              <ColumnDefinition Width="35*"/>
+              <ColumnDefinition Width="50*"/>
             </Grid.ColumnDefinitions>
             <Label x:Name="ArtistsLabel" Grid.Row="0" Grid.Column="0"
                 Content="[Media.AudioArtistsLabel]" Color="{ThemeResource TextColor}"/>
@@ -43,6 +43,10 @@
                 Content="[Webradio.UIContributor.Listeners]" Color="{ThemeResource TextColor}"/>
             <Label x:Name="Listeners" Grid.Row="3" Grid.Column="1" Scroll="Auto"
                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Listeners}" Color="{ThemeResource TextColor}"/>
+
+            <Label x:Name="Bio" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left"
+                Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Bio}" FontSize="{ThemeResource SmallerFontSize}" Color="{ThemeResource TextColor}" Wrap="True" Scroll="Auto" ScrollSpeed="5" Height="350"/>
+
 
             <!--Logo-->
             <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="4">

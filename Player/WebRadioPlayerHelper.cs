@@ -80,7 +80,7 @@ namespace Webradio.Player
 
       mediaAspect.SetAttribute(MediaAspect.ATTR_MIME_TYPE, WEBRADIO_MIMETYPE);
       mediaAspect.SetAttribute(MediaAspect.ATTR_TITLE, stream.Title);
-
+  
       MediaItemAspect.SetAttribute(aspects, ThumbnailLargeAspect.ATTR_THUMBNAIL, ImageFromLogo(stream.Logo));
 
       var mediaItem = new MediaItem(Guid.Empty, aspects);

@@ -42,7 +42,7 @@ namespace Webradio.Player
 
     public WebRadioPlayerBuilder()
     {
-      var bassDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "..\\BassPlayer");
+      var bassDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "BassPlayer");
       _pluginDirectory = bassDir; // Points to root of BassPlayer plugin!
     }
 
@@ -65,6 +65,9 @@ namespace Webradio.Player
       IResourceLocator locator = mediaItem.GetResourceLocator();
       if (InputSourceFactory.CanPlay(locator, mimeType))
       {
+
+       // Bass.BASS_PluginLoad(@"C:\Users\dierk_000\Downloads\basswm24\basswma.dll");
+
         BassPlayer player = new WebRadioBassPlayer(_pluginDirectory);
 
         // Config the BASSPlayer to play also .pls and .m3u

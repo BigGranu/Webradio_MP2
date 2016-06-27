@@ -30,7 +30,6 @@ using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
-using Webradio.Helper;
 using Webradio.Settings;
 
 namespace Webradio.Dialogues
@@ -112,7 +111,7 @@ namespace Webradio.Dialogues
     }
 
     /// <summary>
-    /// Added a Entry
+    /// Add a Entry
     /// </summary>
     public void Add()
     {

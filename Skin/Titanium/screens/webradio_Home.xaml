@@ -2,7 +2,7 @@
 <Include
   xmlns="www.team-mediaportal.com/2008/mpf/directx"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  Source="screens\master_menu.xaml">
+  Source="screens\SimpleShowItems.xaml">
   <Include.Resources>
 
     <!-- Header -->
@@ -39,7 +39,7 @@
             <Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 
               Content="{Binding [Genres]}" FontSize="{ThemeResource SmallerFontSize}" Color="{ThemeResource TextColor}"/>
             
-            <Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.StreamUrls[0].Bitrate]" 
+            <Label VerticalAlignment="Center" HorizontalAlignment="Left" Content="[Webradio.Home.Bitrate]" 
               FontSize="{ThemeResource SmallFontSize}" Color="{ThemeResource EmphasisTextColor}"/>
             
             <Label VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" 

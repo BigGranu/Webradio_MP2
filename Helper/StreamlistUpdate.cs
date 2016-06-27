@@ -85,8 +85,16 @@ namespace Webradio.Helper
         return -1;
       }
 
-      MyStreams ms = MyStreams.Read(StreamListFile);
-      return Convert.ToInt32(ms.Version);
+      try
+      {
+        MyStreams ms = MyStreams.Read(StreamListFile);
+        return Convert.ToInt32(ms.Version);
+      }
+      catch (Exception)
+      {
+        return -1;
+      }
+
     }
 
     public static void CheckUpdate()
