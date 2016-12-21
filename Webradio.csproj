@@ -52,24 +52,45 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bass.Net, Version=2.4.10.3, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
-      <HintPath>C:\Users\Knecht\Source\Repos\MediaPortal-2\MediaPortal\Packages\BASS.NET.2.4.10.3\lib\net40\Bass.Net.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Bass.Net, Version=2.4.10.1, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MediaPortal-2\MediaPortal\Bin\MP2-Client\bin\x86\Debug\Plugins\BassLibraries\Bass.Net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BassLibraries">
+      <HintPath>..\MediaPortal-2\MediaPortal\Bin\MP2-Client\bin\x86\Debug\Plugins\BassLibraries\BassLibraries.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BassPlayer">
+      <HintPath>..\MediaPortal-2\MediaPortal\Bin\MP2-Client\bin\x86\Debug\Plugins\BassPlayer\BassPlayer.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="CoverArtArchive, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Knecht\Source\Repos\Webradio_MP2\libs\CoverArtArchive.dll</HintPath>
     </Reference>
+    <Reference Include="FanArtService.Client">
+      <HintPath>..\MediaPortal-2\MediaPortal\Bin\MP2-Client\bin\x86\Debug\Plugins\FanArtService.Client\FanArtService.Client.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="FanartTv, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Knecht\Source\Repos\Webradio_MP2\libs\FanartTv.dll</HintPath>
     </Reference>
+    <Reference Include="Media">
+      <HintPath>..\MediaPortal-2\MediaPortal\Bin\MP2-Client\bin\x86\Debug\Plugins\Media\Media.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="MediaPortal.Common">
-      <HintPath>C:\Users\Knecht\Source\Repos\MediaPortal-2\MediaPortal\Source\Core\MediaPortal.Common\bin\x86\Debug\MediaPortal.Common.dll</HintPath>
+      <HintPath>..\MediaPortal-2\MediaPortal\Bin\MP2-Client\bin\x86\Debug\MediaPortal.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="MediaPortal.UI">
-      <HintPath>C:\Users\Knecht\Source\Repos\MediaPortal-2\MediaPortal\Source\Core\MediaPortal.UI\bin\x86\Debug\MediaPortal.UI.dll</HintPath>
+      <HintPath>..\MediaPortal-2\MediaPortal\Bin\MP2-Client\bin\x86\Debug\MediaPortal.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MediaPortal.Utilities">
+      <HintPath>..\MediaPortal-2\MediaPortal\Bin\MP2-Client\bin\x86\Debug\MediaPortal.Utilities.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="MusicBrainz, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -81,6 +102,10 @@
       <HintPath>C:\Users\Knecht\Source\Repos\Webradio_MP2\libs\ParkSquare.Gracenote.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="SkinEngine">
+      <HintPath>..\MediaPortal-2\MediaPortal\Bin\MP2-Client\bin\x86\Debug\Plugins\SkinEngine\SkinEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -125,6 +150,8 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\StreamList.xml" />
+    <Content Include="Language\strings_de.xml" />
     <Content Include="Language\strings_en.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -228,34 +255,6 @@
     <Content Include="Skin\Titanium\screens\webradio_Filter.xaml">
       <SubType>Designer</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="C:\Users\Knecht\Source\Repos\MediaPortal-2\MediaPortal\Source\Core\MediaPortal.Utilities\MediaPortal.Utilities.csproj">
-      <Project>{4FE7B8AE-1330-424A-91A1-C68D7ABF9CB8}</Project>
-      <Name>MediaPortal.Utilities</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\Knecht\Source\Repos\MediaPortal-2\MediaPortal\Source\Extensions\BassLibraries\BassLibraries.csproj">
-      <Project>{b186c33c-7dc6-4f6b-911d-b8d3c6482c39}</Project>
-      <Name>BassLibraries</Name>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\Knecht\Source\Repos\MediaPortal-2\MediaPortal\Source\UI\FanArt\FanArtService.Client\FanArtService.Client.csproj">
-      <Project>{cda7272f-e218-42a0-a53a-2d44e4015ff7}</Project>
-      <Name>FanArtService.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\Knecht\Source\Repos\MediaPortal-2\MediaPortal\Source\UI\Players\BassPlayer\BassPlayer.csproj">
-      <Project>{1a980621-b711-4235-b98c-c4276d6fa9fd}</Project>
-      <Name>BassPlayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\Knecht\Source\Repos\MediaPortal-2\MediaPortal\Source\UI\SkinEngine\SkinEngine.csproj">
-      <Project>{7E943389-3589-40C9-B481-2E223554CC49}</Project>
-      <Name>SkinEngine</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\Knecht\Source\Repos\MediaPortal-2\MediaPortal\Source\UI\UiComponents\Media\Media.csproj">
-      <Project>{cd37e2ff-4cf7-4f96-8c73-c6764988d408}</Project>
-      <Name>Media</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\Titanium\screens\webradio_CurrentlyPlaying.xaml">

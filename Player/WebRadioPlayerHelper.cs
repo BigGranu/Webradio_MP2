@@ -67,20 +67,19 @@ namespace Webradio.Player
     /// <param name="stream">Stream.</param>
     private static MediaItem CreateStreamMediaItem(MyStream stream)
     {
-      IDictionary<Guid, MediaItemAspect> aspects = new Dictionary<Guid, MediaItemAspect>();
+      IDictionary<Guid, IList<MediaItemAspect>> aspects = new Dictionary<Guid, IList<MediaItemAspect>>();
 
-      MediaItemAspect providerResourceAspect;
-      aspects[ProviderResourceAspect.ASPECT_ID] = providerResourceAspect = new MediaItemAspect(ProviderResourceAspect.Metadata);
-      MediaItemAspect mediaAspect;
-      aspects[MediaAspect.ASPECT_ID] = mediaAspect = new MediaItemAspect(MediaAspect.Metadata);
-      aspects[AudioAspect.ASPECT_ID] = new MediaItemAspect(AudioAspect.Metadata); // AudioAspect needs to be contained for player mapping
+      MultipleMediaItemAspect providerResourceAspect = MediaItemAspect.CreateAspect(aspects, ProviderResourceAspect.Metadata);
+      SingleMediaItemAspect mediaAspect = MediaItemAspect.GetOrCreateAspect(aspects, MediaAspect.Metadata);
+      SingleMediaItemAspect audioAspect = MediaItemAspect.GetOrCreateAspect(aspects, AudioAspect.Metadata);
 
+      providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_PRIMARY, true);
       providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_RESOURCE_ACCESSOR_PATH, RawUrlResourceProvider.ToProviderResourcePath(stream.StreamUrls[0].StreamUrl).Serialize());
       providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_SYSTEM_ID, ServiceRegistration.Get<ISystemResolver>().LocalSystemId);
+      providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_MIME_TYPE, WEBRADIO_MIMETYPE);
 
-      mediaAspect.SetAttribute(MediaAspect.ATTR_MIME_TYPE, WEBRADIO_MIMETYPE);
       mediaAspect.SetAttribute(MediaAspect.ATTR_TITLE, stream.Title);
-  
+
       MediaItemAspect.SetAttribute(aspects, ThumbnailLargeAspect.ATTR_THUMBNAIL, ImageFromLogo(stream.Logo));
 
       var mediaItem = new MediaItem(Guid.Empty, aspects);
