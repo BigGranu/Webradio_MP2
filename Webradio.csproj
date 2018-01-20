@@ -44,7 +44,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Webradio</RootNamespace>
     <AssemblyName>Webradio</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -195,6 +195,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Content>
+    <Content Include="Skin\WMCSkin\images\TopMenu\36fa3773-8428-4e0c-be5b-4ecff5a5e11f.png" />
+    <Content Include="Skin\WMCSkin\images\TopMenu\56694dc2-041e-4d93-ad52-747d3394eb52.png" />
+    <Content Include="Skin\WMCSkin\images\TopMenu\76a060df-0379-431d-a497-ab49b7c37f4e.png" />
+    <Content Include="Skin\WMCSkin\images\TopMenu\985ad907-0edb-4feb-aa99-2b52ddeade6f.png" />
+    <Content Include="Skin\WMCSkin\images\TopMenu\9c3e6701-6856-49ec-a4cd-0ceb15f385f6.png" />
+    <Content Include="Skin\WMCSkin\images\TopMenu\bc74d4a5-d533-41b5-9d1f-d1a0918f51b7.png" />
+    <Content Include="Skin\WMCSkin\images\TopMenu\d83604c0-0936-4416-9de8-7b6d7c50023c.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -261,7 +268,65 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Skin\BlueVision\screens\webradio_CurrentlyPlaying.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\BlueVision\screens\webradio_Filter.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\BlueVision\screens\webradio_FullscreenContent.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\BlueVision\screens\webradio_Home.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\BlueVision\themes\default\styles\WebradioStyles.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\BlueVision\themes\Win10\screens\webradio_CurrentlyPlaying.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\BlueVision\themes\Win10\screens\webradio_Filter.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\BlueVision\themes\Win10\screens\webradio_FullscreenContent.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\BlueVision\themes\Win10\screens\webradio_Home.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\BlueVision\themes\Win10\styles\WebradioStyles.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\WMCSkin\screens\webradio_CurrentlyPlaying.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\WMCSkin\screens\webradio_dialogSearchInStreams.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\WMCSkin\screens\webradio_dialogShowFilter.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\WMCSkin\screens\webradio_Filter.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\WMCSkin\screens\webradio_FullScreenContent.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\WMCSkin\screens\webradio_Home.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\WMCSkin\screens\webradio_Settings.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Skin\WMCSkin\themes\default\styles\WebradioStyles.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Skin\WMCSkin\workflow\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(SolutionDir)..\Bin\$(SolutionName)\$(OutDir)Plugins\$(ProjectName)\Language"

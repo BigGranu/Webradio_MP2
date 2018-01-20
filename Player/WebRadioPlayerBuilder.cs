@@ -74,7 +74,7 @@ namespace Webradio.Player
         Bass.BASS_SetConfig(BASSConfig.BASS_CONFIG_NET_PLAYLIST, 1);
         try
         {
-          player.SetMediaItemLocator(locator, mimeType, title);
+          player.SetMediaItem(mediaItem);
         }
         catch (Exception e)
         {

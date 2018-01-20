@@ -73,7 +73,7 @@ namespace Webradio.Player
       SingleMediaItemAspect mediaAspect = MediaItemAspect.GetOrCreateAspect(aspects, MediaAspect.Metadata);
       SingleMediaItemAspect audioAspect = MediaItemAspect.GetOrCreateAspect(aspects, AudioAspect.Metadata);
 
-      providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_PRIMARY, true);
+      providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_TYPE, ProviderResourceAspect.TYPE_PRIMARY);
       providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_RESOURCE_ACCESSOR_PATH, RawUrlResourceProvider.ToProviderResourcePath(stream.StreamUrls[0].StreamUrl).Serialize());
       providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_SYSTEM_ID, ServiceRegistration.Get<ISystemResolver>().LocalSystemId);
       providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_MIME_TYPE, WEBRADIO_MIMETYPE);
