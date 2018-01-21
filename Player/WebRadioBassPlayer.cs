@@ -23,6 +23,7 @@
 #endregion
 
 using System;
+using MediaPortal.Common.MediaManagement;
 using MediaPortal.UI.Players.BassPlayer;
 using MediaPortal.UI.Presentation.Players;
 
@@ -36,6 +37,17 @@ namespace Webradio.Player
     public WebRadioBassPlayer(string playerMainDirectory)
       : base(playerMainDirectory)
     {
+    }
+
+    protected override bool GetMediaItemPlayData(MediaItem mediaItem, out string mimeType, out string title)
+    {
+      // Change the mimeType back to "audio/..." to allow input source factory building a valid source.
+      // While we could use and "audio/..." mimeType from beginning, we could not control if the player builder prefers
+      // the WebRadioBassPlayer over the default BassPlayer.
+      var result = base.GetMediaItemPlayData(mediaItem, out mimeType, out title);
+      if (mimeType == WebRadioPlayerHelper.WEBRADIO_MIMETYPE)
+        mimeType = "audio/stream";
+      return result;
     }
 
     public Type UIContributorType

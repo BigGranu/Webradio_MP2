@@ -92,7 +92,6 @@ namespace Webradio.Player
     public static byte[] ImageFromLogo(string path)
     {
       var ms = new MemoryStream();
-
       try
       {
         var imageRequest = (HttpWebRequest)WebRequest.Create(path);
@@ -110,7 +109,6 @@ namespace Webradio.Player
         var s = ServiceRegistration.Get<IPathManager>().GetPath(@"<PLUGINS>\Webradio\Skin\default\images\DefaultLogo.png");
         Image.FromFile(s).Save(ms, ImageFormat.Png);
         return ms.ToArray();
-        throw;
       }
       return ms.ToArray();
     }
