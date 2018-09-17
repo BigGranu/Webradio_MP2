@@ -33,137 +33,137 @@ using Webradio.Models;
 
 namespace Webradio.Helper
 {
-  public class StreamListeners
-  {
-    public static Timer ATimer = new Timer();
-
-    public static void Listeners()
+    public class StreamListeners
     {
-      string listeners = "unknown";
+        public static Timer ATimer = new Timer();
 
-      if (!ServiceRegistration.Get<IPlayerContextManager>().IsAudioContextActive & ATimer.Enabled)
-      {
-        ATimer.Enabled = false;
-        return;
-      }
-
-      if (WebradioHome.SelectedStream.StreamUrls[0].StreamUrl != "")
-      {
-        var link = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl;
-
-        if (WebradioHome.SelectedStream.StreamUrls[0].Provider == "Ru")
+        public static void Listeners()
         {
-          link = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.Substring(0, WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.LastIndexOf("/", StringComparison.Ordinal));
-        }
+            string listeners = "unknown";
 
-        var request = (HttpWebRequest)WebRequest.Create(link);
-        request.UserAgent = "Mozilla";
-        request.Credentials = CredentialCache.DefaultCredentials;
-
-        try
-        {
-          using (WebResponse response = request.GetResponse())
-          {
-            if (response.ContentType == "text/html" | response.ContentType == "text/xml")
+            if (!ServiceRegistration.Get<IPlayerContextManager>().IsAudioContextActive & ATimer.Enabled)
             {
-              using (Stream stream = response.GetResponseStream())
-              {
-                if (stream == null) return;
+                ATimer.Enabled = false;
+                return;
+            }
 
-                using (var reader = new StreamReader(stream))
+            if (WebradioHome.SelectedStream.StreamUrls[0].StreamUrl != "")
+            {
+                var link = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl;
+
+                if (WebradioHome.SelectedStream.StreamUrls[0].Provider == "Ru")
                 {
-                  string s = reader.ReadToEnd();
+                    link = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.Substring(0, WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.LastIndexOf("/", StringComparison.Ordinal));
+                }
 
-                  //SHOUTcast
-                  if (WebradioHome.SelectedStream.StreamUrls[0].Provider == "ShC" & s.Contains("Server is currently up"))
-                  {
-                    try
-                    {
-                      var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
-                      listeners = s.Substring(i, s.IndexOf(" ", i, StringComparison.Ordinal) - i);
-                    }
-                    catch (Exception)
-                    {
-                      listeners = "";
-                    }
-                  }
+                var request = (HttpWebRequest)WebRequest.Create(link);
+                request.UserAgent = "Mozilla";
+                request.Credentials = CredentialCache.DefaultCredentials;
 
-                  //Icecast
-                  if (WebradioHome.SelectedStream.StreamUrls[0].Provider == "ScC")
-                  {
-                  }
+                try
+                {
+                    using (WebResponse response = request.GetResponse())
+                    {
+                        if (response.ContentType == "text/html" | response.ContentType == "text/xml")
+                        {
+                            using (Stream stream = response.GetResponseStream())
+                            {
+                                if (stream == null) return;
 
-                  //Ru
-                  if (WebradioHome.SelectedStream.StreamUrls[0].Provider == "Ru")
-                  {
-                    try
-                    {
-                      var search = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.Substring(WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.LastIndexOf("/", StringComparison.Ordinal)) + ",";
-                      var i = s.IndexOf(",,,", s.LastIndexOf(search, StringComparison.Ordinal), StringComparison.Ordinal) + 3;
-                      listeners = s.Substring(i, s.IndexOf(",", i, StringComparison.Ordinal) - i);
-                    }
-                    catch (Exception)
-                    {
-                      listeners = "";
-                    }
-                  }
+                                using (var reader = new StreamReader(stream))
+                                {
+                                    string s = reader.ReadToEnd();
 
-                  //Streamerspanel
-                  if (WebradioHome.SelectedStream.StreamUrls[0].StreamUrl == "StP" & s.Contains("Server is currently up"))
-                  {
-                    try
-                    {
-                      var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
-                      listeners = s.Substring(i, s.IndexOf(" ", i, StringComparison.Ordinal) - i);
-                    }
-                    catch (Exception)
-                    {
-                      listeners = "";
-                    }
-                  }
+                                    //SHOUTcast
+                                    if (WebradioHome.SelectedStream.StreamUrls[0].Provider == "ShC" & s.Contains("Server is currently up"))
+                                    {
+                                        try
+                                        {
+                                            var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
+                                            listeners = s.Substring(i, s.IndexOf(" ", i, StringComparison.Ordinal) - i);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            listeners = "";
+                                        }
+                                    }
 
-                  //Steamcast
-                  if (WebradioHome.SelectedStream.StreamUrls[0].StreamUrl == "StC")
-                  {
-                    try
-                    {
-                      var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
-                      listeners = s.Substring(i, s.IndexOf(" ", i, StringComparison.Ordinal) - i);
-                    }
-                    catch (Exception)
-                    {
-                      listeners = "";
-                    }
-                  }
+                                    //Icecast
+                                    if (WebradioHome.SelectedStream.StreamUrls[0].Provider == "ScC")
+                                    {
+                                    }
 
-                  if (listeners == "unknown")
-                  {
+                                    //Ru
+                                    if (WebradioHome.SelectedStream.StreamUrls[0].Provider == "Ru")
+                                    {
+                                        try
+                                        {
+                                            var search = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.Substring(WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.LastIndexOf("/", StringComparison.Ordinal)) + ",";
+                                            var i = s.IndexOf(",,,", s.LastIndexOf(search, StringComparison.Ordinal), StringComparison.Ordinal) + 3;
+                                            listeners = s.Substring(i, s.IndexOf(",", i, StringComparison.Ordinal) - i);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            listeners = "";
+                                        }
+                                    }
+
+                                    //Streamerspanel
+                                    if (WebradioHome.SelectedStream.StreamUrls[0].StreamUrl == "StP" & s.Contains("Server is currently up"))
+                                    {
+                                        try
+                                        {
+                                            var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
+                                            listeners = s.Substring(i, s.IndexOf(" ", i, StringComparison.Ordinal) - i);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            listeners = "";
+                                        }
+                                    }
+
+                                    //Steamcast
+                                    if (WebradioHome.SelectedStream.StreamUrls[0].StreamUrl == "StC")
+                                    {
+                                        try
+                                        {
+                                            var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
+                                            listeners = s.Substring(i, s.IndexOf(" ", i, StringComparison.Ordinal) - i);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            listeners = "";
+                                        }
+                                    }
+
+                                    if (listeners == "unknown")
+                                    {
+                                        ATimer.Stop();
+                                        WebradioHome.CurrentListeners = "unknown";
+                                        return;
+                                    }
+
+                                    WebradioHome.CurrentListeners = listeners;
+                                    ATimer.Elapsed += OnTimedEvent;
+                                    ATimer.Interval = 10000;
+                                    ATimer.Start();
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (WebException ex)
+                {
                     ATimer.Stop();
                     WebradioHome.CurrentListeners = "unknown";
-                    return;
-                  }
-
-                  WebradioHome.CurrentListeners = listeners;
-                  ATimer.Elapsed += OnTimedEvent;
-                  ATimer.Interval = 10000;
-                  ATimer.Start();
+                    ServiceRegistration.Get<ILogger>().Warn("WebradioStreamListeners: Error reading Streamdata '{0}'", ex);
                 }
-              }
             }
-          }
         }
-        catch (WebException ex)
-        {
-          ATimer.Stop();
-          WebradioHome.CurrentListeners = "unknown";
-          ServiceRegistration.Get<ILogger>().Warn("WebradioStreamListeners: Error reading Streamdata '{0}'", ex);
-        }
-      }
-    }
 
-    private static void OnTimedEvent(object sender, ElapsedEventArgs e)
-    {
-      Listeners();
+        private static void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            Listeners();
+        }
     }
-  }
 }

@@ -34,116 +34,117 @@ using Webradio.Settings;
 
 namespace Webradio.Dialogues
 {
-  public class WebradioDlgSettingsStreamlistUpdate : IWorkflowModel
-  {
-    #region Consts
-
-    public const string MODEL_ID_STR = "A391ACBF-BEFE-4820-B17D-D06545CF9987";
-    public const string NAME = "name";
-
-    #endregion
-
-    public string OnlineVersion = string.Empty;
-    public string OfflineVersion = string.Empty;
-    public static ItemsList Items = new ItemsList();
-    public WebradioSettings Settings = new WebradioSettings();
-
-    public void Init()
+    public class WebradioDlgSettingsStreamlistUpdate : IWorkflowModel
     {
-      ISettingsManager settingsManager = ServiceRegistration.Get<ISettingsManager>();
-      Settings = settingsManager.Load<WebradioSettings>();
+        #region Consts
 
-      OfflineVersion = ": " + Convert.ToString(StreamlistUpdate.OfflineVersion());
-      OnlineVersion = " : " + Convert.ToString(StreamlistUpdate.OnlineVersion());
+        public const string MODEL_ID_STR = "A391ACBF-BEFE-4820-B17D-D06545CF9987";
+        public const string NAME = "name";
 
-      Items.Clear();
+        #endregion
 
-      var item = new ListItem();
-      item.AdditionalProperties[NAME] = "Automatically";
-      item.SetLabel("Name", "[Webradio.Settings.Automatically]");
-      if (Settings.StreamlistUpdateMode == "Automatically")
-      {
-        item.Selected = true;
-      }
-      Items.Add(item);
+        public string OnlineVersion = string.Empty;
+        public string OfflineVersion = string.Empty;
+        public static ItemsList Items = new ItemsList();
+        public WebradioSettings Settings = new WebradioSettings();
 
-      item = new ListItem();
-      item.AdditionalProperties[NAME] = "Manually";
-      item.SetLabel("Name", "[Webradio.Settings.Manually]");
-      if (Settings.StreamlistUpdateMode == "Manually")
-      {
-        item.Selected = true;
-      }
-      Items.Add(item);
+        public void Init()
+        {
+            ISettingsManager settingsManager = ServiceRegistration.Get<ISettingsManager>();
+            Settings = settingsManager.Load<WebradioSettings>();
 
-      item = new ListItem();
-      item.AdditionalProperties[NAME] = "Disabled";
-      item.SetLabel("Name", "[Webradio.Settings.Disabled]");
-      if (Settings.StreamlistUpdateMode == "Disabled")
-      {
-        item.Selected = true;
-      }
-      Items.Add(item);
+            OfflineVersion = ": " + Convert.ToString(StreamlistUpdate.OfflineVersion());
+            OnlineVersion = " : " + Convert.ToString(StreamlistUpdate.OnlineVersion());
+
+            Items.Clear();
+
+            var item = new ListItem();
+            item.AdditionalProperties[NAME] = "Automatically";
+            item.SetLabel("Name", "[Webradio.Settings.Automatically]");
+            if (Settings.StreamlistUpdateMode == "Automatically")
+            {
+                item.Selected = true;
+            }
+
+            Items.Add(item);
+
+            item = new ListItem();
+            item.AdditionalProperties[NAME] = "Manually";
+            item.SetLabel("Name", "[Webradio.Settings.Manually]");
+            if (Settings.StreamlistUpdateMode == "Manually")
+            {
+                item.Selected = true;
+            }
+
+            Items.Add(item);
+
+            item = new ListItem();
+            item.AdditionalProperties[NAME] = "Disabled";
+            item.SetLabel("Name", "[Webradio.Settings.Disabled]");
+            if (Settings.StreamlistUpdateMode == "Disabled")
+            {
+                item.Selected = true;
+            }
+
+            Items.Add(item);
+        }
+
+        public void Selected(ListItem item)
+        {
+            foreach (ListItem li in Items)
+            {
+                li.Selected = (string)item.AdditionalProperties[NAME] == (string)li.AdditionalProperties[NAME];
+            }
+
+            Settings.StreamlistUpdateMode = (string)item.AdditionalProperties[NAME];
+            Items.FireChange();
+        }
+
+        public void Update()
+        {
+            StreamlistUpdate.MakeUpdate();
+        }
+
+        #region IWorkflowModel implementation
+
+        public Guid ModelId => new Guid(MODEL_ID_STR);
+
+        public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
+        {
+            return true;
+        }
+
+        public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
+        {
+            Init();
+        }
+
+        public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
+        {
+            ServiceRegistration.Get<ISettingsManager>().Save(Settings);
+        }
+
+        public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
+        {
+        }
+
+        public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
+        {
+        }
+
+        public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
+        {
+        }
+
+        public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
+        {
+        }
+
+        public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
+        {
+            return ScreenUpdateMode.AutoWorkflowManager;
+        }
+
+        #endregion
     }
-
-    public void Selected(ListItem item)
-    {
-      foreach (ListItem li in Items)
-      {
-        li.Selected = (string)item.AdditionalProperties[NAME] == (string)li.AdditionalProperties[NAME];
-      }
-      Settings.StreamlistUpdateMode = (string)item.AdditionalProperties[NAME];
-      Items.FireChange();
-    }
-
-    public void Update()
-    {
-      StreamlistUpdate.MakeUpdate();
-    }
-
-    #region IWorkflowModel implementation
-
-    public Guid ModelId
-    {
-      get { return new Guid(MODEL_ID_STR); }
-    }
-
-    public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
-    {
-      return true;
-    }
-
-    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
-    {
-      Init();
-    }
-
-    public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
-    {
-      ServiceRegistration.Get<ISettingsManager>().Save(Settings);
-    }
-
-    public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
-    {
-    }
-
-    public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
-    {
-    }
-
-    public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
-    {
-    }
-
-    public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
-    {
-    }
-
-    public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
-    {
-      return ScreenUpdateMode.AutoWorkflowManager;
-    }
-
-    #endregion
-  }
 }

@@ -116,8 +116,10 @@ namespace Webradio.Models
                 {
                     item.Selected = true;
                 }
+
                 Countrys.Add(item);
             }
+
             Refresh(Countrys);
 
             foreach (var s in CityList)
@@ -128,8 +130,10 @@ namespace Webradio.Models
                 {
                     item.Selected = true;
                 }
+
                 Citys.Add(item);
             }
+
             Refresh(Citys);
 
             foreach (var s in BitrList)
@@ -140,8 +144,10 @@ namespace Webradio.Models
                 {
                     item.Selected = true;
                 }
+
                 Bitrate.Add(item);
             }
+
             Refresh(Bitrate);
 
             foreach (var s in GenrList)
@@ -152,8 +158,10 @@ namespace Webradio.Models
                 {
                     item.Selected = true;
                 }
+
                 Genres.Add(item);
             }
+
             Refresh(Genres);
         }
 
@@ -191,18 +199,22 @@ namespace Webradio.Models
             {
                 CountryState = Convert.ToString(SelectedCountrys.Count) + "/" + Convert.ToString(Countrys.Count);
             }
+
             if (list == Citys)
             {
                 CityState = Convert.ToString(SelectedCitys.Count) + "/" + Convert.ToString(Citys.Count);
             }
+
             if (list == Bitrate)
             {
                 BitrateState = Convert.ToString(SelectedBitrate.Count) + "/" + Convert.ToString(Bitrate.Count);
             }
+
             if (list == Genres)
             {
                 GenreState = Convert.ToString(SelectedGenres.Count) + "/" + Convert.ToString(Genres.Count);
             }
+
             RefreshState();
         }
 
@@ -220,6 +232,7 @@ namespace Webradio.Models
                     select r;
                 x = query.Count();
             }
+
             SelectedStreamsCount = Convert.ToString(x) + "/" + Convert.ToString(StreamList.Count);
         }
 
@@ -276,8 +289,8 @@ namespace Webradio.Models
 
         public static string FilterTitel
         {
-            get { return (string)_filterTitelProperty.GetValue(); }
-            set { _filterTitelProperty.SetValue(value); }
+            get => (string)_filterTitelProperty.GetValue();
+            set => _filterTitelProperty.SetValue(value);
         }
 
         private static readonly AbstractProperty _selectedStreamsCountProperty = new WProperty(typeof(string), string.Empty);
@@ -286,8 +299,8 @@ namespace Webradio.Models
 
         public static string SelectedStreamsCount
         {
-            get { return (string)_selectedStreamsCountProperty.GetValue(); }
-            set { _selectedStreamsCountProperty.SetValue(value); }
+            get => (string)_selectedStreamsCountProperty.GetValue();
+            set => _selectedStreamsCountProperty.SetValue(value);
         }
 
         private static readonly AbstractProperty _countryStateProperty = new WProperty(typeof(string), string.Empty);
@@ -296,8 +309,8 @@ namespace Webradio.Models
 
         public static string CountryState
         {
-            get { return (string)_countryStateProperty.GetValue(); }
-            set { _countryStateProperty.SetValue(value); }
+            get => (string)_countryStateProperty.GetValue();
+            set => _countryStateProperty.SetValue(value);
         }
 
         private static readonly AbstractProperty _cityStateProperty = new WProperty(typeof(string), string.Empty);
@@ -306,8 +319,8 @@ namespace Webradio.Models
 
         public static string CityState
         {
-            get { return (string)_cityStateProperty.GetValue(); }
-            set { _cityStateProperty.SetValue(value); }
+            get => (string)_cityStateProperty.GetValue();
+            set => _cityStateProperty.SetValue(value);
         }
 
         private static readonly AbstractProperty _bitrateStateProperty = new WProperty(typeof(string), string.Empty);
@@ -316,8 +329,8 @@ namespace Webradio.Models
 
         public static string BitrateState
         {
-            get { return (string)_bitrateStateProperty.GetValue(); }
-            set { _bitrateStateProperty.SetValue(value); }
+            get => (string)_bitrateStateProperty.GetValue();
+            set => _bitrateStateProperty.SetValue(value);
         }
 
         private static readonly AbstractProperty _genreStateProperty = new WProperty(typeof(string), string.Empty);
@@ -326,8 +339,8 @@ namespace Webradio.Models
 
         public static string GenreState
         {
-            get { return (string)_genreStateProperty.GetValue(); }
-            set { _genreStateProperty.SetValue(value); }
+            get => (string)_genreStateProperty.GetValue();
+            set => _genreStateProperty.SetValue(value);
         }
 
         private static readonly AbstractProperty _saveImage = new WProperty(typeof(string), string.Empty);
@@ -336,8 +349,8 @@ namespace Webradio.Models
 
         public static string SaveImage
         {
-            get { return (string)_saveImage.GetValue(); }
-            set { _saveImage.SetValue(value); }
+            get => (string)_saveImage.GetValue();
+            set => _saveImage.SetValue(value);
         }
 
         #endregion
@@ -371,6 +384,7 @@ namespace Webradio.Models
             {
                 SelectedGenres.Add(s);
             }
+
             FillAllItemsList();
         }
 
@@ -415,6 +429,7 @@ namespace Webradio.Models
             {
                 FilterList.Add(new FilterSetupInfo(FilterTitel, "1", SelectedCountrys, SelectedCitys, SelectedGenres, SelectedBitrate));
             }
+
             ServiceRegistration.Get<ISettingsManager>().Save(new FilterSettings(FilterList));
             SaveImage = "Saved.png";
         }
@@ -452,6 +467,7 @@ namespace Webradio.Models
                     Refresh(Citys, i);
                 }
             }
+
             SaveImage = "Unsaved.png";
             Refresh(Countrys, item);
         }
@@ -485,6 +501,7 @@ namespace Webradio.Models
                     Refresh(Countrys, i);
                 }
             }
+
             SaveImage = "Unsaved.png";
             Refresh(Citys, item);
         }
@@ -502,6 +519,7 @@ namespace Webradio.Models
                 SelectedBitrate.Add(s);
                 item.Selected = true;
             }
+
             SaveImage = "Unsaved.png";
             Refresh(Bitrate, item);
         }
@@ -519,6 +537,7 @@ namespace Webradio.Models
                 SelectedGenres.Add(s);
                 item.Selected = true;
             }
+
             SaveImage = "Unsaved.png";
             Refresh(Genres, item);
         }

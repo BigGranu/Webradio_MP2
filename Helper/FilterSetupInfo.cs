@@ -22,38 +22,37 @@
 
 #endregion
 
-using System;
 using System.Collections.Generic;
 
 namespace Webradio.Helper
 {
-  public class FilterSetupInfo
-  {
-    public string Titel;
-    public string Id;
-    public List<string> Countrys;
-    public List<string> Citys;
-    public List<string> Genres;
-    public List<string> Bitrate;
-
-    public FilterSetupInfo()
+    public class FilterSetupInfo
     {
-      Titel = "";
-      Id = "";
-      Countrys = new List<string>();
-      Citys = new List<string>();
-      Genres = new List<string>();
-      Bitrate = new List<string>();
-    }
+        public string Titel;
+        public string Id;
+        public List<string> Countrys;
+        public List<string> Citys;
+        public List<string> Genres;
+        public List<string> Bitrate;
 
-    public FilterSetupInfo(String titel, String id, List<string> countrys, List<string> citys, List<string> genres, List<string> bitrate)
-    {
-      Titel = titel;
-      Id = id;
-      Countrys = countrys;
-      Citys = citys;
-      Genres = genres;
-      Bitrate = bitrate;
+        public FilterSetupInfo()
+        {
+            Titel = "";
+            Id = "";
+            Countrys = new List<string>();
+            Citys = new List<string>();
+            Genres = new List<string>();
+            Bitrate = new List<string>();
+        }
+
+        public FilterSetupInfo(string titel, string id, List<string> countrys, List<string> citys, List<string> genres, List<string> bitrate)
+        {
+            Titel = titel;
+            Id = id;
+            Countrys = countrys;
+            Citys = citys;
+            Genres = genres;
+            Bitrate = bitrate;
+        }
     }
-  }
 }

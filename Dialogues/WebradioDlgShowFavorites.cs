@@ -37,162 +37,166 @@ using Webradio.Settings;
 
 namespace Webradio.Dialogues
 {
-  internal class WebradioDlgShowFavorites : IWorkflowModel
-  {
-    #region Consts
-
-    public const string MODEL_ID_STR = "9723DCC8-969D-470E-B156-F4E6E639DD18";
-    public const string NAME = "name";
-
-    #endregion
-
-    public bool Changed = false;
-    public ItemsList AllFavoritItems = new ItemsList();
-    public ItemsList FavoritItems = new ItemsList();
-    public List<FavoriteSetupInfo> FavoritList = new List<FavoriteSetupInfo>();
-    public string SelectedStream = string.Empty;
-
-    public void Init()
+    internal class WebradioDlgShowFavorites : IWorkflowModel
     {
-      FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList ?? new List<FavoriteSetupInfo> { new FavoriteSetupInfo("New Favorite", true, new List<string>()) };
-      if (WebradioHome.SelectedStream.Title != "")
-      {
-        ImportAllFavorits(WebradioHome.SelectedStream);
-        SelectedStream = WebradioHome.SelectedStream.Title;
-      }     
-      ImportFavorits();      
-    }
+        #region Consts
 
-    public void ImportAllFavorits(MyStream stream)
-    {
-      AllFavoritItems.Clear();
+        public const string MODEL_ID_STR = "9723DCC8-969D-470E-B156-F4E6E639DD18";
+        public const string NAME = "name";
 
-      foreach (FavoriteSetupInfo f in FavoritList)
-      {
-        var item = new ListItem();
-        item.AdditionalProperties[NAME] = f.Titel;
-        item.SetLabel("Name", f.Titel);
-        item.Selected = f.StreamUrls.Contains(stream.StreamUrls[0].StreamUrl);
-        AllFavoritItems.Add(item);
-      }
-      AllFavoritItems.FireChange();
-    }
+        #endregion
 
-    public void ImportFavorits()
-    {
-      FavoritItems.Clear();
-      foreach (FavoriteSetupInfo f in FavoritList)
-      {
-        if (f.StreamUrls.Count > 0)
+        public bool Changed = false;
+        public ItemsList AllFavoritItems = new ItemsList();
+        public ItemsList FavoritItems = new ItemsList();
+        public List<FavoriteSetupInfo> FavoritList = new List<FavoriteSetupInfo>();
+        public string SelectedStream = string.Empty;
+
+        public void Init()
         {
-          var item = new ListItem();
-          item.AdditionalProperties[NAME] = f.Titel;
-          item.SetLabel("Name", f.Titel);
-          item.SetLabel("Count", Convert.ToString(f.StreamUrls.Count));
-          FavoritItems.Add(item);
-        }
-      }
-      FavoritItems.FireChange();
-    }
+            FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList ?? new List<FavoriteSetupInfo> { new FavoriteSetupInfo("New Favorite", true, new List<string>()) };
+            if (WebradioHome.SelectedStream.Title != "")
+            {
+                ImportAllFavorits(WebradioHome.SelectedStream);
+                SelectedStream = WebradioHome.SelectedStream.Title;
+            }
 
-    /// <summary>
-    /// Import selected Filter
-    /// </summary>
-    public void SelectFavorite(ListItem item)
-    {
-      var list = new List<MyStream>();
-      foreach (var query in from f in FavoritList where f.Titel == (string)item.AdditionalProperties[NAME] select (from r in WebradioHome.StreamList where _contains(f.StreamUrls, r.StreamUrls[0].StreamUrl) select r))
-      {
-        foreach (MyStream ms in query.Where(ms => !list.Contains(ms)))
+            ImportFavorits();
+        }
+
+        public void ImportAllFavorits(MyStream stream)
         {
-          list.Add(ms);
+            AllFavoritItems.Clear();
+
+            foreach (FavoriteSetupInfo f in FavoritList)
+            {
+                var item = new ListItem();
+                item.AdditionalProperties[NAME] = f.Titel;
+                item.SetLabel("Name", f.Titel);
+                item.Selected = f.StreamUrls.Contains(stream.StreamUrls[0].StreamUrl);
+                AllFavoritItems.Add(item);
+            }
+
+            AllFavoritItems.FireChange();
         }
-        break;
-      }
-      WebradioHome.FillItemList(list);
-      ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
-    }
 
-    private static bool _contains(List<string> l, string s)
-    {
-      if (l.Count == 0)
-      {
-        return true;
-      }
-      string[] sp = s.Split(new[] { ',' });
-      return sp.Any(l.Contains);
-    }
-
-    public void SetFavorite(ListItem item)
-    {
-      var s = (string)item.AdditionalProperties[NAME];
-
-      string url = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl;
-
-      foreach (FavoriteSetupInfo f in FavoritList.Where(f => f.Titel == s))
-      {
-        if (item.Selected)
+        public void ImportFavorits()
         {
-          item.Selected = false;
-          f.StreamUrls.Remove(url);
+            FavoritItems.Clear();
+            foreach (FavoriteSetupInfo f in FavoritList)
+            {
+                if (f.StreamUrls.Count > 0)
+                {
+                    var item = new ListItem();
+                    item.AdditionalProperties[NAME] = f.Titel;
+                    item.SetLabel("Name", f.Titel);
+                    item.SetLabel("Count", Convert.ToString(f.StreamUrls.Count));
+                    FavoritItems.Add(item);
+                }
+            }
+
+            FavoritItems.FireChange();
         }
-        else
+
+        /// <summary>
+        /// Import selected Filter
+        /// </summary>
+        public void SelectFavorite(ListItem item)
         {
-          item.Selected = true;
-          f.StreamUrls.Add(url);
+            var list = new List<MyStream>();
+            foreach (var query in from f in FavoritList where f.Titel == (string)item.AdditionalProperties[NAME] select (from r in WebradioHome.StreamList where _contains(f.StreamUrls, r.StreamUrls[0].StreamUrl) select r))
+            {
+                foreach (MyStream ms in query.Where(ms => !list.Contains(ms)))
+                {
+                    list.Add(ms);
+                }
+
+                break;
+            }
+
+            WebradioHome.FillItemList(list);
+            ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
         }
-        Changed = true;
-        ImportFavorits();
-      }
+
+        private static bool _contains(List<string> l, string s)
+        {
+            if (l.Count == 0)
+            {
+                return true;
+            }
+
+            string[] sp = s.Split(new[] { ',' });
+            return sp.Any(l.Contains);
+        }
+
+        public void SetFavorite(ListItem item)
+        {
+            var s = (string)item.AdditionalProperties[NAME];
+
+            string url = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl;
+
+            foreach (FavoriteSetupInfo f in FavoritList.Where(f => f.Titel == s))
+            {
+                if (item.Selected)
+                {
+                    item.Selected = false;
+                    f.StreamUrls.Remove(url);
+                }
+                else
+                {
+                    item.Selected = true;
+                    f.StreamUrls.Add(url);
+                }
+
+                Changed = true;
+                ImportFavorits();
+            }
+        }
+
+        #region IWorkflowModel implementation
+
+        public Guid ModelId => new Guid(MODEL_ID_STR);
+
+        public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
+        {
+            return true;
+        }
+
+        public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
+        {
+            Init();
+        }
+
+        public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
+        {
+            if (Changed)
+            {
+                ServiceRegistration.Get<ISettingsManager>().Save(new FavoritesSettings(FavoritList));
+            }
+        }
+
+        public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
+        {
+            // We could initialize some data here when changing the media navigation state
+        }
+
+        public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
+        {
+        }
+
+        public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
+        {
+        }
+
+        public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
+        {
+        }
+
+        public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
+        {
+            return ScreenUpdateMode.AutoWorkflowManager;
+        }
+
+        #endregion
     }
-
-    #region IWorkflowModel implementation
-
-    public Guid ModelId
-    {
-      get { return new Guid(MODEL_ID_STR); }
-    }
-
-    public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
-    {
-      return true;
-    }
-
-    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
-    {
-      Init();
-    }
-
-    public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
-    {
-      if (Changed)
-      {
-        ServiceRegistration.Get<ISettingsManager>().Save(new FavoritesSettings(FavoritList));
-      }
-    }
-
-    public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
-    {
-      // We could initialize some data here when changing the media navigation state
-    }
-
-    public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
-    {
-    }
-
-    public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
-    {
-    }
-
-    public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
-    {
-    }
-
-    public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
-    {
-      return ScreenUpdateMode.AutoWorkflowManager;
-    }
-
-    #endregion
-  }
 }

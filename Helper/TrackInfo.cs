@@ -69,6 +69,7 @@ namespace Webradio.Helper
             {
                 return s.Image;
             }
+
             return "";
         }
 
@@ -130,7 +131,7 @@ namespace Webradio.Helper
         {
             // Search with GraceNote
             try
-            { 
+            {
                 var cover2 = new GracenoteClient("8038400-D6D9583FE60EA28CE621BC0EAD6ED8A0").Search(new SearchCriteria
                 {
                     Artist = artist,

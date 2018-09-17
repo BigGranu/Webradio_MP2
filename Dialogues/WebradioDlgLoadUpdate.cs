@@ -37,125 +37,108 @@ using Webradio.Models;
 
 namespace Webradio.Dialogues
 {
-  public class WebradioDlgLoadUpdate : IWorkflowModel
-  {
-    #region Consts
-
-    public const string MODEL_ID_STR = "028ABECD-9885-48F6-B39F-F252EC0115EF";
-
-    protected const string DOWNLOAD_COMPLETE = "[Webradio.Dialog.LoadUpdate.DownloadComplete]";
-    protected const string DOWNLOAD_ERROR = "[Webradio.Dialog.LoadUpdate.DownloadError]";
-
-    #endregion
-
-    #region Propertys
-
-    private static AbstractProperty _updateProgressProperty = new WProperty(typeof(int), 0);
-
-    public AbstractProperty UpdateProgressProperty
+    public class WebradioDlgLoadUpdate : IWorkflowModel
     {
-      get { return _updateProgressProperty; }
+        #region Consts
+
+        public const string MODEL_ID_STR = "028ABECD-9885-48F6-B39F-F252EC0115EF";
+        public const string DOWNLOAD_COMPLETE = "[Webradio.Dialog.LoadUpdate.DownloadComplete]";
+        public const string DOWNLOAD_ERROR = "[Webradio.Dialog.LoadUpdate.DownloadError]";
+
+        #endregion
+
+        #region Propertys
+
+        protected static AbstractProperty UpdateProgressProperty = new WProperty(typeof(int), 0);
+        public static int UpdateProgress
+        {
+            get => (int)UpdateProgressProperty.GetValue();
+            set => UpdateProgressProperty.SetValue(value);
+        }
+
+        protected static AbstractProperty InfoProperty = new WProperty(typeof(string), string.Empty);
+        public static string Info
+        {
+            get => (string)InfoProperty.GetValue();
+            set => InfoProperty.SetValue(value);
+        }
+
+        #endregion
+
+        public static void LoadSenderListe()
+        {
+            try
+            {
+                WebClient webclient1 = new WebClient();
+                webclient1.DownloadFileCompleted += DownloadCompleted;
+                webclient1.DownloadProgressChanged += DownloadStatusChanged;
+                webclient1.DownloadFileAsync(new Uri(StreamlistUpdate.StreamlistServerPath), StreamlistUpdate.StreamListFile);
+            }
+            catch (Exception ex)
+            {
+                ServiceRegistration.Get<ILogger>().Error("Webradio: Error read Online Stationslist '{0}'", ex);
+            }
+        }
+
+        public static void Finish()
+        {
+            WebradioHome homeModel = ServiceRegistration.Get<IWorkflowManager>().GetModel(WebradioHome.MODEL_ID) as WebradioHome;
+            if (homeModel == null)
+                return;
+
+            ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
+            homeModel.Init();
+        }
+
+        private static void DownloadCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            Info = e.Error == null ? DOWNLOAD_COMPLETE : DOWNLOAD_ERROR;
+            Finish();
+        }
+
+        private static void DownloadStatusChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            UpdateProgress = e.ProgressPercentage;
+        }
+
+        #region IWorkflowModel implementation
+
+        public Guid ModelId => new Guid(MODEL_ID_STR);
+
+        public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
+        {
+            return true;
+        }
+
+        public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
+        {
+        }
+
+        public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
+        {
+        }
+
+        public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
+        {
+        }
+
+        public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
+        {
+        }
+
+        public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
+        {
+        }
+
+        public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
+        {
+        }
+
+        public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
+        {
+            return ScreenUpdateMode.AutoWorkflowManager;
+        }
+
+        #endregion
     }
-
-    public static int UpdateProgress
-    {
-      get { return (int)_updateProgressProperty.GetValue(); }
-      set { _updateProgressProperty.SetValue(value); }
-    }
-
-    private static AbstractProperty _infoProperty = new WProperty(typeof(string), string.Empty);
-
-    public AbstractProperty InfoProperty
-    {
-      get { return _infoProperty; }
-    }
-
-    public static string Info
-    {
-      get { return (string)_infoProperty.GetValue(); }
-      set { _infoProperty.SetValue(value); }
-    }
-
-    #endregion
-
-    public static void LoadSenderListe()
-    {
-      try
-      {
-        WebClient webclient1 = new WebClient();
-        webclient1.DownloadFileCompleted += DownloadCompleted;
-        webclient1.DownloadProgressChanged += DownloadStatusChanged;
-        webclient1.DownloadFileAsync(new Uri(StreamlistUpdate.StreamlistServerPath), StreamlistUpdate.StreamListFile);
-      }
-      catch (Exception ex)
-      {
-        ServiceRegistration.Get<ILogger>().Error("Webradio: Error read Online Stationslist '{0}'", ex);
-      }
-    }
-
-    public static void Finish()
-    {
-      WebradioHome homeModel = ServiceRegistration.Get<IWorkflowManager>().GetModel(WebradioHome.MODEL_ID) as WebradioHome;
-      if (homeModel == null)
-        return;
-
-      ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
-      homeModel.Init();     
-    }
-
-    private static void DownloadCompleted(object sender, AsyncCompletedEventArgs e)
-    {
-      Info = e.Error == null ? DOWNLOAD_COMPLETE : DOWNLOAD_ERROR;
-      Finish();
-    }
-
-    private static void DownloadStatusChanged(object sender, DownloadProgressChangedEventArgs e)
-    {
-      UpdateProgress = e.ProgressPercentage;
-    }
-
-    #region IWorkflowModel implementation
-
-    public Guid ModelId
-    {
-      get { return new Guid(MODEL_ID_STR); }
-    }
-
-    public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
-    {
-      return true;
-    }
-
-    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
-    {
-    }
-
-    public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
-    {
-    }
-
-    public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
-    {
-      // We could initialize some data here when changing the media navigation state
-    }
-
-    public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
-    {
-    }
-
-    public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
-    {
-    }
-
-    public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
-    {
-    }
-
-    public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
-    {
-      return ScreenUpdateMode.AutoWorkflowManager;
-    }
-
-    #endregion
-  }
 }

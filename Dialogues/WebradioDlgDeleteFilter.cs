@@ -33,106 +33,100 @@ using Webradio.Models;
 
 namespace Webradio.Dialogues
 {
-  internal class WebradioDlgDeleteFilter : IWorkflowModel
-  {
-    #region Consts
-
-    public const string MODEL_ID_STR = "59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89";
-    public const string NAME = "name";
-    public const string ID = "id";
-
-    #endregion
-
-    public static List<FilterSetupInfo> FilterList = new List<FilterSetupInfo>();
-    public ItemsList FilterItems = new ItemsList();
-
-    public void Init()
+    internal class WebradioDlgDeleteFilter : IWorkflowModel
     {
-      FilterList = WebradioFilter.FilterList;
-      ImportFilter();
-    }
+        #region Consts
 
-    public void ImportFilter()
-    {
-      FilterItems.Clear();
-      int id = 0;
-      foreach (FilterSetupInfo mf in FilterList)
-      {
-        ListItem item = new ListItem();
-        item.AdditionalProperties[NAME] = mf.Titel;
-        item.AdditionalProperties[ID] = mf.Id;
-        item.SetLabel("Name", mf.Titel);
-        FilterItems.Add(item);
-        id += 1;
-      }
-      FilterItems.FireChange();
-    }
+        public const string MODEL_ID_STR = "59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89";
+        public const string NAME = "name";
+        public const string ID = "id";
 
-    public void Select(ListItem item)
-    {
-      item.Selected = item.Selected != true;
-      item.FireChange();
-    }
+        #endregion
 
-    public void Delete()
-    {
-      foreach (ListItem item in FilterItems.Where(item => item.Selected == true))
-      {
-        foreach (FilterSetupInfo mf in FilterList)
+        public static List<FilterSetupInfo> FilterList = new List<FilterSetupInfo>();
+        public ItemsList FilterItems = new ItemsList();
+
+        public void Init()
         {
-          if (mf.Id != (string)item.AdditionalProperties[ID]) continue;
-          FilterList.Remove(mf);
-          break;
+            FilterList = WebradioFilter.FilterList;
+            ImportFilter();
         }
-      }
-      WebradioFilter.SaveImage = "Unsaved.png";
-      WebradioFilter.FilterTitel = "";
-      ImportFilter();
+
+        public void ImportFilter()
+        {
+            FilterItems.Clear();
+            foreach (FilterSetupInfo mf in FilterList)
+            {
+                ListItem item = new ListItem { AdditionalProperties = { [NAME] = mf.Titel, [ID] = mf.Id } };
+                item.SetLabel("Name", mf.Titel);
+                FilterItems.Add(item);
+            }
+
+            FilterItems.FireChange();
+        }
+
+        public void Select(ListItem item)
+        {
+            item.Selected = item.Selected != true;
+            item.FireChange();
+        }
+
+        public void Delete()
+        {
+            foreach (ListItem item in FilterItems.Where(item => item.Selected == true))
+            {
+                foreach (FilterSetupInfo mf in FilterList)
+                {
+                    if (mf.Id != (string)item.AdditionalProperties[ID]) continue;
+                    FilterList.Remove(mf);
+                    break;
+                }
+            }
+
+            WebradioFilter.SaveImage = "Unsaved.png";
+            WebradioFilter.FilterTitel = "";
+            ImportFilter();
+        }
+
+        #region IWorkflowModel implementation
+
+        public Guid ModelId => new Guid(MODEL_ID_STR);
+
+        public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
+        {
+            return true;
+        }
+
+        public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
+        {
+            Init();
+        }
+
+        public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
+        {
+        }
+
+        public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
+        {
+        }
+
+        public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
+        {
+        }
+
+        public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
+        {
+        }
+
+        public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
+        {
+        }
+
+        public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
+        {
+            return ScreenUpdateMode.AutoWorkflowManager;
+        }
+
+        #endregion
     }
-
-    #region IWorkflowModel implementation
-
-    public Guid ModelId
-    {
-      get { return new Guid(MODEL_ID_STR); }
-    }
-
-    public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
-    {
-      return true;
-    }
-
-    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
-    {
-      Init();
-    }
-
-    public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
-    {
-    }
-
-    public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
-    {
-      // We could initialize some data here when changing the media navigation state
-    }
-
-    public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
-    {
-    }
-
-    public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
-    {
-    }
-
-    public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
-    {
-    }
-
-    public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
-    {
-      return ScreenUpdateMode.AutoWorkflowManager;
-    }
-
-    #endregion
-  }
 }

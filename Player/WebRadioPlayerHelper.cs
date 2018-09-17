@@ -34,83 +34,84 @@ using MediaPortal.Common.MediaManagement.DefaultItemAspects;
 using MediaPortal.Common.PathManager;
 using MediaPortal.Common.Services.ResourceAccess.RawUrlResourceProvider;
 using MediaPortal.Common.SystemResolver;
-using MediaPortal.UI.Presentation.Players;
 using MediaPortal.UiComponents.Media.Models;
+using MediaPortal.UI.Presentation.Players;
 using Webradio.Helper;
 
 namespace Webradio.Player
 {
-  internal class WebRadioPlayerHelper
-  {
-    public const string WEBRADIO_MIMETYPE = "webradio/stream";
-
-    /// <summary>
-    /// Constructs a dynamic <see cref="MediaItem"/> that contains the URL for the given <paramref name="stream"/> and starts the playback.
-    /// </summary>
-    /// <param name="stream">Stream.</param>
-    public static void PlayStream(MyStream stream)
+    internal class WebRadioPlayerHelper
     {
-      var mediaItem = CreateStreamMediaItem(stream);
-      if (ServiceRegistration.Get<IPlayerContextManager>().IsVideoContextActive)
-      {
-        PlayItemsModel.CheckQueryPlayAction(mediaItem);
-      }
-      else
-      {
-        PlayItemsModel.PlayItem(mediaItem);
-      }
-    }
+        public const string WEBRADIO_MIMETYPE = "webradio/stream";
 
-    /// <summary>
-    /// Constructs a dynamic <see cref="MediaItem"/> that contains the URL for the given <paramref name="stream"/>.
-    /// </summary>
-    /// <param name="stream">Stream.</param>
-    private static MediaItem CreateStreamMediaItem(MyStream stream)
-    {
-      IDictionary<Guid, IList<MediaItemAspect>> aspects = new Dictionary<Guid, IList<MediaItemAspect>>();
-
-      MultipleMediaItemAspect providerResourceAspect = MediaItemAspect.CreateAspect(aspects, ProviderResourceAspect.Metadata);
-      SingleMediaItemAspect mediaAspect = MediaItemAspect.GetOrCreateAspect(aspects, MediaAspect.Metadata);
-      SingleMediaItemAspect audioAspect = MediaItemAspect.GetOrCreateAspect(aspects, AudioAspect.Metadata);
-
-      providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_TYPE, ProviderResourceAspect.TYPE_PRIMARY);
-      providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_RESOURCE_ACCESSOR_PATH, RawUrlResourceProvider.ToProviderResourcePath(stream.StreamUrls[0].StreamUrl).Serialize());
-      providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_SYSTEM_ID, ServiceRegistration.Get<ISystemResolver>().LocalSystemId);
-      providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_MIME_TYPE, WEBRADIO_MIMETYPE);
-
-      mediaAspect.SetAttribute(MediaAspect.ATTR_TITLE, stream.Title);
-
-      MediaItemAspect.SetAttribute(aspects, ThumbnailLargeAspect.ATTR_THUMBNAIL, ImageFromLogo(stream.Logo));
-
-      var mediaItem = new MediaItem(Guid.Empty, aspects);
-      return mediaItem;
-    }
-
-    /// <summary>
-    /// Convert the Webstreamlogo (Online or Default) to byte[]
-    /// </summary>
-    public static byte[] ImageFromLogo(string path)
-    {
-      var ms = new MemoryStream();
-      try
-      {
-        var imageRequest = (HttpWebRequest)WebRequest.Create(path);
-        imageRequest.Credentials = CredentialCache.DefaultCredentials;
-        using (var imageReponse = (HttpWebResponse)imageRequest.GetResponse())
+        /// <summary>
+        /// Constructs a dynamic <see cref="MediaItem"/> that contains the URL for the given <paramref name="stream"/> and starts the playback.
+        /// </summary>
+        /// <param name="stream">Stream.</param>
+        public static void PlayStream(MyStream stream)
         {
-          using (var imageStream = imageReponse.GetResponseStream())
-          {
-            if (imageStream != null) Image.FromStream(imageStream).Save(ms, ImageFormat.Png);
-          }
+            var mediaItem = CreateStreamMediaItem(stream);
+            if (ServiceRegistration.Get<IPlayerContextManager>().IsVideoContextActive)
+            {
+                PlayItemsModel.CheckQueryPlayAction(mediaItem);
+            }
+            else
+            {
+                PlayItemsModel.PlayItem(mediaItem);
+            }
         }
-      }
-      catch (Exception)
-      {
-        var s = ServiceRegistration.Get<IPathManager>().GetPath(@"<PLUGINS>\Webradio\Skin\default\images\DefaultLogo.png");
-        Image.FromFile(s).Save(ms, ImageFormat.Png);
-        return ms.ToArray();
-      }
-      return ms.ToArray();
+
+        /// <summary>
+        /// Constructs a dynamic <see cref="MediaItem"/> that contains the URL for the given <paramref name="stream"/>.
+        /// </summary>
+        /// <param name="stream">Stream.</param>
+        private static MediaItem CreateStreamMediaItem(MyStream stream)
+        {
+            IDictionary<Guid, IList<MediaItemAspect>> aspects = new Dictionary<Guid, IList<MediaItemAspect>>();
+
+            MultipleMediaItemAspect providerResourceAspect = MediaItemAspect.CreateAspect(aspects, ProviderResourceAspect.Metadata);
+            SingleMediaItemAspect mediaAspect = MediaItemAspect.GetOrCreateAspect(aspects, MediaAspect.Metadata);
+            SingleMediaItemAspect audioAspect = MediaItemAspect.GetOrCreateAspect(aspects, AudioAspect.Metadata);
+
+            providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_TYPE, ProviderResourceAspect.TYPE_PRIMARY);
+            providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_RESOURCE_ACCESSOR_PATH, RawUrlResourceProvider.ToProviderResourcePath(stream.StreamUrls[0].StreamUrl).Serialize());
+            providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_SYSTEM_ID, ServiceRegistration.Get<ISystemResolver>().LocalSystemId);
+            providerResourceAspect.SetAttribute(ProviderResourceAspect.ATTR_MIME_TYPE, WEBRADIO_MIMETYPE);
+
+            mediaAspect.SetAttribute(MediaAspect.ATTR_TITLE, stream.Title);
+
+            MediaItemAspect.SetAttribute(aspects, ThumbnailLargeAspect.ATTR_THUMBNAIL, ImageFromLogo(stream.Logo));
+
+            var mediaItem = new MediaItem(Guid.Empty, aspects);
+            return mediaItem;
+        }
+
+        /// <summary>
+        /// Convert the Webstreamlogo (Online or Default) to byte[]
+        /// </summary>
+        public static byte[] ImageFromLogo(string path)
+        {
+            var ms = new MemoryStream();
+            try
+            {
+                var imageRequest = (HttpWebRequest)WebRequest.Create(path);
+                imageRequest.Credentials = CredentialCache.DefaultCredentials;
+                using (var imageReponse = (HttpWebResponse)imageRequest.GetResponse())
+                {
+                    using (var imageStream = imageReponse.GetResponseStream())
+                    {
+                        if (imageStream != null) Image.FromStream(imageStream).Save(ms, ImageFormat.Png);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                var s = ServiceRegistration.Get<IPathManager>().GetPath(@"<PLUGINS>\Webradio\Skin\default\images\DefaultLogo.png");
+                Image.FromFile(s).Save(ms, ImageFormat.Png);
+                return ms.ToArray();
+            }
+
+            return ms.ToArray();
+        }
     }
-  }
 }

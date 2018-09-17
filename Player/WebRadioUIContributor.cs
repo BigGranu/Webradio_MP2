@@ -22,13 +22,11 @@
 
 #endregion
 
-using System.Threading.Tasks;
-using System.Timers;
 using MediaPortal.Common;
 using MediaPortal.Common.General;
 using MediaPortal.Common.Logging;
-using MediaPortal.UiComponents.Media.Models;
 using MediaPortal.Extensions.UserServices.FanArtService.Client.Models;
+using MediaPortal.UiComponents.Media.Models;
 using MediaPortal.UI.Players.BassPlayer.Interfaces;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Players;
@@ -43,93 +41,140 @@ namespace Webradio.Player
     {
         public const string SCREEN_FULLSCREEN_AUDIO = "webradio_FullscreenContent";
         public const string SCREEN_CURRENTLY_PLAYING_AUDIO = "webradio_CurrentlyPlaying";
-
         protected const int UPDATE_INTERVAL_MS = 300;
-        protected static AbstractProperty _listenersProperty;
-        protected AbstractProperty _albumProperty;
-        protected AbstractProperty _artistBioProperty;
 
-        protected AbstractProperty _artistProperty;
-
-        // only for Fanart    
+        private TrackInfo _info = new TrackInfo();
         private string _cArtist = string.Empty;
-        private readonly NavigationContext _context;
         private string _cTitle = string.Empty;
-        protected AbstractProperty _currentStreamLogoProperty;
 
         protected MediaWorkflowStateType _mediaWorkflowStateType;
         protected ITagSource _tagSource;
-        protected AbstractProperty _titleProperty;
         protected bool _updating;
-        private readonly Timer ATimer = new Timer();
-        private int FanartCount;
-        private TrackInfo TInfo = new TrackInfo();
 
         #region Constructor & maintainance
 
         public WebRadioUIContributor() : base(false, UPDATE_INTERVAL_MS)
         {
             _artistProperty = new WProperty(typeof(string), string.Empty);
-            _artistBioProperty = new WProperty(typeof(string), string.Empty);
             _titleProperty = new WProperty(typeof(string), string.Empty);
+            _artistBioProperty = new WProperty(typeof(string), string.Empty);
             _albumProperty = new WProperty(typeof(string), string.Empty);
-            _currentStreamLogoProperty = new WProperty(typeof(string), string.Empty);
             _listenersProperty = new WProperty(typeof(string), string.Empty);
 
-            _context = ServiceRegistration.Get<IWorkflowManager>().CurrentNavigationContext;
-
-            StartTimer();
+            _currentStreamLogoProperty = new WProperty(typeof(string), string.Empty);
+            _currentStreamTitleProperty = new WProperty(typeof(string), string.Empty);
+            _currentStreamCityProperty = new WProperty(typeof(string), string.Empty);
+            _currentStreamCountryProperty = new WProperty(typeof(string), string.Empty);
+            _currentStreamGenresProperty = new WProperty(typeof(string), string.Empty);
+            _currentStreamHomepageProperty = new WProperty(typeof(string), string.Empty);
+            _currentStreamLanguageProperty = new WProperty(typeof(string), string.Empty);
         }
 
         #endregion
 
-        public AbstractProperty ArtistProperty => _artistProperty;
+        #region Current Stream Infos
 
-        public string Artist
-        {
-            get { return (string)_artistProperty.GetValue(); }
-            set { _artistProperty.SetValue(value); }
-        }
-
-        public AbstractProperty ArtistBioProperty => _artistBioProperty;
-
-        public string ArtistBio
-        {
-            get { return (string)_artistBioProperty.GetValue(); }
-            set { _artistBioProperty.SetValue(value); }
-        }
-
-        public AbstractProperty TitleProperty => _titleProperty;
-
-        public string Title
-        {
-            get { return (string)_titleProperty.GetValue(); }
-            set { _titleProperty.SetValue(value); }
-        }
-
-        public AbstractProperty AlbumProperty => _albumProperty;
-
-        public string Album
-        {
-            get { return (string)_albumProperty.GetValue(); }
-            set { _albumProperty.SetValue(value); }
-        }
-
+        protected AbstractProperty _currentStreamLogoProperty;
         public AbstractProperty CurrentStreamLogoProperty => _currentStreamLogoProperty;
-
         public string CurrentStreamLogo
         {
-            get { return (string)_currentStreamLogoProperty.GetValue(); }
-            set { _currentStreamLogoProperty.SetValue(value); }
+            get => (string)_currentStreamLogoProperty.GetValue();
+            set => _currentStreamLogoProperty.SetValue(value);
         }
 
-        public AbstractProperty ListenersProperty => _listenersProperty;
+        protected AbstractProperty _currentStreamTitleProperty;
+        public AbstractProperty CurrentStreamTitleProperty => _currentStreamTitleProperty;
+        public string CurrentStreamTitle
+        {
+            get => (string)_currentStreamTitleProperty.GetValue();
+            set => _currentStreamTitleProperty.SetValue(value);
+        }
 
+        protected AbstractProperty _currentStreamCityProperty;
+        public AbstractProperty CurrentStreamCityProperty => _currentStreamCityProperty;
+        public string CurrentStreamCity
+        {
+            get => (string)_currentStreamCityProperty.GetValue();
+            set => _currentStreamCityProperty.SetValue(value);
+        }
+
+        protected AbstractProperty _currentStreamCountryProperty;
+        public AbstractProperty CurrentStreamCountryProperty => _currentStreamCountryProperty;
+        public string CurrentStreamCountry
+        {
+            get => (string)_currentStreamCountryProperty.GetValue();
+            set => _currentStreamCountryProperty.SetValue(value);
+        }
+
+        protected AbstractProperty _currentStreamGenresProperty;
+        public AbstractProperty CurrentStreamGenresProperty => _currentStreamGenresProperty;
+        public string CurrentStreamGenres
+        {
+            get => (string)_currentStreamGenresProperty.GetValue();
+            set => _currentStreamGenresProperty.SetValue(value);
+        }
+
+        protected AbstractProperty _currentStreamHomepageProperty;
+        public AbstractProperty CurrentStreamHomepageProperty => _currentStreamHomepageProperty;
+        public string CurrentStreamHomepage
+        {
+            get => (string)_currentStreamHomepageProperty.GetValue();
+            set => _currentStreamHomepageProperty.SetValue(value);
+        }
+
+        protected AbstractProperty _currentStreamLanguageProperty;
+        public AbstractProperty CurrentStreamLanguageProperty => _currentStreamLanguageProperty;
+        public string CurrentStreamLanguage
+        {
+            get => (string)_currentStreamLanguageProperty.GetValue();
+            set => _currentStreamLanguageProperty.SetValue(value);
+        }
+
+        #endregion
+
+        #region Current Title Infos
+
+        protected AbstractProperty _artistProperty;
+        public AbstractProperty ArtistProperty => _artistProperty;
+        public string Artist
+        {
+            get => (string)_artistProperty.GetValue();
+            set => _artistProperty.SetValue(value);
+        }
+
+        protected AbstractProperty _artistBioProperty;
+        public AbstractProperty ArtistBioProperty => _artistBioProperty;
+        public string ArtistBio
+        {
+            get => (string)_artistBioProperty.GetValue();
+            set => _artistBioProperty.SetValue(value);
+        }
+
+        protected AbstractProperty _titleProperty;
+        public AbstractProperty TitleProperty => _titleProperty;
+        public string Title
+        {
+            get => (string)_titleProperty.GetValue();
+            set => _titleProperty.SetValue(value);
+        }
+
+        protected AbstractProperty _albumProperty;
+        public AbstractProperty AlbumProperty => _albumProperty;
+        public string Album
+        {
+            get => (string)_albumProperty.GetValue();
+            set => _albumProperty.SetValue(value);
+        }
+
+        protected static AbstractProperty _listenersProperty;
+        public AbstractProperty ListenersProperty => _listenersProperty;
         public string Listeners
         {
-            get { return (string)_listenersProperty.GetValue(); }
-            set { _listenersProperty.SetValue(value); }
+            get => (string)_listenersProperty.GetValue();
+            set => _listenersProperty.SetValue(value);
         }
+
+        #endregion
 
         public bool BackgroundDisabled => false;
 
@@ -151,13 +196,9 @@ namespace Webradio.Player
         {
             _mediaWorkflowStateType = stateType;
             _tagSource = player as ITagSource;
-            CurrentStreamLogo = WebradioHome.CurrentStreamLogo;
+            SetChannelInfos();
 
-            // Only for Fanart /////////////
-            ATimer.Elapsed += OnTimedEvent;
-            ATimer.Interval = 15000;
-            ATimer.Start();
-            ////////////////////////////////
+            StartTimer();
         }
 
         // Update GUI properties
@@ -168,9 +209,12 @@ namespace Webradio.Player
                 ServiceRegistration.Get<ILogger>().Warn("WebRadioUIContributor: last update cycle still not finished.");
                 return;
             }
+
             _updating = true;
             try
             {
+                SetChannelInfos();
+
                 if (_tagSource != null)
                 {
                     var tags = _tagSource.Tags;
@@ -186,49 +230,58 @@ namespace Webradio.Player
                     Artist = tags.artist;
                     Title = tags.title;
 
-                    if (Artist != _cArtist | Title != _cTitle)
+                    if ((Artist != _cArtist) | (Title != _cTitle))
                     {
                         _cArtist = Artist;
                         _cTitle = Title;
 
-                        if (Title != "" & Artist != "")
+                        if ((Title != "") & (Artist != ""))
                         {
-                            TInfo = new TrackInfo(Artist, Title);
+                            _info = new TrackInfo(Artist, Title);
 
-                            if (TInfo.FrontCover == null | TInfo.FrontCover == "")
-                            {
+                            if ((_info.FrontCover == null) | (_info.FrontCover == ""))
                                 CurrentStreamLogo = WebradioHome.CurrentStreamLogo;
-                            }
                             else
-                            {
-                                CurrentStreamLogo = TInfo.FrontCover;
-                            }
+                                CurrentStreamLogo = _info.FrontCover;
 
-                            if (TInfo.ArtistBackgrounds.Count > 0)
+                            if (_info.ArtistBackgrounds.Count > 0)
                             {
                                 var fanArtBgModel = (FanArtBackgroundModel)ServiceRegistration.Get<IWorkflowManager>().GetModel(FanArtBackgroundModel.FANART_MODEL_ID);
                                 if (fanArtBgModel == null) return;
-                                var uriSource = TInfo.ArtistBackgrounds[0];
-                                fanArtBgModel.ImageSource = uriSource != "" ? new MultiImageSource { UriSource = uriSource } : new MultiImageSource { UriSource = null };
+                                var uriSource = _info.ArtistBackgrounds[0];
+                               // var us = new MultiImageSource { UriSource = uriSource };
+                                
+                                var d = new BitmapImageSource();
+                                d.UriSource = uriSource;
+                                fanArtBgModel.ImageSource = d;
+
+                                // fanArtBgModel.ImageSource = uriSource != "" ? new MultiImageSource { UriSource = uriSource } : new MultiImageSource { UriSource = null };
                             }
                             else
                             {
                                 ClearFanart();
                             }
 
-                            ArtistBio = TInfo.ArtistBio;
+                            ArtistBio = _info.ArtistBio;
                         }
                     }
 
-                    //////////////////////////////////////////////////////////
-
                     return;
                 }
+
                 Artist = string.Empty;
                 Title = string.Empty;
                 Album = string.Empty;
-                CurrentStreamLogo = string.Empty;
                 Listeners = string.Empty;
+
+                CurrentStreamLogo = string.Empty;
+                CurrentStreamTitle = string.Empty;
+                CurrentStreamCity = string.Empty;
+                CurrentStreamCountry = string.Empty;
+                CurrentStreamGenres = string.Empty;
+                CurrentStreamHomepage = string.Empty;
+                CurrentStreamLanguage = string.Empty;
+
                 ClearFanart();
             }
             finally
@@ -237,41 +290,22 @@ namespace Webradio.Player
             }
         }
 
+        private void SetChannelInfos()
+        {
+            var s = WebradioHome.SelectedStream;
+            CurrentStreamTitle = s.Title;
+            CurrentStreamCity = s.City;
+            CurrentStreamCountry = s.Country;
+            CurrentStreamGenres = s.Genres;
+            CurrentStreamHomepage = s.Homepage;
+            CurrentStreamLanguage = s.Language;
+            CurrentStreamLogo = WebradioHome.CurrentStreamLogo;
+        }
+
         private void ClearFanart()
         {
             var fanArtBgModel = (FanArtBackgroundModel)ServiceRegistration.Get<IWorkflowManager>().GetModel(FanArtBackgroundModel.FANART_MODEL_ID);
-            if (fanArtBgModel != null)
-            {
-                fanArtBgModel.ImageSource = new MultiImageSource { UriSource = null };
-            }
-        }
-
-        private void OnTimedEvent(object sender, ElapsedEventArgs e)
-        {
-            //var context = ServiceRegistration.Get<IWorkflowManager>().CurrentNavigationContext;
-
-            //if (context.WorkflowModelId != _context.WorkflowModelId)
-            //{
-            //    ATimer.Stop();
-            //    return;
-            //}
-
-            //if (TInfo.ArtistBackgrounds.Count > FanartCount)
-            //{
-            //    var fanArtBgModel = (FanArtBackgroundModel)ServiceRegistration.Get<IWorkflowManager>().GetModel(FanArtBackgroundModel.FANART_MODEL_ID);
-            //    if (fanArtBgModel == null) return;
-            //    var uriSource = TInfo.ArtistBackgrounds[FanartCount];
-            //    fanArtBgModel.ImageSource = uriSource != "" ? new MultiImageSource { UriSource = uriSource } : new MultiImageSource { UriSource = null };
-            //}
-
-            //if (FanartCount == TInfo.ArtistBackgrounds.Count)
-            //{
-            //    FanartCount = 0;
-            //}
-            //else
-            //{
-            //    FanartCount += 1;
-            //}
+            if (fanArtBgModel != null) fanArtBgModel.ImageSource = new MultiImageSource { UriSource = null };
         }
     }
 }

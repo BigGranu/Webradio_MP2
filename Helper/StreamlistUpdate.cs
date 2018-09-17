@@ -30,91 +30,89 @@ using MediaPortal.Common.PathManager;
 using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.Workflow;
 using Webradio.Dialogues;
-using Webradio.Models;
 using Webradio.Settings;
 
 namespace Webradio.Helper
 {
-  public class StreamlistUpdate
-  {
-    public static string WebradioDataFolder = ServiceRegistration.Get<IPathManager>().GetPath(@"<DATA>\Webradio");
-    public static string StreamListFile = Path.Combine(WebradioDataFolder, "StreamList.xml");
-    public static string StreamlistServerPath = "http://install.team-mediaportal.com/MP2/Webradio/Streamlist/StreamList.xml";
-
-    public static bool StreamListExists()
+    public class StreamlistUpdate
     {
-      if (!Directory.Exists(WebradioDataFolder))
-        Directory.CreateDirectory(WebradioDataFolder);
-      return File.Exists(StreamListFile);
+        public static string WebradioDataFolder = ServiceRegistration.Get<IPathManager>().GetPath(@"<DATA>\Webradio");
+        public static string StreamListFile = Path.Combine(WebradioDataFolder, "StreamList.xml");
+        public static string StreamlistServerPath = "http://install.team-mediaportal.com/MP2/Webradio/Streamlist/StreamList.xml";
+
+        public static bool StreamListExists()
+        {
+            if (!Directory.Exists(WebradioDataFolder))
+                Directory.CreateDirectory(WebradioDataFolder);
+            return File.Exists(StreamListFile);
+        }
+
+        public static int OnlineVersion()
+        {
+            WebRequest request = WebRequest.Create(StreamlistServerPath);
+            request.Credentials = CredentialCache.DefaultCredentials;
+            WebResponse response = null;
+            StreamReader reader = null;
+
+            try
+            {
+                response = request.GetResponse();
+                reader = new StreamReader(response.GetResponseStream());
+                char[] buffer = new char[200];
+                reader.Read(buffer, 0, 200);
+
+                string s = new string(buffer);
+                int a = s.IndexOf("<Version>", StringComparison.Ordinal) + 9;
+                int b = s.IndexOf("</Version>", StringComparison.Ordinal);
+                return Convert.ToInt32(s.Substring(a, b - a));
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+            finally
+            {
+                if (reader != null) reader.Close();
+                if (response != null) response.Close();
+            }
+        }
+
+        public static int OfflineVersion()
+        {
+            if (!StreamListExists())
+            {
+                return -1;
+            }
+
+            try
+            {
+                MyStreams ms = MyStreams.Read(StreamListFile);
+                return Convert.ToInt32(ms.Version);
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
+        public static void CheckUpdate()
+        {
+            if (OfflineVersion() >= OnlineVersion()) return;
+            var mode = ServiceRegistration.Get<ISettingsManager>().Load<WebradioSettings>().StreamlistUpdateMode;
+            if (mode == "Manually")
+            {
+                MakeUpdate();
+            }
+
+            if (mode == "Automatically")
+            {
+                WebradioDlgLoadUpdate.LoadSenderListe();
+            }
+        }
+
+        public static void MakeUpdate()
+        {
+            ServiceRegistration.Get<IWorkflowManager>().NavigatePushAsync(new Guid("7EB62BD5-3401-45B8-A622-C3A073D5BFDF"));
+        }
     }
-
-    public static int OnlineVersion()
-    {
-      WebRequest request = WebRequest.Create(StreamlistServerPath);
-      request.Credentials = CredentialCache.DefaultCredentials;
-      WebResponse response = null;
-      StreamReader reader = null;
-
-      try
-      {
-        response = request.GetResponse();
-        reader = new StreamReader(response.GetResponseStream());
-        char[] buffer = new char[200];
-        reader.Read(buffer, 0, 200);
-
-        string s = new string(buffer);
-        int a = s.IndexOf("<Version>", StringComparison.Ordinal) + 9;
-        int b = s.IndexOf("</Version>", StringComparison.Ordinal);
-        return Convert.ToInt32(s.Substring(a, b - a));
-      }
-      catch (Exception ex)
-      {
-        return -1;
-      }
-      finally
-      {
-        if (reader != null) reader.Close();
-        if (response != null) response.Close();
-      }
-    }
-
-    public static int OfflineVersion()
-    {
-      if (!StreamListExists())
-      {
-        return -1;
-      }
-
-      try
-      {
-        MyStreams ms = MyStreams.Read(StreamListFile);
-        return Convert.ToInt32(ms.Version);
-      }
-      catch (Exception)
-      {
-        return -1;
-      }
-
-    }
-
-    public static void CheckUpdate()
-    {
-      if (OfflineVersion() >= OnlineVersion()) return;
-      var mode = ServiceRegistration.Get<ISettingsManager>().Load<WebradioSettings>().StreamlistUpdateMode;
-      if (mode == "Manually")
-      {
-        MakeUpdate();
-      }
-
-      if (mode == "Automatically")
-      {
-        WebradioDlgLoadUpdate.LoadSenderListe();
-      }
-    }
-
-    public static void MakeUpdate()
-    {
-      ServiceRegistration.Get<IWorkflowManager>().NavigatePushAsync(new Guid("7EB62BD5-3401-45B8-A622-C3A073D5BFDF"));
-    }
-  }
 }

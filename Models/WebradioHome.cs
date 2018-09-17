@@ -61,8 +61,8 @@ namespace Webradio.Models
 
         public string DefaultImage
         {
-            get { return (string)_defaultImage.GetValue(); }
-            set { _defaultImage.SetValue(value); }
+            get => (string)_defaultImage.GetValue();
+            set => _defaultImage.SetValue(value);
         }
 
         public void Init()
@@ -115,6 +115,7 @@ namespace Webradio.Models
 
                 AllRadioStreams.Add(item);
             }
+
             AllRadioStreams.FireChange();
         }
 
@@ -128,30 +129,18 @@ namespace Webradio.Models
 
             // is the original language available
             foreach (var d in ms.Descriptions)
-            {
                 if (d.Languagecode.Contains(localization))
-                {
                     return d.Txt;
-                }
-            }
 
             // is English available
             foreach (var d in ms.Descriptions)
-            {
-                if (d.Languagecode.Contains("en") & d.Txt != "")
-                {
+                if (d.Languagecode.Contains("en") & (d.Txt != ""))
                     return d.Txt;
-                }
-            }
 
             // is any language available
             foreach (var d in ms.Descriptions)
-            {
                 if (d.Txt != "")
-                {
                     return d.Txt;
-                }
-            }
 
             return desc;
         }
@@ -162,10 +151,7 @@ namespace Webradio.Models
         public static string SetStreamLogo(MyStream ms)
         {
             var s = "DefaultLogo.png";
-            if (ms.Logo != "")
-            {
-                s = ms.Logo;
-            }
+            if (ms.Logo != "") s = ms.Logo;
             return s;
         }
 
@@ -174,22 +160,10 @@ namespace Webradio.Models
         /// </summary>
         public static void SetFallbackValues(MyStream ms)
         {
-            if (ms.Country == "")
-            {
-                ms.Country = "unknown";
-            }
-            if (ms.City == "")
-            {
-                ms.City = "unknown";
-            }
-            if (ms.StreamUrls[0].Bitrate == "")
-            {
-                ms.StreamUrls[0].Bitrate = "unknown";
-            }
-            if (ms.Genres == "")
-            {
-                ms.Genres = "unknown";
-            }
+            if (ms.Country == "") ms.Country = "unknown";
+            if (ms.City == "") ms.City = "unknown";
+            if (ms.StreamUrls[0].Bitrate == "") ms.StreamUrls[0].Bitrate = "unknown";
+            if (ms.Genres == "") ms.Genres = "unknown";
         }
 
         /// <summary>
@@ -230,10 +204,7 @@ namespace Webradio.Models
         private void ClearFanart()
         {
             var fanArtBgModel = (FanArtBackgroundModel)ServiceRegistration.Get<IWorkflowManager>().GetModel(FanArtBackgroundModel.FANART_MODEL_ID);
-            if (fanArtBgModel != null)
-            {
-                fanArtBgModel.ImageSource = new MultiImageSource { UriSource = null };
-            }
+            if (fanArtBgModel != null) fanArtBgModel.ImageSource = new MultiImageSource { UriSource = null };
         }
 
         #region Consts
