@@ -65,9 +65,12 @@ namespace Webradio.Player
             _currentStreamTitleProperty = new WProperty(typeof(string), string.Empty);
             _currentStreamCityProperty = new WProperty(typeof(string), string.Empty);
             _currentStreamCountryProperty = new WProperty(typeof(string), string.Empty);
+            _currentStreamCountryCodeProperty = new WProperty(typeof(string), string.Empty);
             _currentStreamGenresProperty = new WProperty(typeof(string), string.Empty);
             _currentStreamHomepageProperty = new WProperty(typeof(string), string.Empty);
             _currentStreamLanguageProperty = new WProperty(typeof(string), string.Empty);
+            _currentStreamLanguageCodeProperty = new WProperty(typeof(string), string.Empty);
+            _currentStreamDescriptionProperty = new WProperty(typeof(string), string.Empty);
         }
 
         #endregion
@@ -106,6 +109,14 @@ namespace Webradio.Player
             set => _currentStreamCountryProperty.SetValue(value);
         }
 
+        protected AbstractProperty _currentStreamCountryCodeProperty;
+        public AbstractProperty CurrentStreamCountryCodeProperty => _currentStreamCountryCodeProperty;
+        public string CurrentStreamCountryCode
+        {
+            get => (string)_currentStreamCountryCodeProperty.GetValue();
+            set => _currentStreamCountryCodeProperty.SetValue(value);
+        }
+
         protected AbstractProperty _currentStreamGenresProperty;
         public AbstractProperty CurrentStreamGenresProperty => _currentStreamGenresProperty;
         public string CurrentStreamGenres
@@ -128,6 +139,22 @@ namespace Webradio.Player
         {
             get => (string)_currentStreamLanguageProperty.GetValue();
             set => _currentStreamLanguageProperty.SetValue(value);
+        }
+
+        protected AbstractProperty _currentStreamLanguageCodeProperty;
+        public AbstractProperty CurrentStreamLanguageCodeProperty => _currentStreamLanguageCodeProperty;
+        public string CurrentStreamLanguageCode
+        {
+            get => (string)_currentStreamLanguageCodeProperty.GetValue();
+            set => _currentStreamLanguageCodeProperty.SetValue(value);
+        }
+
+        protected AbstractProperty _currentStreamDescriptionProperty;
+        public AbstractProperty CurrentStreamDescriptionProperty => _currentStreamDescriptionProperty;
+        public string CurrentStreamDescription
+        {
+            get => (string)_currentStreamDescriptionProperty.GetValue();
+            set => _currentStreamDescriptionProperty.SetValue(value);
         }
 
         #endregion
@@ -273,6 +300,7 @@ namespace Webradio.Player
                 Title = string.Empty;
                 Album = string.Empty;
                 Listeners = string.Empty;
+                ArtistBio = string.Empty;
 
                 CurrentStreamLogo = string.Empty;
                 CurrentStreamTitle = string.Empty;
@@ -281,6 +309,9 @@ namespace Webradio.Player
                 CurrentStreamGenres = string.Empty;
                 CurrentStreamHomepage = string.Empty;
                 CurrentStreamLanguage = string.Empty;
+                CurrentStreamCountryCode = string.Empty;
+                CurrentStreamLanguageCode = string.Empty;
+                CurrentStreamDescription = string.Empty;
 
                 ClearFanart();
             }
@@ -295,10 +326,13 @@ namespace Webradio.Player
             var s = WebradioHome.SelectedStream;
             CurrentStreamTitle = s.Title;
             CurrentStreamCity = s.City;
-            CurrentStreamCountry = s.Country;
+            CurrentStreamCountry = "[Country." + s.Country + "]";
             CurrentStreamGenres = s.Genres;
             CurrentStreamHomepage = s.Homepage;
-            CurrentStreamLanguage = s.Language;
+            CurrentStreamLanguage = "[Language." + s.Language + "]";
+            CurrentStreamCountryCode = s.Country;
+            CurrentStreamLanguageCode = s.Language;
+            CurrentStreamDescription = WebradioHome.SetStreamDescription(s);
             CurrentStreamLogo = WebradioHome.CurrentStreamLogo;
         }
 
