@@ -28,127 +28,134 @@ using System.Xml.Serialization;
 
 namespace Webradio.Helper
 {
-    public class MyStreams
+  public class MyStreams
+  {
+    private static readonly XmlSerializer SERIALIZER = new XmlSerializer(typeof(MyStreams));
+    private static FileStream _fileStream;
+    public List<MyStream> Streams = new List<MyStream>();
+
+    public string Version = "1";
+
+    public MyStreams()
     {
-        private static readonly XmlSerializer SERIALIZER = new XmlSerializer(typeof(MyStreams));
-        private static FileStream _fileStream;
-
-        public string Version = "1";
-        public List<MyStream> Streams = new List<MyStream>();
-
-        public MyStreams()
-        {
-        }
-
-        public MyStreams(List<MyStream> streamsValue, string versionValue)
-        {
-            Version = versionValue;
-            Streams = streamsValue;
-        }
-
-        public static void Write(string xmlFile, object obj)
-        {
-            try
-            {
-                _fileStream = new FileStream(xmlFile, FileMode.Create);
-                SERIALIZER.Serialize(_fileStream, obj);
-            }
-            finally
-            {
-                _fileStream.Close();
-            }
-        }
-
-        public static MyStreams Read(string xmlFile)
-        {
-            MyStreams ms;
-
-            try
-            {
-                _fileStream = new FileStream(xmlFile, FileMode.Open);
-                ms = (MyStreams)SERIALIZER.Deserialize(_fileStream);
-            }
-            finally
-            {
-                _fileStream.Close();
-            }
-
-            return ms;
-        }
     }
 
-    public class MyStream
+    public MyStreams(List<MyStream> streamsValue, string versionValue)
     {
-        [XmlAttribute("City")] public string City = string.Empty;
-
-        [XmlAttribute("Country")] public string Country = string.Empty;
-
-        public List<Description> Descriptions = new List<Description>();
-        public string Genres = string.Empty;
-        public string Homepage = string.Empty;
-        public string Language = string.Empty;
-        public string Logo = string.Empty;
-        public List<Url> StreamUrls = new List<Url>();
-
-        [XmlAttribute("Title")] public string Title = string.Empty;
-
-        public MyStream()
-        {
-        }
-
-        public MyStream(string titleValue, string countryValue, string cityValue, List<Url> streamUrlsValue, List<Description> descriptionsValue, string logoValue, string homepageValue, string languageValue, string genresValue)
-        {
-            Title = titleValue;
-            Country = countryValue;
-            City = cityValue;
-            StreamUrls = streamUrlsValue;
-            Descriptions = descriptionsValue;
-            Logo = logoValue;
-            Homepage = homepageValue;
-            Language = languageValue;
-            Genres = genresValue;
-        }
+      Version = versionValue;
+      Streams = streamsValue;
     }
 
-    public class Url
+    public static void Write(string xmlFile, object obj)
     {
-        [XmlAttribute("Provider")] public string Provider = string.Empty;
-        [XmlAttribute("Bitrate")] public string Bitrate = string.Empty;
-        [XmlAttribute("Frequenz")] public string Frequenz = string.Empty;
-        [XmlAttribute("Mode")] public string Mode = string.Empty;
-        [XmlAttribute("Name")] public string Name = string.Empty;
-        [XmlText] public string StreamUrl = string.Empty;
-        [XmlAttribute("Typ")] public string Typ = string.Empty;
-
-        public Url()
-        {
-        }
-
-        public Url(string nameValue, string typValue, string bitrateValue, string modeValue, string frequenzValue, string urlValue, string providerValue)
-        {
-            Name = nameValue;
-            Typ = typValue;
-            Bitrate = bitrateValue;
-            Mode = modeValue;
-            Frequenz = frequenzValue;
-            StreamUrl = urlValue;
-            Provider = providerValue;
-        }
+      try
+      {
+        _fileStream = new FileStream(xmlFile, FileMode.Create);
+        SERIALIZER.Serialize(_fileStream, obj);
+      }
+      finally
+      {
+        _fileStream.Close();
+      }
     }
 
-    public class Description
+    public static MyStreams Read(string xmlFile)
     {
-        [XmlAttribute("Languagecode")] public string Languagecode = string.Empty;
-        [XmlText] public string Txt = string.Empty;
+      MyStreams ms;
 
-        public Description()
-        {
-        }
+      try
+      {
+        _fileStream = new FileStream(xmlFile, FileMode.Open);
+        ms = (MyStreams)SERIALIZER.Deserialize(_fileStream);
+      }
+      finally
+      {
+        _fileStream.Close();
+      }
 
-        public Description(string languagecodeValue, string textValue)
-        {
-            Languagecode = languagecodeValue;
-            Txt = textValue;
-        }
+      return ms;
     }
+  }
+
+  public class MyStream
+  {
+    [XmlAttribute("City")] public string City = string.Empty;
+
+    [XmlAttribute("Country")] public string Country = string.Empty;
+
+    public List<Description> Descriptions = new List<Description>();
+    public string Genres = string.Empty;
+    public string Homepage = string.Empty;
+    public string Language = string.Empty;
+    public string Logo = string.Empty;
+    public List<Url> StreamUrls = new List<Url>();
+
+    [XmlAttribute("Title")] public string Title = string.Empty;
+
+    public MyStream()
+    {
+    }
+
+    public MyStream(string titleValue, string countryValue, string cityValue, List<Url> streamUrlsValue, List<Description> descriptionsValue, string logoValue, string homepageValue, string languageValue, string genresValue)
+    {
+      Title = titleValue;
+      Country = countryValue;
+      City = cityValue;
+      StreamUrls = streamUrlsValue;
+      Descriptions = descriptionsValue;
+      Logo = logoValue;
+      Homepage = homepageValue;
+      Language = languageValue;
+      Genres = genresValue;
+    }
+  }
+
+  public class Url
+  {
+    [XmlAttribute("Bitrate")] public string Bitrate = string.Empty;
+
+    [XmlAttribute("Frequenz")] public string Frequenz = string.Empty;
+
+    [XmlAttribute("Mode")] public string Mode = string.Empty;
+
+    [XmlAttribute("Name")] public string Name = string.Empty;
+
+    [XmlAttribute("Provider")] public string Provider = string.Empty;
+
+    [XmlText] public string StreamUrl = string.Empty;
+
+    [XmlAttribute("Typ")] public string Typ = string.Empty;
+
+    public Url()
+    {
+    }
+
+    public Url(string nameValue, string typValue, string bitrateValue, string modeValue, string frequenzValue, string urlValue, string providerValue)
+    {
+      Name = nameValue;
+      Typ = typValue;
+      Bitrate = bitrateValue;
+      Mode = modeValue;
+      Frequenz = frequenzValue;
+      StreamUrl = urlValue;
+      Provider = providerValue;
+    }
+  }
+
+  public class Description
+  {
+    [XmlAttribute("Languagecode")] public string Languagecode = string.Empty;
+
+    [XmlText] public string Txt = string.Empty;
+
+    public Description()
+    {
+    }
+
+    public Description(string languagecodeValue, string textValue)
+    {
+      Languagecode = languagecodeValue;
+      Txt = textValue;
+    }
+  }
 }

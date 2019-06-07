@@ -7,117 +7,126 @@
   Description="Play Webradiostreams">
 
   <Version
-   PluginVersion="1.3"
-   ReleaseDate="2018-01-20 01:00:00 GMT+01:00"
-   CurrentAPI="1"/>
+    PluginVersion="1.3"
+    ReleaseDate="2018-01-20 01:00:00 GMT+01:00"
+    CurrentAPI="1" />
 
 
   <Runtime>
-    <Assembly FileName="Webradio.dll"/>
+    <Assembly FileName="Webradio.dll" />
   </Runtime>
 
   <DependsOn>
     <CoreDependency Name="MediaPortal.Common" CompatibleAPI="2" />
     <CoreDependency Name="MediaPortal.UI" CompatibleAPI="2" />
-    <PluginReference PluginId="{1AFF4467-64B0-4ca1-AF28-9AEDF3525BCE}" CompatibleAPI="1"/> <!-- ConfigurationManager -->
-    <PluginReference PluginId="{B765A4B6-F455-4941-BDAE-2CE45208BFEB}" CompatibleAPI="1"/> <!-- Configuration plugin -->
-    <PluginReference PluginId="{5D239050-02B8-4f58-8301-7630A1C4CF85}" CompatibleAPI="1"/> <!-- SkinBase -->
-    <PluginReference PluginId="{9886EB43-B3EB-4cf1-A979-8D4D8874C555}" CompatibleAPI="1"/> <!-- BassPlayer -->
-    <PluginReference PluginId="{15FB35F7-8C85-4404-BC67-BFF28446158A}" CompatibleAPI="2"/> <!-- Media -->
+    <PluginReference PluginId="{1AFF4467-64B0-4ca1-AF28-9AEDF3525BCE}" CompatibleAPI="1" />
+    <!-- ConfigurationManager -->
+    <PluginReference PluginId="{B765A4B6-F455-4941-BDAE-2CE45208BFEB}" CompatibleAPI="1" />
+    <!-- Configuration plugin -->
+    <PluginReference PluginId="{5D239050-02B8-4f58-8301-7630A1C4CF85}" CompatibleAPI="1" /> <!-- SkinBase -->
+    <PluginReference PluginId="{9886EB43-B3EB-4cf1-A979-8D4D8874C555}" CompatibleAPI="1" /> <!-- BassPlayer -->
+    <PluginReference PluginId="{15FB35F7-8C85-4404-BC67-BFF28446158A}" CompatibleAPI="2" /> <!-- Media -->
   </DependsOn>
 
   <Register Location="/Models">
-    <Model Id="EA3CC191-0BE5-4C8D-889F-E9C4616AB554" ClassName="Webradio.Models.WebradioHome"/>
-    <Model Id="FF29E03E-F4A9-4E21-A299-349E79010430" ClassName="Webradio.Models.WebradioFilter"/>
+    <Model Id="EA3CC191-0BE5-4C8D-889F-E9C4616AB554" ClassName="Webradio.Models.WebradioHome" />
+    <Model Id="FF29E03E-F4A9-4E21-A299-349E79010430" ClassName="Webradio.Models.WebradioFilter" />
 
-    <Model Id="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94" ClassName="Webradio.Dialogues.WebradioDlgFavorites"/>
-    <Model Id="63F1DA3E-E87F-4478-83E7-C13966447869" ClassName="Webradio.Dialogues.WebradioDlgShowFilter"/>
-    <Model Id="9723DCC8-969D-470E-B156-F4E6E639DD18" ClassName="Webradio.Dialogues.WebradioDlgShowFavorites"/>
-    <Model Id="59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89" ClassName="Webradio.Dialogues.WebradioDlgDeleteFilter"/>
-    <Model Id="7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA" ClassName="Webradio.Dialogues.WebradioDlgSearchInStreams"/>
-    <Model Id="10D0E2AB-AE84-406F-8AA9-5A3FB2A86360" ClassName="Webradio.Dialogues.WebradioDlgImportFilter"/>
-    <Model Id="028ABECD-9885-48F6-B39F-F252EC0115EF" ClassName="Webradio.Dialogues.WebradioDlgLoadUpdate"/>
-    <Model Id="A391ACBF-BEFE-4820-B17D-D06545CF9987" ClassName="Webradio.Dialogues.WebradioDlgSettingsStreamlistUpdate"/>
+    <Model Id="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94" ClassName="Webradio.Dialogues.WebradioDlgFavorites" />
+    <Model Id="63F1DA3E-E87F-4478-83E7-C13966447869" ClassName="Webradio.Dialogues.WebradioDlgShowFilter" />
+    <Model Id="9723DCC8-969D-470E-B156-F4E6E639DD18" ClassName="Webradio.Dialogues.WebradioDlgShowFavorites" />
+    <Model Id="BEB5B535-15BF-4C6A-82CF-644ED5A4D8B5" ClassName="Webradio.Dialogues.WebradioDlgShowMessage" />
+    <Model Id="59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89" ClassName="Webradio.Dialogues.WebradioDlgDeleteFilter" />
+    <Model Id="7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA" ClassName="Webradio.Dialogues.WebradioDlgSearchInStreams" />
+    <Model Id="10D0E2AB-AE84-406F-8AA9-5A3FB2A86360" ClassName="Webradio.Dialogues.WebradioDlgImportFilter" />
+    <Model Id="028ABECD-9885-48F6-B39F-F252EC0115EF" ClassName="Webradio.Dialogues.WebradioDlgLoadUpdate" />
+    <Model Id="A391ACBF-BEFE-4820-B17D-D06545CF9987" ClassName="Webradio.Dialogues.WebradioDlgSettingsStreamlistUpdate" />
   </Register>
 
   <Register Location="/Players/Builders">
-    <PlayerBuilder Id="78C3403B-CABC-4E21-8D80-2370A31B0A04" ClassName="Webradio.Player.WebRadioPlayerBuilder"/>
+    <PlayerBuilder Id="78C3403B-CABC-4E21-8D80-2370A31B0A04" ClassName="Webradio.Player.WebRadioPlayerBuilder" />
   </Register>
 
   <Register Location="/Workflow/States">
     <WorkflowState Id="263FADFE-87BE-4563-83F0-E62707891E1B"
-      Name="WebradioHome" MainScreen="webradio_Home"
-      DisplayLabel="[Webradio.Home.ScreenTitle]"
-      WorkflowModel="EA3CC191-0BE5-4C8D-889F-E9C4616AB554"/>
+                   Name="WebradioHome" MainScreen="webradio_Home"
+                   DisplayLabel="[Webradio.Home.ScreenTitle]"
+                   WorkflowModel="EA3CC191-0BE5-4C8D-889F-E9C4616AB554" />
 
     <WorkflowState Id="F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E"
-      Name="WebradioFilter" MainScreen="webradio_Filter"
-      DisplayLabel="[Webradio.Filter.ScreenTitle]"
-      WorkflowModel="FF29E03E-F4A9-4E21-A299-349E79010430"/>
+                   Name="WebradioFilter" MainScreen="webradio_Filter"
+                   DisplayLabel="[Webradio.Filter.ScreenTitle]"
+                   WorkflowModel="FF29E03E-F4A9-4E21-A299-349E79010430" />
 
     <DialogState Id="3E56BA52-F982-40C3-ACD9-E88425DC7C43"
-      Name="WebradioFavorites"
-      DialogScreen="webradio_dialogFavorites"
-      DisplayLabel="[Webradio.Favorites.ScreenTitle]"
-      WorkflowModel="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94"/>
+                 Name="WebradioFavorites"
+                 DialogScreen="webradio_dialogFavorites"
+                 DisplayLabel="[Webradio.Favorites.ScreenTitle]"
+                 WorkflowModel="EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94" />
 
     <DialogState Id="EB57D60B-0490-46C9-B6D8-0170DA37A926"
-      Name="ImportFilter"
-      DialogScreen="webradio_dialogImportFilter"
-      DisplayLabel="[Webradio.Dialog.ImportFilter.Header]"
-      WorkflowModel="10D0E2AB-AE84-406F-8AA9-5A3FB2A86360"/>
+                 Name="ImportFilter"
+                 DialogScreen="webradio_dialogImportFilter"
+                 DisplayLabel="[Webradio.Dialog.ImportFilter.Header]"
+                 WorkflowModel="10D0E2AB-AE84-406F-8AA9-5A3FB2A86360" />
 
     <DialogState Id="76A060DF-0379-431D-A497-AB49B7C37F4E"
-      Name="ShowFilter"
-      DialogScreen="webradio_dialogShowFilter"
-      DisplayLabel="[Webradio.Dialog.ShowFilter.Header]"
-      WorkflowModel="63F1DA3E-E87F-4478-83E7-C13966447869"/>
+                 Name="ShowFilter"
+                 DialogScreen="webradio_dialogShowFilter"
+                 DisplayLabel="[Webradio.Dialog.ShowFilter.Header]"
+                 WorkflowModel="63F1DA3E-E87F-4478-83E7-C13966447869" />
 
     <DialogState Id="4942D325-08BB-4237-8825-F616AD2ADBF7"
-      Name="Search"
-      DialogScreen="Webradio_dialogSearchInStreams"
-      DisplayLabel="[Webradio.Dialog.Search.Header]"
-      WorkflowModel="7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA"/>
+                 Name="Search"
+                 DialogScreen="Webradio_dialogSearchInStreams"
+                 DisplayLabel="[Webradio.Dialog.Search.Header]"
+                 WorkflowModel="7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA" />
 
     <DialogState Id="56694DC2-041E-4D93-AD52-747D3394EB52"
-      Name="ShowFavorites"
-      DialogScreen="webradio_dialogShowFavorites"
-      DisplayLabel="[Webradio.Dialog.ShowFavorites.Header]"
-      WorkflowModel="9723DCC8-969D-470E-B156-F4E6E639DD18"/>
+                 Name="ShowFavorites"
+                 DialogScreen="webradio_dialogShowFavorites"
+                 DisplayLabel="[Webradio.Dialog.ShowFavorites.Header]"
+                 WorkflowModel="9723DCC8-969D-470E-B156-F4E6E639DD18" />
+
+    <DialogState Id="E0C1F78A-D32F-44BC-9678-EDCD0710FF75"
+                 Name="ShowMessage"
+                 DialogScreen="webradio_dialogShowMessage"
+                 DisplayLabel="[Webradio.Dialog.ShowMessage.Header]"
+                 WorkflowModel="BEB5B535-15BF-4C6A-82CF-644ED5A4D8B5" />
 
     <DialogState Id="AAA7C211-93D4-40A8-96B3-2CCE6C7CB0A8"
-      Name="DeleteFilter"
-      DialogScreen="webradio_dialogDeleteFilter"
-      DisplayLabel="[Webradio.Dialog.DeleteFilter.Header]"
-      WorkflowModel="59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89"/>
+                 Name="DeleteFilter"
+                 DialogScreen="webradio_dialogDeleteFilter"
+                 DisplayLabel="[Webradio.Dialog.DeleteFilter.Header]"
+                 WorkflowModel="59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89" />
 
     <DialogState Id="7EB62BD5-3401-45B8-A622-C3A073D5BFDF"
-      Name="LoadUpdate"
-      DialogScreen="webradio_dialogLoadUpdate"
-      DisplayLabel="[Webradio.Dialog.LoadUpdate.Header]"
-      WorkflowModel="028ABECD-9885-48F6-B39F-F252EC0115EF"/>
+                 Name="LoadUpdate"
+                 DialogScreen="webradio_dialogLoadUpdate"
+                 DisplayLabel="[Webradio.Dialog.LoadUpdate.Header]"
+                 WorkflowModel="028ABECD-9885-48F6-B39F-F252EC0115EF" />
 
     <DialogState Id="F5549E99-5346-4F6F-99CD-3103CF4EEF09"
-      Name="SettingsStreamlistUpdate"
-      DialogScreen="webradio_dialogSettingsStreamlistUpdate"
-      DisplayLabel="[Webradio.Settings.Streamlistupdate]"
-      WorkflowModel="A391ACBF-BEFE-4820-B17D-D06545CF9987"/>
+                 Name="SettingsStreamlistUpdate"
+                 DialogScreen="webradio_dialogSettingsStreamlistUpdate"
+                 DisplayLabel="[Webradio.Settings.Streamlistupdate]"
+                 WorkflowModel="A391ACBF-BEFE-4820-B17D-D06545CF9987" />
   </Register>
 
   <Register Location="/Resources/Skin">
-    <Resource Id="WebradioSkin" Directory="Skin" Type="Skin"/>
+    <Resource Id="WebradioSkin" Directory="Skin" Type="Skin" />
   </Register>
 
   <Register Location="/Resources/Language">
-    <Resource Id="WebradioLanguge" Directory="Language" Type="Language"/>
+    <Resource Id="WebradioLanguge" Directory="Language" Type="Language" />
   </Register>
 
   <!-- Content of Settings/Plugins section -->
   <Register Location="/Configuration/Settings/Plugins">
     <ConfigSection
-        Id="Webradio"
-        Redundant="true"
-        Text="Webradio"/>
+      Id="Webradio"
+      Redundant="true"
+      Text="Webradio" />
   </Register>
 
   <!-- Content of Settings/Plugins/Webradio section -->
@@ -127,19 +136,19 @@
       Text="[Webradio.Filter.ScreenTitle]"
       HelpText="[Webradio.Filter.Helptext]"
       ClassName="Webradio.Settings.Configuration.WebradioConfigFilters"
-      AdditionalData="WorkflowState=F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E,ConfAppPanel=..."/>
+      AdditionalData="WorkflowState=F35CFCFE-7E2F-4F1C-BF99-AFAC0181134E,ConfAppPanel=..." />
     <CustomConfigSetting
       Id="Webradio_Favorites"
       Text="[Webradio.Favorites.ScreenTitle]"
       HelpText="[Webradio.Favorites.Helptext]"
       ClassName="Webradio.Settings.Configuration.WebradioConfigFavorites"
-      AdditionalData="WorkflowState=3E56BA52-F982-40C3-ACD9-E88425DC7C43,ConfAppPanel=..."/>
+      AdditionalData="WorkflowState=3E56BA52-F982-40C3-ACD9-E88425DC7C43,ConfAppPanel=..." />
     <CustomConfigSetting
       Id="Webradio_Updates"
       Text="[Webradio.Settings.Streamlistupdate]"
       HelpText="[Webradio.Settings.Streamlistupdate]"
       ClassName="Webradio.Settings.Configuration.WebradioConfigStreamlistUpdates"
-      AdditionalData="WorkflowState=F5549E99-5346-4F6F-99CD-3103CF4EEF09,ConfAppPanel=..."/>
+      AdditionalData="WorkflowState=F5549E99-5346-4F6F-99CD-3103CF4EEF09,ConfAppPanel=..." />
   </Register>
 
 </Plugin>

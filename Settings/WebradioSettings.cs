@@ -26,19 +26,12 @@ using MediaPortal.Common.Settings;
 
 namespace Webradio.Settings
 {
-    public class WebradioSettings
-    {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public WebradioSettings()
-        {
-        }
-
-        /// <summary>
-        /// Selected StreamlistUpdateMode
-        /// </summary>
-        [Setting(SettingScope.User, "Manually")]
-        public string StreamlistUpdateMode { get; set; }
-    }
+  public class WebradioSettings
+  {
+    /// <summary>
+    /// Selected StreamlistUpdateMode
+    /// </summary>
+    [Setting(SettingScope.User, "Manually")]
+    public string StreamlistUpdateMode { get; set; }
+  }
 }

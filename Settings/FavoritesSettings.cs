@@ -27,52 +27,52 @@ using MediaPortal.Common.Settings;
 
 namespace Webradio.Settings
 {
+  /// <summary>
+  /// Favorites settings class.
+  /// </summary>
+  internal class FavoritesSettings
+  {
     /// <summary>
-    /// Favorites settings class.
+    /// Constructor
     /// </summary>
-    internal class FavoritesSettings
+    public FavoritesSettings()
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public FavoritesSettings()
-        {
-            FavoritesSetupList = new List<FavoriteSetupInfo>();
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public FavoritesSettings(List<FavoriteSetupInfo> list)
-        {
-            FavoritesSetupList = list;
-        }
-
-        /// <summary>
-        /// List of all Favorites
-        /// </summary>
-        [Setting(SettingScope.User, null)]
-        public List<FavoriteSetupInfo> FavoritesSetupList { get; set; }
+      FavoritesSetupList = new List<FavoriteSetupInfo>();
     }
 
-    public class FavoriteSetupInfo
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    public FavoritesSettings(List<FavoriteSetupInfo> list)
     {
-        public string Titel;
-        public bool Active;
-        public List<string> StreamUrls;
-
-        public FavoriteSetupInfo()
-        {
-            Titel = "";
-            Active = true;
-            StreamUrls = new List<string>();
-        }
-
-        public FavoriteSetupInfo(string titel, bool active, List<string> streamUrls)
-        {
-            Titel = titel;
-            Active = active;
-            StreamUrls = streamUrls;
-        }
+      FavoritesSetupList = list;
     }
+
+    /// <summary>
+    /// List of all Favorites
+    /// </summary>
+    [Setting(SettingScope.User, null)]
+    public List<FavoriteSetupInfo> FavoritesSetupList { get; set; }
+  }
+
+  public class FavoriteSetupInfo
+  {
+    public bool Active;
+    public List<string> StreamUrls;
+    public string Titel;
+
+    public FavoriteSetupInfo()
+    {
+      Titel = "";
+      Active = true;
+      StreamUrls = new List<string>();
+    }
+
+    public FavoriteSetupInfo(string titel, bool active, List<string> streamUrls)
+    {
+      Titel = titel;
+      Active = active;
+      StreamUrls = streamUrls;
+    }
+  }
 }

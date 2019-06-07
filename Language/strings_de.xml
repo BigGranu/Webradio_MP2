@@ -1,4 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
+
 <resources>
   <string name="Webradio.MenuEntry">Webradio</string>
   <string name="Webradio.StateDisplayLabel">Webradio</string>
@@ -67,6 +68,7 @@
   <string name="Webradio.Dialog.LoadUpdate.DownloadComplete">Herunterladen beendet</string>
   <string name="Webradio.Dialog.LoadUpdate.DownloadError">Downloadfehler</string>
   <string name="Webradio.Dialog.LoadUpdate.Button">Update starten</string>
+  <string name="Webradio.Dialog.ShowMessage.Title">Nachricht</string>
   <string name="Webradio.UIContributor.Listeners">Zuhörer:</string>
   <string name="Language.aa">Afar</string>
   <string name="Language.ab">Abchasisch</string>

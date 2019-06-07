@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Include
+  xmlns="www.team-mediaportal.com/2008/mpf/directx"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  Source="screens\master_configuration_dialog_wb.xaml">
+  <Include.Resources>
+
+    <!-- Header -->
+    <ResourceWrapper x:Key="Header_Text" Resource="[Webradio.Dialog.ShowMessage.Header]" />
+
+    <Model x:Key="WebradioModel" Id="BEB5B535-15BF-4C6A-82CF-644ED5A4D8B5" />
+
+    <!-- Contents -->
+    <ControlTemplate x:Key="Contents_Template">
+      <DockPanel DataContext="{Binding Source={StaticResource WebradioModel}}">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="80*" />
+          </Grid.RowDefinitions>
+
+          <Rectangle Grid.Row="0" Fill="OrangeRed" />
+
+          <Label Grid.Row="0" Content="[Webradio.Dialog.ShowMessage.Title]"
+                 HorizontalContentAlignment="Center"
+                 Margin="10,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+
+          <Label Grid.Row="1" Content="{Binding Path=Message}"
+                 HorizontalContentAlignment="Center"
+                 Margin="10,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                 Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" />
+
+        </Grid>
+      </DockPanel>
+    </ControlTemplate>
+  </Include.Resources>
+</Include>

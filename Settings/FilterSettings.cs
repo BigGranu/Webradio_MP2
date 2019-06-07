@@ -28,31 +28,37 @@ using Webradio.Helper;
 
 namespace Webradio.Settings
 {
+  /// <summary>
+  /// Filter settings class.
+  /// </summary>
+  public class FilterSettings
+  {
     /// <summary>
-    /// Filter settings class.
+    /// Constructor
     /// </summary>
-    public class FilterSettings
+    public FilterSettings()
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public FilterSettings()
-        {
-            FilterSetupList = new List<FilterSetupInfo>();
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public FilterSettings(List<FilterSetupInfo> list)
-        {
-            FilterSetupList = list;
-        }
-
-        /// <summary>
-        /// List of all Filter
-        /// </summary>
-        [Setting(SettingScope.User, null)]
-        public List<FilterSetupInfo> FilterSetupList { get; set; }
+      FilterSetupList = new List<FilterSetupInfo>();
     }
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    public FilterSettings(List<FilterSetupInfo> list)
+    {
+      FilterSetupList = list;
+    }
+
+    /// <summary>
+    /// The Active Filter
+    /// </summary>
+    [Setting(SettingScope.User, null)]
+    public FilterSetupInfo ActiveFilter { get; set; } = null;
+
+    /// <summary>
+    /// List of all Filter
+    /// </summary>
+    [Setting(SettingScope.User, null)]
+    public List<FilterSetupInfo> FilterSetupList { get; set; }
+  }
 }

@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Include
   xmlns="www.team-mediaportal.com/2008/mpf/directx"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,9 +7,9 @@
   <Include.Resources>
 
     <!-- Header -->
-    <ResourceWrapper x:Key="Dialog_Header_Text" Resource="[Webradio.Settings.Streamlistupdate]"/>
+    <ResourceWrapper x:Key="Dialog_Header_Text" Resource="[Webradio.Settings.Streamlistupdate]" />
 
-    <Model x:Key="Model" Id="A391ACBF-BEFE-4820-B17D-D06545CF9987"/>
+    <Model x:Key="Model" Id="A391ACBF-BEFE-4820-B17D-D06545CF9987" />
 
     <ControlTemplate x:Key="Contents_Template">
       <DockPanel DataContext="{Binding Source={StaticResource Model}}">
@@ -24,30 +25,35 @@
           </Grid.RowDefinitions>
 
           <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0" Margin="5,5,5,5">
-            <Label Content="[Webradio.Settings.Offline]" HorizontalContentAlignment="Center" Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" />
-            <Label Content="{Binding Path=OfflineVersion}" HorizontalContentAlignment="Center" Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" />
+            <Label Content="[Webradio.Settings.Offline]" HorizontalContentAlignment="Center"
+                   Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" />
+            <Label Content="{Binding Path=OfflineVersion}" HorizontalContentAlignment="Center"
+                   Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" />
           </StackPanel>
 
           <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5">
-            <Label Content="[Webradio.Settings.Online]" HorizontalContentAlignment="Center" Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" />
-            <Label Content="{Binding Path=OnlineVersion}" HorizontalContentAlignment="Center" Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" />
+            <Label Content="[Webradio.Settings.Online]" HorizontalContentAlignment="Center"
+                   Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" />
+            <Label Content="{Binding Path=OnlineVersion}" HorizontalContentAlignment="Center"
+                   Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" />
           </StackPanel>
-          
+
           <ListView Grid.Column="0" Grid.Row="2" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-            Style="{ThemeResource WebradioFilterListViewStyle}" ItemsSource="{Binding Path=Items, Mode=TwoWay}" >
+                    Style="{ThemeResource WebradioFilterListViewStyle}" ItemsSource="{Binding Path=Items, Mode=TwoWay}">
             <ListView.Resources>
               <CommandList x:Key="Menu_Command">
                 <Command Source="{StaticResource Model}" Path="Selected">
                   <Command.Parameters>
-                    <LateBoundValue BindingValue="{Binding}"/>
+                    <LateBoundValue BindingValue="{Binding}" />
                   </Command.Parameters>
                 </Command>
               </CommandList>
             </ListView.Resources>
           </ListView>
-          
-          <Button Grid.Column="0" Grid.Row="3" Margin="10,0,10,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="[Webradio.Dialog.LoadUpdate.Button]" Command="{Command Update}"/>
 
+          <Button Grid.Column="0" Grid.Row="3" Margin="10,0,10,0" HorizontalContentAlignment="Center"
+                  VerticalContentAlignment="Center" Content="[Webradio.Dialog.LoadUpdate.Button]"
+                  Command="{Command Update}" />
 
 
         </Grid>

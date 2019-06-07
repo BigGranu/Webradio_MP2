@@ -35,122 +35,117 @@ using Webradio.Models;
 
 namespace Webradio.Dialogues
 {
-    internal class WebradioDlgSearchInStreams : IWorkflowModel
+  internal class WebradioDlgSearchInStreams : IWorkflowModel
+  {
+    public void SearchTitel()
     {
-        #region Consts
-
-        public const string MODEL_ID_STR = "7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA";
-        public const string NO_STREAMS = "[Webradio.Dialog.Search.NoStreams]";
-        public const string ENTER_TEXT = "[Webradio.Dialog.Search.NoSearchText]";
-
-        #endregion
-
-        #region Propertys
-
-        protected static AbstractProperty SearchTextProperty = new WProperty(typeof(string), string.Empty);
-        public static string SearchText
-        {
-            get => (string)SearchTextProperty.GetValue();
-            set => SearchTextProperty.SetValue(value);
-        }
-
-        protected static AbstractProperty InfoLabelProperty = new WProperty(typeof(string), string.Empty);
-        public static string InfoLabel
-        {
-            get => (string)InfoLabelProperty.GetValue();
-            set => InfoLabelProperty.SetValue(value);
-        }
-
-        #endregion
-
-        public void SearchTitel()
-        {
-            if (SearchText != "")
-            {
-                FillList(WebradioHome.StreamList.Where(ms => ms.Title.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
-            }
-            else
-            {
-                InfoLabel = ENTER_TEXT;
-            }
-        }
-
-        public void SearchDescription()
-        {
-            if (SearchText != "")
-            {
-                FillList(WebradioHome.StreamList.Where(ms => ms.Descriptions[0].Txt.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
-            }
-            else
-            {
-                InfoLabel = ENTER_TEXT;
-            }
-        }
-
-        public void SearchAll()
-        {
-            if (SearchText != "")
-            {
-                FillList(WebradioHome.StreamList.Where(ms => ms.Title.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0 | ms.Descriptions[0].Txt.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
-            }
-            else
-            {
-                InfoLabel = ENTER_TEXT;
-            }
-        }
-
-        public void FillList(List<MyStream> list)
-        {
-            if (list.Count > 0)
-            {
-                WebradioHome.FillItemList(list);
-                ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
-            }
-            else
-            {
-                InfoLabel = NO_STREAMS;
-            }
-        }
-
-        #region IWorkflowModel implementation
-
-        public Guid ModelId => new Guid(MODEL_ID_STR);
-
-        public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
-        {
-            return true;
-        }
-
-        public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
-        {
-            InfoLabel = "";
-        }
-
-        public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
-        {
-        }
-
-        public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
-        {
-        }
-
-        public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
-        {
-        }
-
-        public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
-        {
-        }
-
-        public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
-        {
-        }
-
-        public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
-        {
-            return ScreenUpdateMode.AutoWorkflowManager;
-        }
-
-        #endregion
+      if (SearchText != "")
+        FillList(WebradioHome.StreamList.Where(ms => ms.Title.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
+      else
+        InfoLabel = ENTER_TEXT;
     }
+
+    public void SearchDescription()
+    {
+      if (SearchText != "")
+        FillList(WebradioHome.StreamList.Where(ms => ms.Descriptions[0].Txt.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
+      else
+        InfoLabel = ENTER_TEXT;
+    }
+
+    public void SearchAll()
+    {
+      if (SearchText != "")
+        FillList(WebradioHome.StreamList.Where(ms => (ms.Title.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0) | (ms.Descriptions[0].Txt.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0)).ToList());
+      else
+        InfoLabel = ENTER_TEXT;
+    }
+
+    public void FillList(List<MyStream> list)
+    {
+      if (list.Count > 0)
+      {
+        WebradioHome.FillItemList(list);
+        ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
+      }
+      else
+      {
+        InfoLabel = NO_STREAMS;
+      }
+    }
+
+    #region Consts
+
+    public const string MODEL_ID_STR = "7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA";
+    public const string NO_STREAMS = "[Webradio.Dialog.Search.NoStreams]";
+    public const string ENTER_TEXT = "[Webradio.Dialog.Search.NoSearchText]";
+
+    #endregion
+
+    #region Propertys
+
+    private static readonly AbstractProperty _searchTextProperty = new WProperty(typeof(string), string.Empty);
+
+    public AbstractProperty SearchTextProperty => _searchTextProperty;
+
+    public static string SearchText
+    {
+      get => (string)_searchTextProperty.GetValue();
+      set => _searchTextProperty.SetValue(value);
+    }
+
+    private static readonly AbstractProperty _infoLabelProperty = new WProperty(typeof(string), string.Empty);
+
+    public AbstractProperty InfoLabelProperty => _infoLabelProperty;
+
+    public static string InfoLabel
+    {
+      get => (string)_infoLabelProperty.GetValue();
+      set => _infoLabelProperty.SetValue(value);
+    }
+
+    #endregion
+
+    #region IWorkflowModel implementation
+
+    public Guid ModelId => new Guid(MODEL_ID_STR);
+
+    public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
+    {
+      return true;
+    }
+
+    public void EnterModelContext(NavigationContext oldContext, NavigationContext newContext)
+    {
+      InfoLabel = "";
+    }
+
+    public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
+    {
+    }
+
+    public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
+    {
+      // We could initialize some data here when changing the media navigation state
+    }
+
+    public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
+    {
+    }
+
+    public void Reactivate(NavigationContext oldContext, NavigationContext newContext)
+    {
+    }
+
+    public void UpdateMenuActions(NavigationContext context, IDictionary<Guid, WorkflowAction> actions)
+    {
+    }
+
+    public ScreenUpdateMode UpdateScreen(NavigationContext context, ref string screen)
+    {
+      return ScreenUpdateMode.AutoWorkflowManager;
+    }
+
+    #endregion
+  }
 }

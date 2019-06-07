@@ -26,15 +26,15 @@ using MediaPortal.Common.Configuration.ConfigurationClasses;
 
 namespace Webradio.Settings.Configuration
 {
-    internal class WebradioConfigFilters : CustomConfigSetting
-    {
-    }
+  internal class WebradioConfigFilters : CustomConfigSetting
+  {
+  }
 
-    internal class WebradioConfigFavorites : CustomConfigSetting
-    {
-    }
+  internal class WebradioConfigFavorites : CustomConfigSetting
+  {
+  }
 
-    internal class WebradioConfigStreamlistUpdates : CustomConfigSetting
-    {
-    }
+  internal class WebradioConfigStreamlistUpdates : CustomConfigSetting
+  {
+  }
 }

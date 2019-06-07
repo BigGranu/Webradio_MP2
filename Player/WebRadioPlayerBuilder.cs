@@ -28,7 +28,6 @@ using System.Reflection;
 using MediaPortal.Common;
 using MediaPortal.Common.Logging;
 using MediaPortal.Common.MediaManagement;
-using MediaPortal.Common.ResourceAccess;
 using MediaPortal.UI.Players.BassPlayer;
 using MediaPortal.UI.Players.BassPlayer.PlayerComponents;
 using MediaPortal.UI.Presentation.Players;
@@ -36,58 +35,58 @@ using Un4seen.Bass;
 
 namespace Webradio.Player
 {
-    public class WebRadioPlayerBuilder : IPlayerBuilder
+  public class WebRadioPlayerBuilder : IPlayerBuilder
+  {
+    private readonly string _pluginDirectory;
+
+    public WebRadioPlayerBuilder()
     {
-        private readonly string _pluginDirectory;
-
-        public WebRadioPlayerBuilder()
-        {
-            var bassDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "BassPlayer");
-            _pluginDirectory = bassDir; // Points to root of BassPlayer plugin!
-        }
-
-        #region IPlayerBuilder implementation
-
-        public IPlayer GetPlayer(MediaItem mediaItem)
-        {
-            string mimeType;
-            string title;
-            if (!mediaItem.GetPlayData(out mimeType, out title))
-                return null;
-
-            // Our special player is only used for our mimetype
-            if (mimeType != WebRadioPlayerHelper.WEBRADIO_MIMETYPE)
-                return null;
-
-            // Set back to valid audio mimetype
-            mimeType = "audio/stream";
-
-            IResourceLocator locator = mediaItem.GetResourceLocator();
-            if (InputSourceFactory.CanPlay(locator, mimeType))
-            {
-                // Bass.BASS_PluginLoad(@"C:\Users\dierk_000\Downloads\basswm24\basswma.dll");
-
-                BassPlayer player = new WebRadioBassPlayer(_pluginDirectory);
-
-                // Config the BASSPlayer to play also .pls and .m3u
-                Bass.BASS_SetConfig(BASSConfig.BASS_CONFIG_NET_PLAYLIST, 1);
-                try
-                {
-                    player.SetMediaItem(mediaItem);
-                }
-                catch (Exception e)
-                {
-                    ServiceRegistration.Get<ILogger>().Warn("WebRadioBassPlayer: Error playing media item '{0}'", e, locator);
-                    player.Dispose();
-                    return null;
-                }
-
-                return player;
-            }
-
-            return null;
-        }
-
-        #endregion
+      var bassDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "BassPlayer");
+      _pluginDirectory = bassDir; // Points to root of BassPlayer plugin!
     }
+
+    #region IPlayerBuilder implementation
+
+    public IPlayer GetPlayer(MediaItem mediaItem)
+    {
+      string mimeType;
+      string title;
+      if (!mediaItem.GetPlayData(out mimeType, out title))
+        return null;
+
+      // Our special player is only used for our mimetype
+      if (mimeType != WebRadioPlayerHelper.WEBRADIO_MIMETYPE)
+        return null;
+
+      // Set back to valid audio mimetype
+      mimeType = "audio/stream";
+
+      var locator = mediaItem.GetResourceLocator();
+      if (InputSourceFactory.CanPlay(locator, mimeType))
+      {
+        // Bass.BASS_PluginLoad(@"C:\Users\dierk_000\Downloads\basswm24\basswma.dll");
+
+        BassPlayer player = new WebRadioBassPlayer(_pluginDirectory);
+
+        // Config the BASSPlayer to play also .pls and .m3u
+        Bass.BASS_SetConfig(BASSConfig.BASS_CONFIG_NET_PLAYLIST, 1);
+        try
+        {
+          player.SetMediaItem(mediaItem);
+        }
+        catch (Exception e)
+        {
+          ServiceRegistration.Get<ILogger>().Warn("WebRadioBassPlayer: Error playing media item '{0}'", e, locator);
+          player.Dispose();
+          return null;
+        }
+
+        return player;
+      }
+
+      return null;
+    }
+
+    #endregion
+  }
 }

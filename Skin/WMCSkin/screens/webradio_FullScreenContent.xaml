@@ -1,98 +1,217 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Screen
-    xmlns="www.team-mediaportal.com/2008/mpf/directx"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mp_special_workflow="clr-namespace:MediaPortal.UI.SkinEngine.SpecialElements.Workflow"
-    xmlns:mp_audio_viz="clr-namespace:MediaPortal.UiComponents.Media.Controls;assembly=Media"
-    mp_special_workflow:WorkflowContext.StateSlot="Root"
-    xmlns:mp_special_controls="clr-namespace:MediaPortal.UI.SkinEngine.SpecialElements.Controls"
-    x:Name="FullscreenContentAudioScreen">
-  <Grid>
-    <Grid.Resources>
-      <Model x:Key="Model" Id="D8998340-DA2D-42be-A29B-6D7A72AEA2DC" />
-      <!-- AudioPlayerModel -->
-    </Grid.Resources>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*"/>
-      <ColumnDefinition Width="80"/>
-    </Grid.ColumnDefinitions>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="150"/>
-      <RowDefinition Height="350"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+  xmlns="www.team-mediaportal.com/2008/mpf/directx"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:mp_special_workflow="clr-namespace:MediaPortal.UI.SkinEngine.SpecialElements.Workflow"
+  xmlns:mp_audio_viz="clr-namespace:MediaPortal.UiComponents.Media.Controls;assembly=Media"
+  mp_special_workflow:WorkflowContext.StateSlot="Root"
+  xmlns:mp_special_controls="clr-namespace:MediaPortal.UI.SkinEngine.SpecialElements.Controls"
+  x:Name="FullscreenContentAudioScreen">
 
-    <Control x:Name="WindowButtons" Grid.Column="1" Grid.Row="0">
-      <Control.TemplateControl>
-        <Include Source="screens\FSCWindowButtons.inc"/>
-      </Control.TemplateControl>
-    </Control>
+  <mp_special_controls:PlayerControl PlayerContext="CurrentPlayer" HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Stretch">
+    <mp_special_controls:PlayerControl.TemplateControl>
+      <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+        <Grid.Background>
+          <VisualBrush x:Name="FanartVisualBrush">
+            <VisualBrush.Visual>
+              <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image x:Name="FanArtImageBackground" Stretch="UniformToFill" Source="background.jpg" />
+              </Grid>
+            </VisualBrush.Visual>
+          </VisualBrush>
+        </Grid.Background>
 
-    <Control Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0,-50,0,-50">
-      <Control.Background>
-        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-          <GradientStop Offset="0" Color="#A0000000"/>
-          <GradientStop Offset="1" Color="#14000000"/>
-        </LinearGradientBrush >
-      </Control.Background>
-    </Control>
+        <Grid.Resources>
+          <Model x:Key="Model" Id="D8998340-DA2D-42be-A29B-6D7A72AEA2DC" />
+          <Model x:Key="MouseModel" Id="CA6428A7-A6E2-4dd3-9661-F89CEBAF8E62" />
+          <Model x:Key="AudioPlayerModel" Id="D8998340-DA2D-42be-A29B-6D7A72AEA2DC" />
+          <!-- AudioPlayerModel -->
+        </Grid.Resources>
 
-    <mp_audio_viz:AudioSpectrumAnalyzer Grid.ZIndex="100" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="600" Height="300"
-        HorizontalAlignment="Center" VerticalAlignment="Center"
-        x:Name="SpectrumAnalyzer" Style="{ThemeResource SpectrumAnalyzerStyle}"/>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="25*" />
+          <ColumnDefinition Width="38*" />
+          <ColumnDefinition Width="37*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="350" />
+        </Grid.RowDefinitions>
 
-    <Grid Grid.Row="2" Grid.Column="0" Grid.RowSpan="2">
-      <mp_special_controls:PlayerControl Margin="20" PlayerContext="CurrentPlayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <mp_special_controls:PlayerControl.TemplateControl>
-          <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
-            <Grid.RowDefinitions>
-              <RowDefinition Height="Auto"/>
-              <RowDefinition Height="Auto"/>
-              <RowDefinition Height="Auto"/>
-              <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="300"/>
-              <ColumnDefinition Width="Auto"/>
-              <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <Control Grid.RowSpan="2" Grid.ColumnSpan="3">
+          <Control.Background>
+            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+              <GradientStop Color="{ThemeResource InfoScreenGradientColor1}" Offset="0" />
+              <GradientStop Color="{ThemeResource InfoScreenGradientColor1}" Offset="0.6" />
+              <GradientStop Color="{ThemeResource InfoScreenGradientColor2}" Offset="0.67" />
+              <GradientStop Color="{ThemeResource InfoScreenGradientColor3}" Offset="1" />
+            </LinearGradientBrush>
+          </Control.Background>
+        </Control>
 
-            <StackPanel  Grid.Column="0" Grid.Row="0" Grid.RowSpan="4">
-              <Canvas Height="150" Width="150" Background="#00000000">
-                <Rectangle Height="150" Width="150" RadiusY="20" RadiusX="20" Stroke="Black">
-                  <Rectangle.Fill>
-                    <ImageBrush DataContext="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamLogo}" ImageSource="{Binding}" />
-                  </Rectangle.Fill>
-                </Rectangle>
-                <Rectangle Height="150" Width="150" RadiusY="20" RadiusX="20" Stroke="Black" Opacity="0.5">
-                  <Rectangle.Fill>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                      <GradientStop Color="Black" Offset="0"/>
-                      <GradientStop Offset="0.073"/>
-                      <GradientStop Color="Transparent" Offset="1"/>
-                      <GradientStop Color="Transparent" Offset="0.103"/>
-                    </LinearGradientBrush>
-                  </Rectangle.Fill>
-                </Rectangle>
-              </Canvas>
-            </StackPanel >
+        <mp_audio_viz:AudioSpectrumAnalyzer Grid.ZIndex="100" Grid.Row="1" Grid.ColumnSpan="3" Width="1900"
+                                            Height="280"
+                                            HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-260,0,0"
+                                            x:Name="SpectrumAnalyzer" Style="{ThemeResource SpectrumAnalyzerStyle}" />
 
-            <Label x:Name="ArtistsLabel" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom"
-                Content="[Media.AudioArtistsLabel]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="Artists" Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom"
-                Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Artist}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="TitleLabel" Grid.Row="2" Grid.Column="1"
-                Content="[Media.AudioTitleLabel]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="Title" Grid.Row="2" Grid.Column="2" Scroll="Auto"
-                Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Title}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="ListenersLabel" Grid.Row="3" Grid.Column="1"
-                Content="[Webradio.UIContributor.Listeners]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="Listeners" Grid.Row="3" Grid.Column="2" Scroll="Auto"
-                Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Listeners}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            
-          </Grid>
-        </mp_special_controls:PlayerControl.TemplateControl>
-      </mp_special_controls:PlayerControl>
-    </Grid>
-  </Grid>
+        <Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="0,50,0,0">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <!--Logo-->
+          <StackPanel Grid.RowSpan="5">
+            <Canvas Height="250" Width="250" Background="#00000000">
+              <Rectangle Height="250" Width="250" RadiusY="25" RadiusX="25" Stroke="Black">
+                <Rectangle.Fill>
+                  <ImageBrush
+                    DataContext="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamLogo}"
+                    ImageSource="{Binding}" />
+                </Rectangle.Fill>
+              </Rectangle>
+              <Rectangle Height="250" Width="250" RadiusY="25" RadiusX="25" Stroke="Black">
+                <Rectangle.Fill>
+                  <ImageBrush DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}"
+                              ImageSource="{Binding [Logo]}" />
+                </Rectangle.Fill>
+              </Rectangle>
+              <Rectangle Height="250" Width="250" RadiusY="25" RadiusX="25" Stroke="Black" Opacity="0.5">
+                <Rectangle.Fill>
+                  <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0" />
+                    <GradientStop Offset="0.073" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                    <GradientStop Color="Transparent" Offset="0.103" />
+                  </LinearGradientBrush>
+                </Rectangle.Fill>
+              </Rectangle>
+            </Canvas>
+          </StackPanel>
+
+          <Label x:Name="StreamTitle" Grid.Row="0" Grid.Column="1" Scroll="Auto" FontFamily="SegoeUIBold"
+                 FontSize="{ThemeResource BigFontSize}"
+                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamTitle}"
+                 Color="{ThemeResource TextColor}" />
+          <Label x:Name="Genre" Grid.Row="1" Grid.Column="1" Scroll="Auto" FontSize="{ThemeResource BigFontSize}"
+                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamGenres}"
+                 Color="{ThemeResource TextColor}" />
+          <Label x:Name="City" Grid.Row="2" Grid.Column="1" Scroll="Auto" FontSize="{ThemeResource BigFontSize}"
+                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamCity}"
+                 Color="{ThemeResource TextColor}" />
+          <Label x:Name="Country" Grid.Row="3" Grid.Column="1" Scroll="Auto" FontSize="{ThemeResource BigFontSize}"
+                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamCountry}"
+                 Color="{ThemeResource TextColor}" />
+          <Image Grid.Row="4" Grid.Column="1" Margin="0,5,0,0" Stretch="Uniform" Height="40" HorizontalAlignment="Left"
+                 VerticalAlignment="Top">
+            <Image.Source>
+              <Binding Source="{StaticResource Model}" Path="PlayerUIContributor.CurrentStreamLanguageCode"
+                       Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}LanguageFlags\{0}.png" />
+            </Image.Source>
+          </Image>
+
+          <Label x:Name="TitleLabel" Grid.Row="0" Grid.Column="2"
+                 Content="[Media.AudioTitleLabel]" Color="{ThemeResource TextColor}"
+                 FontSize="{ThemeResource BigFontSize}" />
+          <Label x:Name="Title" Grid.Row="0" Grid.Column="3" Scroll="Auto"
+                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Title}"
+                 Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}" />
+          <Label x:Name="ArtistsLabel" Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom"
+                 Content="[Media.AudioArtistsLabel]" Color="{ThemeResource TextColor}"
+                 FontSize="{ThemeResource BigFontSize}" />
+          <Label x:Name="Artists" Grid.Row="1" Grid.Column="3" VerticalAlignment="Bottom"
+                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Artist}"
+                 Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}" />
+          <Label x:Name="ListenersLabel" Grid.Row="2" Grid.Column="2"
+                 Content="[Webradio.UIContributor.Listeners]" Color="{ThemeResource TextColor}"
+                 FontSize="{ThemeResource BigFontSize}" />
+          <Label x:Name="Listeners" Grid.Row="2" Grid.Column="3" Scroll="Auto"
+                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Listeners}"
+                 Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}" />
+          <Label x:Name="AlbumLabel" Grid.Row="3" Grid.Column="2"
+                 Content="[Webradio.UIContributor.Album]" Color="{ThemeResource TextColor}"
+                 FontSize="{ThemeResource BigFontSize}" />
+          <Label x:Name="Album" Grid.Row="3" Grid.Column="3" Scroll="Auto"
+                 Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Album}"
+                 Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}" />
+
+        </Grid>
+
+
+        <Grid Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30,5,0,0">
+          <StackPanel Orientation="Horizontal" Context="{Service Window}"
+                      IsVisible="{Binding Source={StaticResource MouseModel},Path=IsMouseUsed}">
+            <Button x:Name="BackButton" Style="{ThemeResource NavigateBackButtonStyle}" Margin="5"
+                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Command="{Command Source={Service WorkflowManager},Path=NavigatePop,Parameters=1}" />
+            <Button x:Name="HomeButton" Style="{ThemeResource HomeButtonStyle}" Margin="5" HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Command="{Command Source={Service WorkflowManager},Path=NavigatePush,Parameters=7F702D9C-F2DD-42da-9ED8-0BA92F07787F}" />
+          </StackPanel>
+        </Grid>
+
+        <!-- Mouse control buttons -->
+        <Grid x:Name="MouseButtonsPanel" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right"
+              VerticalAlignment="Top" Margin="0,0,5,0">
+          <StackPanel Orientation="Horizontal">
+            <StackPanel Margin="0,0,0,0" Orientation="Horizontal" Context="{Service Window}"
+                        IsVisible="{Binding Source={StaticResource MouseModel},Path=IsMouseUsed}">
+              <Button x:Name="WindowedButton" Style="{ThemeResource MinMaxButtonStyle}" Margin="5,2,0,0"
+                      HorizontalAlignment="Right"
+                      Command="{Command Source={Service Window},Path=SwitchMode,Parameters=NormalWindowed}">
+                <Button.IsVisible>
+                  <Binding Source="{StaticResource ScreenModeModel}" Path="CurrentScreenMode"
+                           Converter="{StaticResource ExpressionValueConverter}"
+                           ConverterParameter="{}{0} == {ScreenMode}.{FullScreen}" />
+                </Button.IsVisible>
+              </Button>
+              <Button x:Name="MaximizedButton" Style="{ThemeResource MinMaxButtonStyle}" Margin="5,2,0,0"
+                      HorizontalAlignment="Right"
+                      Command="{Command Source={Service Window},Path=SwitchMode,Parameters=FullScreen}">
+                <Button.IsVisible>
+                  <Binding Source="{StaticResource ScreenModeModel}" Path="CurrentScreenMode"
+                           Converter="{StaticResource ExpressionValueConverter}"
+                           ConverterParameter="{}{0} != {ScreenMode}.{FullScreen}" />
+                </Button.IsVisible>
+              </Button>
+              <Button x:Name="ExitButton" Style="{ThemeResource ExitButtonStyle}" Margin="5,2,0,0"
+                      HorizontalAlignment="Right"
+                      Command="{Command Source={Service Window},Path=Shutdown}">
+                <Button.IsVisible>
+                  <Binding Source="{StaticResource ScreenModeModel}" Path="CurrentScreenMode"
+                           Converter="{StaticResource ExpressionValueConverter}"
+                           ConverterParameter="{}{0} == {ScreenMode}.{FullScreen}" />
+                </Button.IsVisible>
+              </Button>
+            </StackPanel>
+          </StackPanel>
+        </Grid>
+
+        <DockPanel x:Name="OSD_RightPanel" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" LastChildFill="false"
+                   IsVisible="{Binding Source={StaticResource AudioPlayerModel}, Path=IsOSDVisible}">
+          <mp_special_controls:PlayerControl x:Name="PrimaryOSD" DockPanel.Dock="Bottom"
+                                             Style="{ThemeResource PrimaryWebRadioOSDStyle}"
+                                             VerticalAlignment="Stretch" HorizontalAlignment="Right" />
+        </DockPanel>
+
+      </Grid>
+    </mp_special_controls:PlayerControl.TemplateControl>
+  </mp_special_controls:PlayerControl>
 </Screen>
