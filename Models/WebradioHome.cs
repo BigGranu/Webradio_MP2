@@ -86,19 +86,12 @@ namespace Webradio.Models
       var ms = MyStreams.Read(StreamlistUpdate.StreamListFile);
       StreamList = ms.Streams;
 
-      //todo
       FilterSettings = ServiceRegistration.Get<ISettingsManager>().Load<FilterSettings>();
       var af = FilterSettings.ActiveFilter;
 
       if (af != null)
       {
-        var mst = new List<MyStream>();
-        foreach (var s in StreamList)
-          if (af.Bitrate.Contains(s.StreamUrls[0].Bitrate) ||
-              af.Citys.Contains(s.City) ||
-              af.Countrys.Contains(s.Country) ||
-              af.Genres.Contains(s.Genres))
-            mst.Add(s);
+        var mst = MyStreams.Filtered(af, StreamList);
         FillItemList(mst);
       }
       else

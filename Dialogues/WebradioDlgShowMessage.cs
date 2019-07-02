@@ -24,17 +24,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using MediaPortal.Common;
-using MediaPortal.Common.Settings;
-using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
-using MediaPortal.UI.Presentation.Screens;
 using MediaPortal.UI.Presentation.Workflow;
-using Webradio.Helper;
-using Webradio.Models;
 using Webradio.Player;
-using Webradio.Settings;
 
 namespace Webradio.Dialogues
 {

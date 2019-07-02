@@ -38,8 +38,10 @@
                    Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" />
           </StackPanel>
 
-          <ListView Grid.Column="0" Grid.Row="2" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                    Style="{ThemeResource WebradioFilterListViewStyle}" ItemsSource="{Binding Path=Items, Mode=TwoWay}">
+          <ListView Grid.Column="0" Grid.Row="2" Margin="10" HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Style="{ThemeResource WebradioFilterListViewStyle}"
+                    ItemsSource="{Binding Path=Items, Mode=TwoWay}">
             <ListView.Resources>
               <CommandList x:Key="Menu_Command">
                 <Command Source="{StaticResource Model}" Path="Selected">

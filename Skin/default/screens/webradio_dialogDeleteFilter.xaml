@@ -19,7 +19,8 @@
             <RowDefinition Height="10*" />
           </Grid.RowDefinitions>
 
-          <ListView x:Name="lvFavorites" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+          <ListView x:Name="lvFavorites" Grid.Row="0" HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
                     Style="{ThemeResource WebradioFilterListViewStyle}"
                     ItemsSource="{Binding Path=FilterItems}">
             <ListView.Resources>

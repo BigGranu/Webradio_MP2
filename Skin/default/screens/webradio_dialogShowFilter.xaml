@@ -44,10 +44,12 @@
                  Margin="10,0,10,0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch"
                  Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" />
 
-          <Button Content="[Webradio.Dialog.ShowFilter.ShowFilter]" Margin="10,5,10,5" Grid.Row="2" Grid.ColumnSpan="2"
+          <Button Content="[Webradio.Dialog.ShowFilter.ShowFilter]" Margin="10,5,10,5" Grid.Row="2"
+                  Grid.ColumnSpan="2"
                   VerticalAlignment="Stretch" HorizontalContentAlignment="Center"
                   Command="{Command ShowFilter}" />
-          <Button Content="[Webradio.Dialog.ShowFilter.Country]" Margin="10,5,5,5" Grid.Row="3" Grid.Column="0"
+          <Button Content="[Webradio.Dialog.ShowFilter.Country]" Margin="10,5,5,5" Grid.Row="3"
+                  Grid.Column="0"
                   VerticalAlignment="Stretch" VerticalContentAlignment="Center"
                   Command="{Command QuickCountry}" />
           <Button Content="[Webradio.Dialog.ShowFilter.City]" Margin="5,5,10,5" Grid.Row="3" Grid.Column="1"

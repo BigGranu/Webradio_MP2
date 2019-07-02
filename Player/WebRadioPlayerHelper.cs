@@ -55,7 +55,7 @@ namespace Webradio.Player
     /// <param name="stream">Stream.</param>
     public static bool PlayStream(MyStream stream)
     {
-      HttpStatusCode code = CheckStream(stream.StreamUrls[0].StreamUrl);
+      var code = CheckStream(stream.StreamUrls[0].StreamUrl);
       if (code != HttpStatusCode.OK)
       {
         StatusCode = code.ToString();

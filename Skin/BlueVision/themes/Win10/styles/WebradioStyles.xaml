@@ -86,7 +86,8 @@
           <Image.OpacityMask>
             <VisualBrush>
               <VisualBrush.Visual>
-                <Border Name="mask" Background="White" CornerRadius="16" BorderThickness="0" BorderBrush="Black"
+                <Border Name="mask" Background="White" CornerRadius="16" BorderThickness="0"
+                        BorderBrush="Black"
                         Margin="1" />
               </VisualBrush.Visual>
             </VisualBrush>
@@ -94,7 +95,8 @@
           <Image.Opacity>
             <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}"
                           ConverterParameter="{}{0} ? {1} : {2}">
-              <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Button}}" Path="HasFocus" />
+              <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Button}}"
+                       Path="HasFocus" />
               <Binding Source="1.0" />
               <Binding Source="0.8" />
             </MultiBinding>

@@ -38,7 +38,8 @@
           <!--Searchbuttons-->
           <Button Content="[Webradio.Dialog.Search.Title]" Margin="10,10,15,10" Grid.Row="2" Grid.Column="0"
                   VerticalAlignment="Stretch" Command="{Command SearchTitel}" />
-          <Button Content="[Webradio.Dialog.Search.Description]" Margin="15,10,15,10" Grid.Row="2" Grid.Column="1"
+          <Button Content="[Webradio.Dialog.Search.Description]" Margin="15,10,15,10" Grid.Row="2"
+                  Grid.Column="1"
                   VerticalAlignment="Stretch" Command="{Command SearchDescription}" />
           <Button Content="[Webradio.Dialog.Search.All]" Margin="15,10,10,10" Grid.Row="2" Grid.Column="2"
                   VerticalAlignment="Stretch" Command="{Command SearchAll}" />

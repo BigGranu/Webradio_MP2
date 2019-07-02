@@ -40,7 +40,8 @@
                   FontSize="{ThemeResource SmallFontSize}"
                   VerticalAlignment="Stretch" Command="{Command SearchTitel}"
                   Style="{ThemeResource ButtonWideStyle_List}" />
-          <Button Content="[Webradio.Dialog.Search.Description]" Margin="15,10,15,10" Grid.Row="2" Grid.Column="1"
+          <Button Content="[Webradio.Dialog.Search.Description]" Margin="15,10,15,10" Grid.Row="2"
+                  Grid.Column="1"
                   FontSize="{ThemeResource SmallFontSize}"
                   VerticalAlignment="Stretch" Command="{Command SearchDescription}"
                   Style="{ThemeResource ButtonWideStyle_List}" />

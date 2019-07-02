@@ -57,10 +57,12 @@
 
             <!--Logo-->
             <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="4">
-              <Canvas Width="{StaticResource MEDIA_THUMB_WIDTH_CP}" Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}"
+              <Canvas Width="{StaticResource MEDIA_THUMB_WIDTH_CP}"
+                      Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}"
                       Background="#00000000">
                 <Rectangle Width="{StaticResource MEDIA_THUMB_WIDTH_CP}"
-                           Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}" RadiusY="20" RadiusX="20" Stroke="Black">
+                           Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}" RadiusY="20" RadiusX="20"
+                           Stroke="Black">
                   <Rectangle.Fill>
                     <ImageBrush
                       DataContext="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamLogo}"
@@ -68,7 +70,8 @@
                   </Rectangle.Fill>
                 </Rectangle>
                 <Rectangle Width="{StaticResource MEDIA_THUMB_WIDTH_CP}"
-                           Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}" RadiusY="20" RadiusX="20" Stroke="Black"
+                           Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}" RadiusY="20" RadiusX="20"
+                           Stroke="Black"
                            Opacity="0.5">
                   <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

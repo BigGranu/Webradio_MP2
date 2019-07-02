@@ -29,7 +29,8 @@
 
           <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="10,10,10,10">
             <Label DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}"
-                   Content="{Binding [Name]}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                   Content="{Binding [Name]}" HorizontalAlignment="Stretch"
+                   HorizontalContentAlignment="Center"
                    VerticalAlignment="Center" Color="{ThemeResource TextColor}" />
           </StackPanel>
 
@@ -77,21 +78,24 @@
 
           <!--Logo-->
           <StackPanel Grid.Row="1" Grid.Column="1">
-            <Canvas Width="{StaticResource MEDIA_THUMB_WIDTH_CP}" Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}"
+            <Canvas Width="{StaticResource MEDIA_THUMB_WIDTH_CP}"
+                    Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}"
                     Background="#00000000">
               <Rectangle Height="100" Width="100" RadiusY="20" RadiusX="20" Stroke="Black">
                 <Rectangle.Fill>
                   <ImageBrush ImageSource="{Binding Path=DefaultImage}" />
                 </Rectangle.Fill>
               </Rectangle>
-              <Rectangle Width="{StaticResource MEDIA_THUMB_WIDTH_CP}" Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}"
+              <Rectangle Width="{StaticResource MEDIA_THUMB_WIDTH_CP}"
+                         Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}"
                          RadiusY="20" RadiusX="20" Stroke="Black">
                 <Rectangle.Fill>
                   <ImageBrush DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}"
                               ImageSource="{Binding [Logo]}" />
                 </Rectangle.Fill>
               </Rectangle>
-              <Rectangle Width="{StaticResource MEDIA_THUMB_WIDTH_CP}" Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}"
+              <Rectangle Width="{StaticResource MEDIA_THUMB_WIDTH_CP}"
+                         Height="{StaticResource MEDIA_THUMB_HEIGHT_CP}"
                          RadiusY="20" RadiusX="20" Stroke="Black" Opacity="0.5">
                 <Rectangle.Fill>
                   <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -109,14 +113,16 @@
                  DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}"
                  Content="{Binding [Description]}" FontSize="{ThemeResource SmallerFontSize}"
                  Color="{ThemeResource TextColor}"
-                 Wrap="True" Scroll="Auto" ScrollSpeed="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                 Wrap="True" Scroll="Auto" ScrollSpeed="5" HorizontalAlignment="Stretch"
+                 VerticalAlignment="Stretch" />
 
           <Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left"
                  DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}"
                  Content="{Binding [Indx]}" FontSize="{ThemeResource SmallerFontSize}"
                  Color="{ThemeResource TextColor}" />
 
-          <ListView x:Name="lvStreams" Grid.Column="2" Grid.RowSpan="4" Margin="10" HorizontalAlignment="Stretch"
+          <ListView x:Name="lvStreams" Grid.Column="2" Grid.RowSpan="4" Margin="10"
+                    HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch" Style="{ThemeResource ContentsMenuListViewStyle}"
                     ItemsSource="{Binding Path=AllRadioStreams}">
             <ListView.Resources>

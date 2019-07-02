@@ -48,7 +48,8 @@
                       <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <StackPanel x:Name="PlayControlsPanel" Orientation="Horizontal" Grid.Column="1" Grid.Row="1"
+                    <StackPanel x:Name="PlayControlsPanel" Orientation="Horizontal" Grid.Column="1"
+                                Grid.Row="1"
                                 Margin="0"
                                 VerticalAlignment="Center" HorizontalAlignment="Right">
                       <StackPanel.LayoutTransform>
@@ -57,36 +58,49 @@
                         </TransformGroup>
                       </StackPanel.LayoutTransform>
 
-                      <Button x:Name="StopButton" Style="{ThemeResource StopButtonStyle}" Margin="0"
+                      <Button x:Name="StopButton" Style="{ThemeResource StopButtonStyle}"
+                              Margin="0"
                               IsVisible="{Binding CanStop}"
                               Command="{Command Stop}" />
-                      <Button x:Name="SkipBackButton" Style="{ThemeResource SkipBackButtonStyle}" Margin="0"
+                      <Button x:Name="SkipBackButton" Style="{ThemeResource SkipBackButtonStyle}"
+                              Margin="0"
                               IsVisible="{Binding CanSkipBack}"
                               Command="{Command Previous}" />
-                      <Button x:Name="RewindButton" Style="{ThemeResource RewindButtonStyle}" Margin="0"
+                      <Button x:Name="RewindButton" Style="{ThemeResource RewindButtonStyle}"
+                              Margin="0"
                               IsVisible="{Binding CanSeekBackward}"
                               Command="{Command SeekBackward}" />
-                      <Button x:Name="PlayButton" Style="{ThemeResource PlayButtonStyle}" Margin="5,0,5,0"
+                      <Button x:Name="PlayButton" Style="{ThemeResource PlayButtonStyle}"
+                              Margin="5,0,5,0"
                               IsVisible="{Binding CanPlay}"
                               Command="{Command Play}" />
-                      <Button x:Name="PauseButton" Style="{ThemeResource PauseButtonStyle}" Margin="5,0,5,0"
+                      <Button x:Name="PauseButton" Style="{ThemeResource PauseButtonStyle}"
+                              Margin="5,0,5,0"
                               IsVisible="{Binding CanPause}"
                               Command="{Command Pause}" />
-                      <Button x:Name="ForwardButton" Style="{ThemeResource ForwardButtonStyle}" Margin="0"
+                      <Button x:Name="ForwardButton" Style="{ThemeResource ForwardButtonStyle}"
+                              Margin="0"
                               IsVisible="{Binding CanSeekForward}"
                               Command="{Command SeekForward}" />
-                      <Button x:Name="SkipForwardButton" Style="{ThemeResource SkipForwardButtonStyle}" Margin="0"
+                      <Button x:Name="SkipForwardButton"
+                              Style="{ThemeResource SkipForwardButtonStyle}" Margin="0"
                               IsVisible="{Binding CanSkipForward}"
                               Command="{Command Next}" />
                       <Image Source="PlayerControl\DIVIDER.PNG" Height="35" Stretch="Uniform"
                              VerticalAlignment="Center" Margin="3,0,3,0" />
-                      <Button x:Name="AudioActiveButton" Style="{ThemeResource AudioActiveButtonStyle}" Margin="0"
-                              Command="{Command AudioButtonPressed}" IsVisible="{Binding IsAudio}" />
-                      <Button x:Name="AudioInactiveButton" Style="{ThemeResource AudioInactiveButtonStyle}" Margin="0"
-                              Command="{Command AudioButtonPressed}" IsVisible="{Binding !IsAudio}" />
-                      <Button x:Name="VolumeDownButton" Style="{ThemeResource VolumeDownButtonStyle}" Margin="0"
+                      <Button x:Name="AudioActiveButton"
+                              Style="{ThemeResource AudioActiveButtonStyle}" Margin="0"
+                              Command="{Command AudioButtonPressed}"
+                              IsVisible="{Binding IsAudio}" />
+                      <Button x:Name="AudioInactiveButton"
+                              Style="{ThemeResource AudioInactiveButtonStyle}" Margin="0"
+                              Command="{Command AudioButtonPressed}"
+                              IsVisible="{Binding !IsAudio}" />
+                      <Button x:Name="VolumeDownButton"
+                              Style="{ThemeResource VolumeDownButtonStyle}" Margin="0"
                               Command="{Command Source={StaticResource GeneralPlayerModel},Path=VolumeDown}" />
-                      <Button x:Name="VolumeUpButton" Style="{ThemeResource VolumeUpButtonStyle}" Margin="0"
+                      <Button x:Name="VolumeUpButton" Style="{ThemeResource VolumeUpButtonStyle}"
+                              Margin="0"
                               Command="{Command Source={StaticResource GeneralPlayerModel},Path=VolumeUp}" />
                     </StackPanel>
                     <!-- PlayControlsPanel -->
@@ -217,7 +231,8 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ListView}">
-          <ScrollViewer CanContentScroll="True" Margin="0" Style="{ThemeResource VerticalMediaScrollViewerStyle}"
+          <ScrollViewer CanContentScroll="True" Margin="0"
+                        Style="{ThemeResource VerticalMediaScrollViewerStyle}"
                         HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled"
                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ItemsPresenter VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
@@ -233,11 +248,13 @@
               <Binding.Source>
                 <ItemsPanelTemplate>
                   <!--VirtualizingStackPanel x:Name="ListItemsHost" IsItemsHost="True"/-->
-                  <AnimatedStackPanel x:Name="ListItemsHost" IsItemsHost="True" ScrollMargin="130,130"
+                  <AnimatedStackPanel x:Name="ListItemsHost" IsItemsHost="True"
+                                      ScrollMargin="130,130"
                                       Margin="0,-20,0,-60">
                     <AnimatedStackPanel.Resources>
                       <Storyboard x:Key="ScrollAnimation" FillBehavior="HoldEnd">
-                        <DoubleAnimation BeginTime="00:00:00" From="0" To="1" Duration="00:00:00.300"
+                        <DoubleAnimation BeginTime="00:00:00" From="0" To="1"
+                                         Duration="00:00:00.300"
                                          FillBehavior="HoldEnd"
                                          Storyboard.TargetName="ListItemsHost"
                                          Storyboard.TargetProperty="ScrollOffsetMultiplier" />

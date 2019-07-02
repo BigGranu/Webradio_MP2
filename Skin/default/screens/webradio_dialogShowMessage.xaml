@@ -27,7 +27,7 @@
 
           <Label Grid.Row="0" Content="[Webradio.Dialog.ShowMessage.Title]"
                  HorizontalContentAlignment="Center"
-                 Margin="10,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                 Margin="10,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
 
           <Label Grid.Row="1" Content="{Binding Path=Message}"
                  HorizontalContentAlignment="Center"

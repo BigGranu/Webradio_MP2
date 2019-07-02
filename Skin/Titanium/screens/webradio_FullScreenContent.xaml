@@ -47,7 +47,8 @@
 
           <mp_audio_viz:AudioSpectrumAnalyzer Width="800" Height="150"
                                               HorizontalAlignment="Center" VerticalAlignment="Center"
-                                              x:Name="SpectrumAnalyzer" Style="{ThemeResource SpectrumAnalyzerStyle}"
+                                              x:Name="SpectrumAnalyzer"
+                                              Style="{ThemeResource SpectrumAnalyzerStyle}"
                                               BarSpacing="10" BarCount="41" />
         </ControlTemplate>
       </Control.Resources>
@@ -70,7 +71,8 @@
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Control x:Name="CoverReflexion" Style="{ThemeResource ReflexionControl}" Grid.Row="0" Grid.RowSpan="2"
+            <Control x:Name="CoverReflexion" Style="{ThemeResource ReflexionControl}" Grid.Row="0"
+                     Grid.RowSpan="2"
                      Grid.Column="0" Margin="50,170,0,0">
               <Control.Resources>
                 <ResourceWrapper x:Key="ControlWidth" Resource="250" />
@@ -79,14 +81,16 @@
                   <!--Logo-->
                   <StackPanel>
                     <Canvas Width="250" Height="250" Background="#00000000">
-                      <Rectangle Width="250" Height="250" RadiusY="20" RadiusX="20" Stroke="Black">
+                      <Rectangle Width="250" Height="250" RadiusY="20" RadiusX="20"
+                                 Stroke="Black">
                         <Rectangle.Fill>
                           <ImageBrush
                             DataContext="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamLogo}"
                             ImageSource="{Binding}" />
                         </Rectangle.Fill>
                       </Rectangle>
-                      <Rectangle Width="250" Height="250" RadiusY="20" RadiusX="20" Stroke="Black" Opacity="0.5">
+                      <Rectangle Width="250" Height="250" RadiusY="20" RadiusX="20"
+                                 Stroke="Black" Opacity="0.5">
                         <Rectangle.Fill>
                           <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="Black" Offset="0" />

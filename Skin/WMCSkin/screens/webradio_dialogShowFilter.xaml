@@ -41,12 +41,14 @@
                 Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch"
                 Color="{ThemeResource TextColor}" FontSize="{ThemeResource SmallFontSize}" /-->
 
-            <Button Content="[Webradio.Dialog.ShowFilter.Country]" Margin="5" FontSize="{ThemeResource SmallFontSize}"
+            <Button Content="[Webradio.Dialog.ShowFilter.Country]" Margin="5"
+                    FontSize="{ThemeResource SmallFontSize}"
                     VerticalAlignment="Center" VerticalContentAlignment="Stretch"
                     Style="{ThemeResource ButtonWideStyle_List}"
                     Command="{Command QuickCountry}" />
 
-            <Button Content="[Webradio.Dialog.ShowFilter.City]" Margin="5" FontSize="{ThemeResource SmallFontSize}"
+            <Button Content="[Webradio.Dialog.ShowFilter.City]" Margin="5"
+                    FontSize="{ThemeResource SmallFontSize}"
                     VerticalAlignment="Center" HorizontalContentAlignment="Stretch"
                     Style="{ThemeResource ButtonWideStyle_List}"
                     Command="{Command QuickCity}" />
@@ -55,7 +57,8 @@
                 VerticalAlignment="Center" HorizontalContentAlignment="Stretch"
                 Command="{Command ShowFilter}"/-->
 
-            <Button Content="[Webradio.Dialog.ShowFilter.Genre]" Margin="5" FontSize="{ThemeResource SmallFontSize}"
+            <Button Content="[Webradio.Dialog.ShowFilter.Genre]" Margin="5"
+                    FontSize="{ThemeResource SmallFontSize}"
                     VerticalAlignment="Center" HorizontalContentAlignment="Stretch"
                     Style="{ThemeResource ButtonWideStyle_List}"
                     Command="{Command QuickGenre}" />

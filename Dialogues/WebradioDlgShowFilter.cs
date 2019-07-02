@@ -55,7 +55,18 @@ namespace Webradio.Dialogues
       _typ = string.Empty;
       _quick = false;
       FilterList = ServiceRegistration.Get<ISettingsManager>().Load<FilterSettings>().FilterSetupList;
-      if (FilterList == null) FilterList = new List<FilterSetupInfo> { new FilterSetupInfo("New Filter", "0", new List<string>(), new List<string>(), new List<string>(), new List<string>()) };
+      if (FilterList == null)
+        FilterList = new List<FilterSetupInfo>
+        {
+          new FilterSetupInfo(
+            "New Filter", "0",
+            new List<string>(),
+            new List<string>(),
+            new List<string>(),
+            new List<string>())
+        };
+
+      FilterSettings = new FilterSettings(FilterList);
 
       var list = new List<string>();
 
@@ -74,30 +85,17 @@ namespace Webradio.Dialogues
 
     public void SelectedFilter(ListItem item)
     {
-      //todo 
       var name = (string)item.AdditionalProperties[KEY_FILTER];
+      var list = new List<MyStream>();
+
       foreach (var f in FilterList)
         if (f.Titel == name)
         {
+          list = MyStreams.Filtered(f, WebradioHome.StreamList);
           FilterSettings.ActiveFilter = f;
           ServiceRegistration.Get<ISettingsManager>().Save(FilterSettings);
           break;
         }
-
-      var list = new List<MyStream>();
-      foreach (var query in from f in FilterList
-        where f.Titel == (string)item.AdditionalProperties[KEY_FILTER]
-        select from r in WebradioHome.StreamList
-          where
-            Contains(f.Countrys, r.Country)
-            && Contains(f.Citys, r.City)
-            && Contains2(f.Genres, r.Genres)
-            && Contains(f.Bitrate, r.StreamUrls[0].Bitrate)
-          select r)
-      {
-        foreach (var ms in query.Where(ms => !list.Contains(ms))) list.Add(ms);
-        break;
-      }
 
       WebradioHome.FillItemList(list);
     }

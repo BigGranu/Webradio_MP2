@@ -22,8 +22,10 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace Webradio.Helper
@@ -74,6 +76,33 @@ namespace Webradio.Helper
       }
 
       return ms;
+    }
+
+    public static List<MyStream> Filtered(FilterSetupInfo filter, List<MyStream> streams)
+    {
+      var list = new List<MyStream>();
+      foreach (var ms in streams)
+        if (Contains2(filter.Genres, ms.Genres) &&
+            Contains(filter.Countrys, ms.Country) &&
+            Contains(filter.Citys, ms.City) &&
+            Contains(filter.Bitrate, ms.StreamUrls[0].Bitrate))
+          list.Add(ms);
+
+      return list;
+    }
+
+    private static bool Contains(List<string> l, string s)
+    {
+      return l.Count == 0 || l.Contains(s);
+    }
+
+    private static bool Contains2(ICollection<string> l, string s)
+    {
+      if (s == null) throw new ArgumentNullException("s");
+      if (l.Count == 0) return true;
+
+      var split = s.Split(',');
+      return split.Any(part => l.Contains(part.Trim()));
     }
   }
 

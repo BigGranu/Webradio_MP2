@@ -40,7 +40,8 @@
     <Model Id="7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA" ClassName="Webradio.Dialogues.WebradioDlgSearchInStreams" />
     <Model Id="10D0E2AB-AE84-406F-8AA9-5A3FB2A86360" ClassName="Webradio.Dialogues.WebradioDlgImportFilter" />
     <Model Id="028ABECD-9885-48F6-B39F-F252EC0115EF" ClassName="Webradio.Dialogues.WebradioDlgLoadUpdate" />
-    <Model Id="A391ACBF-BEFE-4820-B17D-D06545CF9987" ClassName="Webradio.Dialogues.WebradioDlgSettingsStreamlistUpdate" />
+    <Model Id="A391ACBF-BEFE-4820-B17D-D06545CF9987"
+           ClassName="Webradio.Dialogues.WebradioDlgSettingsStreamlistUpdate" />
   </Register>
 
   <Register Location="/Players/Builders">

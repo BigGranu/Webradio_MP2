@@ -36,7 +36,8 @@
           </Border.IsVisible>
         </Border>
 
-        <ListView DockPanel.Dock="Center" x:Name="lvStreams" Margin="-31,35,-60,50" HorizontalAlignment="Stretch"
+        <ListView DockPanel.Dock="Center" x:Name="lvStreams" Margin="-31,35,-60,50"
+                  HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch" Style="{ThemeResource WebRadioContainerStyle}"
                   ItemsSource="{Binding Path=AllRadioStreams}">
           <ListView.Resources>
@@ -76,7 +77,8 @@
                 <Label VerticalAlignment="Center" HorizontalAlignment="Right"
                        DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}"
                        Content="{Binding [Genres]}" Color="{ThemeResource TextColor}" />
-                <Label VerticalAlignment="Center" HorizontalAlignment="Right" Color="{ThemeResource TextColor}"
+                <Label VerticalAlignment="Center" HorizontalAlignment="Right"
+                       Color="{ThemeResource TextColor}"
                        DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}">
                   <Label.Content>
                     <Binding Path="[Bitrate]" Converter="{StaticResource StringFormatConverter}"
@@ -94,13 +96,15 @@
                        Content="{Binding [Language]}" Color="{ThemeResource TextColor}" />
               </StackPanel>
 
-              <Image Grid.Column="1" Grid.Row="0" Thumbnail="True" Stretch="Fill" Height="185" Width="185"
+              <Image Grid.Column="1" Grid.Row="0" Thumbnail="True" Stretch="Fill" Height="185"
+                     Width="185"
                      Source="{Binding [ImageSrc]}" FallbackSource="{Binding [DefaultIconSrc]}"
                      DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}">
                 <Image.OpacityMask>
                   <VisualBrush>
                     <VisualBrush.Visual>
-                      <Border Name="mask" Background="White" CornerRadius="21" BorderThickness="0" BorderBrush="Black"
+                      <Border Name="mask" Background="White" CornerRadius="21"
+                              BorderThickness="0" BorderBrush="Black"
                               Margin="2" />
                     </VisualBrush.Visual>
                   </VisualBrush>
@@ -109,13 +113,16 @@
             </Grid>
           </StackPanel>
 
-          <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Margin="0,0,20,0" VerticalAlignment="Stretch"
+          <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Margin="0,0,20,0"
+                      VerticalAlignment="Stretch"
                       HorizontalAlignment="Left">
-            <Label DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" Color="{ThemeResource TextColor}"
+            <Label DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}"
+                   Color="{ThemeResource TextColor}"
                    FontFamily="DefaultBold"
                    Content="{Binding [Name]}" Margin="0" Wrap="True" HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch" />
-            <Label DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}" Color="{ThemeResource TextColor}"
+            <Label DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}"
+                   Color="{ThemeResource TextColor}"
                    Opacity="0.7"
                    Content="{Binding [Description]}" Wrap="True" HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
@@ -124,7 +131,8 @@
         </DockPanel>
         <Label DockPanel.Dock="Top" VerticalAlignment="Center" HorizontalAlignment="Left"
                DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}"
-               Content="{Binding [Indx]}" FontSize="{ThemeResource SmallFontSize}" Color="{ThemeResource TextColor}"
+               Content="{Binding [Indx]}" FontSize="{ThemeResource SmallFontSize}"
+               Color="{ThemeResource TextColor}"
                FontFamily="DefaultBold" Margin="-25,-85,0,0" />
       </DockPanel>
     </ControlTemplate>
